@@ -18,8 +18,10 @@
     <% @tagscans.each do |tagscan| %>
       <tr>
         <td><%= tagscan.created_at %></td>
-        <td><%= tagscan.epc %></td>
-        <td><%= tagscan.pc %></td>
+        <% if tagscan.tag %>
+        <td><%= tagscan.tag.epc %></td>
+        <td><%= tagscan.tag.pc %></td>
+        <% end %>
         <td><%= tagscan.antenna %></td>
         <td><%= tagscan.rssi %></td>
         <td><%= link_to 'Show', tagscan %></td>

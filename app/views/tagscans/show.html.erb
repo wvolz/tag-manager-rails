@@ -1,15 +1,17 @@
 <p id="notice"><%= notice %></p>
 
+<% if @tagscan.tag %>
 <p>
   <strong>EPC:</strong>
-  <%= @tagscan.epc %>
-  (DEC = <%= @tagscan.epc_dec %>)
+  <%= @tagscan.tag.epc %>
+  (DEC = <%= @tagscan.tag.epc_dec %>)
 </p>
 
 <p>
   <strong>Pc:</strong>
-  <%= @tagscan.pc %>
+  <%= @tagscan.tag.pc %>
 </p>
+<% end %>
 
 <p>
   <strong>Antenna:</strong>

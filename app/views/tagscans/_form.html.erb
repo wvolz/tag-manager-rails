@@ -13,12 +13,7 @@
 
   <div class="field">
     <%= form.label :epc %>
-    <%= form.text_field :epc, id: :tagscan_epc %>
-  </div>
-
-  <div class="field">
-    <%= form.label :pc %>
-    <%= form.text_field :pc, id: :tagscan_pc %>
+    <%= form.collection_select(:tag_id, Tag.all, :id, :epc) %>
   </div>
 
   <div class="field">

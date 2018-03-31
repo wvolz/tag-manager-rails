@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>EPC:</strong>
+  <%= @tagscan.epc %>
+  (DEC = <%= @tagscan.epc_dec %>)
+</p>
+
+<p>
+  <strong>Pc:</strong>
+  <%= @tagscan.pc %>
+</p>
+
+<p>
+  <strong>Antenna:</strong>
+  <%= @tagscan.antenna %>
+</p>
+
+<p>
+  <strong>Rssi:</strong>
+  <%= @tagscan.rssi %>
+</p>
+
+<%= link_to 'Edit', edit_tagscan_path(@tagscan) %> |
+<%= link_to 'Back', tagscans_path %>

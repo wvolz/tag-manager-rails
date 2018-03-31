@@ -1,0 +1,37 @@
+<%= form_with(model: tagscan, local: true) do |form| %>
+  <% if tagscan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tagscan.errors.count, "error") %> prohibited this tagscan from being saved:</h2>
+
+      <ul>
+      <% tagscan.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :epc %>
+    <%= form.text_field :epc, id: :tagscan_epc %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pc %>
+    <%= form.text_field :pc, id: :tagscan_pc %>
+  </div>
+
+  <div class="field">
+    <%= form.label :antenna %>
+    <%= form.text_field :antenna, id: :tagscan_antenna %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rssi %>
+    <%= form.text_field :rssi, id: :tagscan_rssi %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -5,4 +5,9 @@ class Tag < ApplicationRecord
             epc.hex
         end
     end
+
+    def last_tag_scan
+        last = self.tagscans.order('created_at desc').first
+        return last.created_at
+    end
 end

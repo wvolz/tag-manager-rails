@@ -69,6 +69,6 @@ class TagscansController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tagscan_params
-      params.require(:tagscan).permit(:tag_id, :antenna, :rssi)
+      params.require(:tagscan).permit(:tag_epc, :tag_pc, :antenna, :rssi)
     end
 end

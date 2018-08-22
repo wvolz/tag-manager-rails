@@ -55,3 +55,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Added at 2018-08-21 12:07:47 -0600 by volz:
 gem "local_time", "~> 2.0"
+
+# Added at 2018-08-21 15:35:53 -0600 by volz:
+gem "bindata", "~> 2.4"

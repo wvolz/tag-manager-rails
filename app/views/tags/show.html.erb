@@ -8,7 +8,34 @@
 
 <p>
   <strong>PC:</strong>
-  <%= @tag.pc %>
+  <table border>
+      <tr>
+          <th>Raw</th>
+          <th>Len</th>
+          <th>UserMemory</th>
+          <th>XPC</th>
+          <th>NSI</th>
+          <th>AFI</th>
+      </tr>
+      <tr>
+          <td><%= @tag.pc %></td>
+          <td>
+            <%= @tag.pc_decode.len %>
+          </td>
+          <td>
+            <%= @tag.pc_decode.user_memory %>
+          </td>
+          <td>
+            <%= @tag.pc_decode.xpc %>
+          </td>
+          <td>
+            <%= @tag.pc_decode.nsi %>
+          </td>
+          <td>
+            <%= @tag.pc_decode.afi.to_hex %>
+          </td>
+      </tr>
+  </table>
 </p>
 
 <% if @tag.tag_type %>

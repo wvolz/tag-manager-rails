@@ -1,5 +1,7 @@
 class Tag < ApplicationRecord
     has_many :tagscans
+    belongs_to :tag_type, optional: true
+
     def epc_dec
         if not epc.nil?
             epc.hex

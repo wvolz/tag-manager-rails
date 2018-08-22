@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Epc:</strong>
+  <%= @tag.epc %>
+  (DEC = <%= @tag.epc_dec %>)
+</p>
+
+<p>
+  <strong>PC:</strong>
+  <%= @tag.pc %>
+</p>
+
+<% if @tag.tag_type %>
+<p>
+  <strong>Tag Type:</strong>
+  <%= @tag.tag_type.name %>
+</p>
+<% end %>
+
+<%= link_to 'Edit', edit_tag_path(@tag) %> |
+<%= link_to 'Back', tags_path %>

@@ -1,5 +1,7 @@
 {
   "name": "tag-manager-rails",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "local-time": "^2.0.1"
+  }
 }

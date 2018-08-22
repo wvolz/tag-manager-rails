@@ -1,0 +1,32 @@
+<%= form_with(model: tag, local: true) do |form| %>
+  <% if tag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(tag.errors.count, "error") %> prohibited this tag from being saved:</h2>
+
+      <ul>
+      <% tag.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+  <div class="field">
+    <%= form.label :tag_type %>
+    <%= form.collection_select :tag_type_id, TagType.order(:name), :id, :name, include_blank: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :epc %>
+    <%= form.text_field :epc, id: :tag_epc %>
+  </div>
+
+  <div class="field">
+    <%= form.label :pc %>
+    <%= form.text_field :pc, id: :tag_pc %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

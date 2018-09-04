@@ -25,6 +25,11 @@
     <%= form.label :pc %>
     <%= form.text_field :pc, id: :tag_pc %>
   </div>
+  
+  <div class="field">
+    <%= form.label :authorization %>
+    <%= form.collection_check_boxes :authorization_ids, Authorization.order(:name), :id, :name %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

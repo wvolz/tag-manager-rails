@@ -45,5 +45,16 @@
 </p>
 <% end %>
 
+<% if @tag.authorizations.size > 0 %>
+<p>
+<strong>Authorizations:</strong>
+<ul>
+<% @tag.authorizations.ids.each do |auth_id| %>
+    <li><%= Authorization.find(auth_id).name %></li>
+<% end %>
+</ul>
+</p>
+<% end %>
+
 <%= link_to 'Edit', edit_tag_path(@tag) %> |
 <%= link_to 'Back', tags_path %>

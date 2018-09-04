@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :authorizations
   resources :tag_types
   resources :tags
   resources :tagscans

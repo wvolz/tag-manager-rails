@@ -1,6 +1,7 @@
 class Tag < ApplicationRecord
     has_many :tagscans
     belongs_to :tag_type, optional: true
+    has_and_belongs_to_many :authorizations, optional: true
 
     class PC < BinData::Record
       bit5  :len

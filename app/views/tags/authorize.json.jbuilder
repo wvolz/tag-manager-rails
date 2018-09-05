@@ -1,2 +1,2 @@
-json.extract! tag, :id, :epc, :pc, :created_at, :updated_at
-json.url tag_url(tag, format: :json)
+json.response @auth_response
+json.record @db_result

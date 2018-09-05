@@ -1,5 +1,6 @@
 class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
+  before_action :set_tag_by_epc, only: [:authorize]
 
   # GET /tags
   # GET /tags.json
@@ -19,6 +20,18 @@ class TagsController < ApplicationController
 
   # GET /tags/1/edit
   def edit
+  end
+
+  # GET /tags/:epc/authorize
+  def authorize
+      @auth_response = 'unauthorized'
+      @db_result = nil
+      if (@tag.authorizations.exists?(params[:a]))
+        @db_result = @tag.authorizations.find(params[:a])
+        if (@db_result)
+            @auth_response = 'authorized'
+        end
+      end
   end
 
   # POST /tags
@@ -65,6 +78,13 @@ class TagsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_tag
       @tag = Tag.find(params[:id])
+    end
+
+    def set_tag_by_epc
+      @tag = Tag.find_by(epc: params[:id])
+      unless @tag
+          raise ActiveRecord::RecordNotFound
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

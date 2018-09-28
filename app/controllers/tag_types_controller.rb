@@ -69,6 +69,6 @@ class TagTypesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tag_type_params
-      params.require(:tag_type).permit(:name)
+      params.require(:tag_type).permit(:name, :decoder)
     end
 end

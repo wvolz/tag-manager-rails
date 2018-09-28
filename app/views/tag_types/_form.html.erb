@@ -15,6 +15,11 @@
     <%= form.label :name %>
     <%= form.text_field :name, id: :tag_type_name %>
   </div>
+  
+  <div class="field">
+    <%= form.label :decoder %>
+    <%= form.select :decoder, TagType.decoders.keys %>
+  </div>
 
   <div class="actions">
     <%= form.submit %>

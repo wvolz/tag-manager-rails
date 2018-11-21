@@ -43,6 +43,10 @@
   <strong>Tag Type:</strong>
   <%= @tag.tag_type.name %>
 </p>
+<p>
+  <strong>Tag decoded data:</strong>
+  <%= render "uii_decode" %>
+</p>
 <% end %>
 
 <% if @tag.authorizations.size > 0 %>

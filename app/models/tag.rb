@@ -33,4 +33,17 @@ class Tag < ApplicationRecord
             end
         end 
     end
+
+    def uii_decode
+        if @parsed_uii
+            return @parsed_uii
+        else
+            # TODO do I need this?
+            if not epc.nil?
+                if not tag_type.nil?
+                    tag_type.uii_decode(epc)
+                end
+            end
+        end
+    end
 end

@@ -1,0 +1,22 @@
+<table border>
+    <thead>
+        <th>AgencyUse</th>
+        <th>Classification</th>
+        <th>hovDeclaration</th>
+        <th>version</th>
+        <th>agency</th>
+        <th>transponderSerialNum</th>
+        <th>uiiValidationHash</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td><%= @tag.uii_decode.agencyUse %></td>
+            <td><%= @tag.uii_decode.classification %></td>
+            <td><%= @tag.uii_decode.hovDeclaration %></td>
+            <td><%= @tag.uii_decode.version %></td>
+            <td><%= @tag.uii_decode.agency %></td>
+            <td><%= @tag.uii_decode.transponderSerialNum %></td>
+            <td><%= @tag.uii_decode.uiiValidationHash %></td>
+        </tr>
+    </tbody>
+</table>

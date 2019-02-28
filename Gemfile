@@ -58,3 +58,6 @@ gem "local_time", "~> 2.0"
 
 # Added at 2018-08-21 15:35:53 -0600 by volz:
 gem "bindata", "~> 2.4"
+
+# Added at 2019-02-28 11:47:36 -0700 by volz:
+gem "pg", "~> 1.1"

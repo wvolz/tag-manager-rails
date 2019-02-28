@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190228191847) do
+ActiveRecord::Schema.define(version: 20190228194330) do
 
   create_table "authorizations", force: :cascade do |t|
     t.string "name"
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20190228191847) do
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string "epc", limit: 24
+    t.string "epc", limit: 124
     t.string "pc", limit: 4
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

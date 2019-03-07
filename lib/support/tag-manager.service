@@ -1,0 +1,19 @@
+[Unit]
+Description=TagManager HTTP Server
+After=network.target
+
+[Service]
+# Foreground process (do not use --daemon in ExecStart or config.rb)
+Type=simple
+User=tag-manager
+WorkingDirectory=/home/tag-manager/tag-manager-rails
+
+# Helpful for debugging socket activation, etc.
+# Environment=PUMA_DEBUG=1
+EnvironmentFile=/home/tag-manager/.rbenv-vars
+Environment=RAILS_ENV=production
+ExecStart=/home/tag-manager/.rbenv/bin/rbenv exec bundle exec puma -e production
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

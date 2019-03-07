@@ -1,0 +1,9 @@
+/home/tag-manager/tag-manager-rails/log/*.log {
+  daily
+  missingok
+  rotate 7
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+}

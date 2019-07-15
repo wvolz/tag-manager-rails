@@ -48,6 +48,24 @@
   <%= render "uii_decode" %>
 </p>
 <% end %>
+<p>
+<strong>Last 10 scans</strong>
+<table border>
+    <tr>
+        <th>TagScan ID</th>
+        <th>Antenna</th>
+        <th>RSSI</th>
+        <th>Create Date</th>
+    </tr>
+<% @tag.tagscans.last(10).each do |scan| %>
+    <tr>
+        <td><%= scan.id %></td>
+        <td><%= scan.antenna %></td>
+        <td><%= scan.rssi %></td>
+        <td><%= scan.created_at %></td>
+    </tr>
+<% end %>
+</table>
 
 <% if @tag.authorizations.size > 0 %>
 <p>

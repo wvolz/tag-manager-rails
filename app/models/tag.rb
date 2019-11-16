@@ -19,7 +19,11 @@ class Tag < ApplicationRecord
 
     def last_tag_scan
         last = self.tagscans.order('created_at desc').first
-        return last.created_at
+        if last.present?
+            return last.created_at
+        else
+            return
+        end
     end
 
     def pc_decode

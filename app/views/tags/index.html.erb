@@ -17,17 +17,19 @@
 
   <tbody>
     <% @tags.each do |tag| %>
+        <% if tag.id.present? %>
       <tr>
         <td><%= tag.epc %></td>
-        <td><%= tag.pc %></td>
+        <td><% if tag.pc.present? %><%= tag.pc %><%else%>Unknown<%end%></td>
         <td><% if tag.tag_type %><%= tag.tag_type.name %><%else%>Unknown<%end%></td>
-        <td><%= tag.created_at %></td>
-        <td><%= local_time(tag.updated_at) %></td>
-        <td><%= local_time(tag.last_tag_scan) %></td>
+        <td><% if tag.created_at.present? %><%= tag.created_at %><%else%>Unknown<%end%></td>
+        <td><% if tag.updated_at.present? %><%= local_time(tag.updated_at) %><%else%><%end%></td>
+        <td><% if tag.last_tag_scan.present? %><%= local_time(tag.last_tag_scan) %><%else%><%end%></td>
         <td><%= link_to 'Show', tag %></td>
         <td><%= link_to 'Edit', edit_tag_path(tag) %></td>
         <td><%= link_to 'Destroy', tag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
+        <% end %>
     <% end %>
   </tbody>
 </table>

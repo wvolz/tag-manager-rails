@@ -4,7 +4,7 @@ class TagscansController < ApplicationController
   # GET /tagscans
   # GET /tagscans.json
   def index
-    @tagscans = Tagscan.all
+    @pagy, @tagscans = pagy(Tagscan.all)
   end
 
   # GET /tagscans/1

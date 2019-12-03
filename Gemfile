@@ -59,3 +59,5 @@ gem "bindata", "~> 2.4"
 
 # Added at 2019-02-28 11:47:36 -0700 by volz:
 gem "pg", "~> 1.1"
+
+gem 'pagy', '~> 3.7'

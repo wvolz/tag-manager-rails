@@ -28,6 +28,8 @@ class TagscansController < ApplicationController
 
     respond_to do |format|
       if @tagscan.save
+        TagscansGrabphotoJob.perform_later(@tagscan)
+        
         format.html { redirect_to @tagscan, notice: 'Tagscan was successfully created.' }
         format.json { render :show, status: :created, location: @tagscan }
       else

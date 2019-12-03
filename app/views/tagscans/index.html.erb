@@ -10,6 +10,7 @@
       <th>Pc</th>
       <th>Antenna</th>
       <th>Rssi</th>
+      <th>Image</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -24,6 +25,7 @@
         <% end %>
         <td><%= tagscan.antenna %></td>
         <td><%= tagscan.rssi %></td>
+        <td><%= tagscan.image.attached? %></td>
         <td><%= link_to 'Show', tagscan %></td>
         <td><%= link_to 'Edit', edit_tagscan_path(tagscan) %></td>
         <td><%= link_to 'Destroy', tagscan, method: :delete, data: { confirm: 'Are you sure?' } %></td>

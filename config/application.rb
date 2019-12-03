@@ -17,5 +17,8 @@ module TagManagerRails
     # the framework and any gems in your application.
     
     config.time_zone = 'America/Denver'
+
+    # change to match your camera, expects a JPEG image
+    config.grabphoto_camera_url = 'http://10.11.50.178/cgi-bin/snapshot.cgi'
   end
 end

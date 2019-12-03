@@ -58,13 +58,19 @@
         <th>Antenna</th>
         <th>RSSI</th>
         <th>Create Date</th>
+        <th>Image Attached?</th>
     </tr>
 <% @tag.tagscans.last(10).each do |scan| %>
     <tr>
-        <td><%= scan.id %></td>
+        <td><%= link_to(scan.id, url_for(scan)) %></td>
         <td><%= scan.antenna %></td>
         <td><%= scan.rssi %></td>
         <td><%= scan.created_at %></td>
+        <td><%= scan.image.attached? %>
+        <% if scan.image.attached? %>
+          <%= link_to(image_tag(scan.image.variant(resize_to_limit: [100,100])), url_for(scan.image)) %>
+        <% end %>
+        </td>
     </tr>
 <% end %>
 </table>

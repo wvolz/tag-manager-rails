@@ -23,5 +23,12 @@
   <%= @tagscan.rssi %>
 </p>
 
+<% if @tagscan.image.attached? %>
+<p>
+  <strong>Image:</strong>
+  <%= link_to(image_tag(@tagscan.image.variant(resize_to_limit: [100,100])), url_for(@tagscan.image)) %>
+</p>
+<% end %>
+
 <%= link_to 'Edit', edit_tagscan_path(@tagscan) %> |
 <%= link_to 'Back', tagscans_path %>

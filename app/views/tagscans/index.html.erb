@@ -25,7 +25,13 @@
         <% end %>
         <td><%= tagscan.antenna %></td>
         <td><%= tagscan.rssi %></td>
-        <td><%= tagscan.image.attached? %></td>
+        <td>
+          <% if tagscan.image.attached? %>
+            <%= image_tag(tagscan.image.variant(resize_to_limit: [100,100])) %>
+          <% else %>
+            <%= image_tag "no-image-graphic.png" %>
+          <% end %>
+        </td>
         <td><%= link_to 'Show', tagscan %></td>
         <td><%= link_to 'Edit', edit_tagscan_path(tagscan) %></td>
         <td><%= link_to 'Destroy', tagscan, method: :delete, data: { confirm: 'Are you sure?' } %></td>

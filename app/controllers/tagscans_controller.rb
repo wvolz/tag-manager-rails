@@ -4,7 +4,7 @@ class TagscansController < ApplicationController
   # GET /tagscans
   # GET /tagscans.json
   def index
-    @pagy, @tagscans = pagy(Tagscan.all)
+    @pagy, @tagscans = pagy(Tagscan.order(created_at: :desc))
   end
 
   # GET /tagscans/1

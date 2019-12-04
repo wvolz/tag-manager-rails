@@ -49,8 +49,9 @@ class Tagscan < ApplicationRecord
             f.flush
             # reset ios to beginning of file
             f.rewind
+            current_date_time = DateTime.now.to_s(:number)
             self.image.attach(io: f,
-                              filename: 'image.jpg',
+                              filename: "#{current_date_time}-image.jpg",
                               content_type: 'image/jpg')
           end
         else

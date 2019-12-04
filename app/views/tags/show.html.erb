@@ -51,7 +51,7 @@
 </p>
 <% end %>
 <p>
-<strong>Last 10 scans</strong>
+<strong>Last 20 scans</strong>
 <table border>
     <tr>
         <th>TagScan ID</th>
@@ -60,7 +60,7 @@
         <th>Create Date</th>
         <th>Image Attached?</th>
     </tr>
-<% @tag.tagscans.last(10).each do |scan| %>
+<% @tag.tagscans.last(20).each do |scan| %>
     <tr>
         <td><%= link_to(scan.id, url_for(scan)) %></td>
         <td><%= scan.antenna %></td>

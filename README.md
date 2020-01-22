@@ -10,4 +10,6 @@ Run the following before going to production
 
 `bundle exec rake db:migrate RAILS_ENV=production`
 
+`yarn install --production --pure-lockfile`
+
 `bundle exec rake assets:precompile RAILS_ENV=production`

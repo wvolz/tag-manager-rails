@@ -6,4 +6,6 @@ This application manages 6c tags and authorizations for an rfid reader.
 
 Run the following before going to production
 
-`RAILS_ENV=production rails assets:precompile`
+`bundle exec rake db:migrate RAILS_ENV=production`
+
+`bundle exec rake assets:precompile RAILS_ENV=production`

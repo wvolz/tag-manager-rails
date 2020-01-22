@@ -13,3 +13,9 @@
  *= require_tree .
  *= require_self
  */
+
+th a.current {
+  padding-right: 12px;
+  background-repeat: no-repeat;
+  background-position: right center;
+}

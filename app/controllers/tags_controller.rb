@@ -1,11 +1,12 @@
 class TagsController < ApplicationController
   before_action :set_tag, only: [:show, :edit, :update, :destroy]
   before_action :set_tag_by_epc, only: [:authorize]
+  helper_method :sort_column, :sort_direction
 
   # GET /tags
   # GET /tags.json
   def index
-    @tags = Tag.all
+    @tags = Tag.order(sort_column + " " + sort_direction)
   end
 
   # GET /tags/1
@@ -90,5 +91,13 @@ class TagsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def tag_params
       params.require(:tag).permit(:epc, :pc, :tag_type_id, :authorization_ids => [])
+    end
+
+    def sort_column
+      Tag.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    end
+
+    def sort_direction
+      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
     end
 end

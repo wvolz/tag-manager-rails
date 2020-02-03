@@ -1,6 +1,7 @@
 class Tagscan < ApplicationRecord
     belongs_to :tag
     has_one_attached :image
+    after_create :update_last_seen_time
 
     def tag_epc
         tag.try(:epc)
@@ -58,5 +59,10 @@ class Tagscan < ApplicationRecord
           # log issue grabbing image
           logger.info "Couldn't grab image from #{url} code #{res.code} msg #{res.msg}"
         end
+    end
+    
+    def update_last_seen_time
+        tag.last_seen_at = DateTime.current
+        tag.save
     end
 end

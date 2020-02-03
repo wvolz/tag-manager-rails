@@ -2,6 +2,7 @@ class Tagscan < ApplicationRecord
     belongs_to :tag
     has_one_attached :image
     after_create :update_last_seen_time
+    scope :by_created, -> { order(created_at: :desc) }
 
     def tag_epc
         tag.try(:epc)

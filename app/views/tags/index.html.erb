@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>EPC</th>
+      <th>Description</th>
       <th>PC</th>
       <th>Type</th>
       <th><%= sortable "created_at", "Created" %></th>
@@ -20,6 +21,7 @@
         <% if tag.id.present? %>
       <tr>
         <td><%= tag.epc %></td>
+        <td><%= tag.description %></td>
         <td><% if tag.pc.present? %><%= tag.pc %><%else%>Unknown<%end%></td>
         <td><% if tag.tag_type %><%= tag.tag_type.name %><%else%>Unknown<%end%></td>
         <td><% if tag.created_at.present? %><%= tag.created_at %><%else%>Unknown<%end%></td>

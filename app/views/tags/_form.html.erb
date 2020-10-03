@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-  
+
   <div class="field">
     <%= form.label :tag_type %>
     <%= form.collection_select :tag_type_id, TagType.order(:name), :id, :name, include_blank: true %>
@@ -22,10 +22,15 @@
   </div>
 
   <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description, id: :tag_description %>
+  </div>
+
+  <div class="field">
     <%= form.label :pc %>
     <%= form.text_field :pc, id: :tag_pc %>
   </div>
-  
+
   <div class="field">
     <%= form.label :authorization %>
     <%= form.collection_check_boxes :authorization_ids, Authorization.order(:name), :id, :name %>

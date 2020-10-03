@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_23_001501) do
+ActiveRecord::Schema.define(version: 2020_10_03_051607) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -58,6 +58,7 @@ ActiveRecord::Schema.define(version: 2020_01_23_001501) do
     t.datetime "updated_at", null: false
     t.integer "tag_type_id"
     t.datetime "last_seen_at"
+    t.string "description"
   end
 
   create_table "tagscans", force: :cascade do |t|
@@ -70,4 +71,5 @@ ActiveRecord::Schema.define(version: 2020_01_23_001501) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "tagscans", "tags"
 end

@@ -3,8 +3,6 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.1'
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3', '~> 1.4'
 # Use Puma as the app server
 gem 'puma', '~> 4.1'
 # Use SCSS for stylesheets
@@ -32,6 +30,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'sqlite3', '~> 1.4'
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'
@@ -48,6 +47,11 @@ group :test do
   gem 'webdrivers'
 end
 
+group :production do
+  # Added at 2019-02-28 11:47:36 -0700 by volz:
+  gem "pg", "~> 1.1"
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
@@ -56,9 +60,6 @@ gem "local_time", "~> 2.0"
 
 # Added at 2018-08-21 15:35:53 -0600 by volz:
 gem "bindata", "~> 2.4"
-
-# Added at 2019-02-28 11:47:36 -0700 by volz:
-gem "pg", "~> 1.1"
 
 gem 'pagy', '~> 3.7'
 

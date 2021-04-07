@@ -1,9 +1,15 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @authorization.name %>
-</p>
+<div class="row">
+  <div class="col-sm">
+    <strong>Name:</strong>
+    <%= @authorization.name %>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_authorization_path(@authorization) %> |
-<%= link_to 'Back', authorizations_path %>
+<div class="row">
+  <div class="col-sm">
+    <%= link_to 'Edit', edit_authorization_path(@authorization) %> |
+    <%= link_to 'Back', authorizations_path %>
+  </div>
+<div class="row">

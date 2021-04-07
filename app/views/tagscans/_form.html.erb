@@ -12,26 +12,26 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :epc %>
-    <%= form.text_field :tag_epc %>
+    <%= form.label :epc, class:"form-label" %>
+    <%= form.text_field :tag_epc, class:"form-control" %>
   </div>
   
   <div class="field">
-    <%= form.label :pc %>
-    <%= form.text_field :tag_pc %>
+    <%= form.label :pc, class:"form-label" %>
+    <%= form.text_field :tag_pc, class:"form-control" %>
   </div>
 
   <div class="field">
-    <%= form.label :antenna %>
-    <%= form.text_field :antenna, id: :tagscan_antenna %>
+    <%= form.label :antenna, class:"form-label" %>
+    <%= form.text_field :antenna, id: :tagscan_antenna, class:"form-control" %>
   </div>
 
   <div class="field">
-    <%= form.label :rssi %>
-    <%= form.text_field :rssi, id: :tagscan_rssi %>
+    <%= form.label :rssi, class:"form-label" %>
+    <%= form.text_field :rssi, id: :tagscan_rssi, class:"form-control" %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class:"btn btn-primary" %>
   </div>
 <% end %>

@@ -1,33 +1,52 @@
 <p id="notice"><%= notice %></p>
 
 <% if @tagscan.tag %>
-<p>
-  <strong>EPC:</strong>
-  <%= @tagscan.tag.epc %>
-  (DEC = <%= @tagscan.tag.epc_dec %>)
-</p>
+<div class="row">
+  <div class="col-1">
+    <strong>EPC:</strong>
+  </div>
+  <div class="col-sm">
+    <%= @tagscan.tag.epc %> (DEC = <%= @tagscan.tag.epc_dec %>)
+  </div>
+</div>
 
-<p>
-  <strong>Pc:</strong>
-  <%= @tagscan.tag.pc %>
-</p>
+<div class="row">
+  <div class="col-1">
+    <strong>Pc:</strong>
+  </div>
+  <div class="col-sm">
+    <%= @tagscan.tag.pc %>
+  </div>
+</div>
 <% end %>
 
-<p>
-  <strong>Antenna:</strong>
-  <%= @tagscan.antenna %>
-</p>
+<div class="row">
+  <div class="col-1">
+    <strong>Antenna:</strong>
+  </div>
+  <div class="col-sm">
+    <%= @tagscan.antenna %>
+  </div>
+</div>
 
-<p>
-  <strong>Rssi:</strong>
-  <%= @tagscan.rssi %>
-</p>
+<div class="row">
+  <div class="col-1">
+    <strong>Rssi:</strong>
+  </div>
+  <div class="col-sm">
+    <%= @tagscan.rssi %>
+  </div>
+</div>
 
 <% if @tagscan.image.attached? %>
-<p>
-  <strong>Image:</strong>
-  <%= link_to(image_tag(@tagscan.image.variant(resize_to_limit: [100,100])), url_for(@tagscan.image)) %>
-</p>
+<div class="row">
+  <div class="col-1">
+    <strong>Image:</strong>
+  </div>
+  <div class="col-sm">
+    <%= link_to(image_tag(@tagscan.image.variant(resize_to_limit: [100,100])), url_for(@tagscan.image)) %>
+  </div>
+</div>
 <% end %>
 
 <%= link_to 'Edit', edit_tagscan_path(@tagscan) %> |

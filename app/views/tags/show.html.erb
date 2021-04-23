@@ -86,7 +86,7 @@
             <th>Antenna</th>
             <th>RSSI</th>
             <th>Create Date</th>
-            <th>Image Attached?</th>
+            <th>Image</th>
         </tr>
       </thead>
       <tbody>
@@ -96,10 +96,12 @@
             <td><%= scan.antenna %></td>
             <td><%= scan.rssi %></td>
             <td><%= scan.created_at %></td>
-            <td><%= scan.image.attached? %>
-            <% if scan.image.attached? %>
-              <%= link_to(image_tag(scan.image.variant(resize_to_limit: [100,100])), url_for(scan.image)) %>
-            <% end %>
+            <td>
+              <% if scan.image.attached? %>
+                  <%= link_to(image_tag(scan.image.variant(resize_to_limit: [100,100])), url_for(scan.image)) %>
+              <% else %>
+                  <%= image_tag "no-image-graphic.png" %>
+              <% end %>
             </td>
         </tr>
       <% end %>

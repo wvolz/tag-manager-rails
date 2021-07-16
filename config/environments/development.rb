@@ -75,5 +75,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
   
   # whitelist hosts below
-  config.hosts << "magicchef.volzfamily.net"
+  config.hosts << "yourdomain.net"
 end

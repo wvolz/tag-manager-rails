@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_03_235448) do
+ActiveRecord::Schema.define(version: 2021_09_30_155413) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -66,6 +66,8 @@ ActiveRecord::Schema.define(version: 2021_02_03_235448) do
     t.integer "tag_type_id"
     t.datetime "last_seen_at"
     t.string "description"
+    t.string "tid", limit: 124
+    t.string "user_memory", limit: 124
   end
 
   create_table "tagscans", force: :cascade do |t|

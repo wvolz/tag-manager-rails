@@ -22,6 +22,16 @@
   </div>
 
   <div class="field">
+    <%= form.label :tid, class:"form-label" %>
+    <%= form.text_field :tid, {id: :tag_tid, class:"form-control"} %>
+  </div>
+
+  <div class="field">
+    <%= form.label :user_memory, class:"form-label" %>
+    <%= form.text_field :user_memory, {id: :tag_user_memory, class:"form-control"} %>
+  </div>
+
+  <div class="field">
     <%= form.label :description, class:"form-label" %>
     <%= form.text_field :description, {id: :tag_description, class:"form-control"} %>
   </div>

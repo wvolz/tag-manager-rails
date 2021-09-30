@@ -90,7 +90,7 @@ class TagsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tag_params
-      params.require(:tag).permit(:epc, :pc, :description, :tag_type_id, :authorization_ids => [])
+      params.require(:tag).permit(:epc, :tid, :user_memory, :pc, :description, :tag_type_id, :authorization_ids => [])
     end
 
     def sort_column

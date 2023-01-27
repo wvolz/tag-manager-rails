@@ -11,6 +11,30 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container-fluid">
+        <span class="navbar-brand" href="#">TagManager</span>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <div class="navbar-text ms-auto">
+            <% if signed_in? %>
+              <div><%= current_user.first_name %></div>
+            <% end %>
+          </div>
+          <div class="navbar-text ms-2">
+            <div>
+              <% if signed_in? %>
+              <%= button_to "Logout", sign_out_path, method: :delete %>
+              <% else %>
+              <%= link_to "Login", sign_in_path %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
     <div class="container-fluid">
       <%= yield %>
     </div>

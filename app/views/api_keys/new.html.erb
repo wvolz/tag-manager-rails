@@ -1,0 +1,14 @@
+<h1>New API Key for <%= current_user.email %></h1>
+
+<div class="row justify-content-md-center">
+    <div class="col-md-auto">
+        This will only be shown once
+    </div>
+</div>
+<div class="row justify-content-md-center">
+    <div class="col-md-auto">
+        <%= @api_key.token %>
+    </div>
+</div>
+
+<%= link_to 'Back', api_keys_path %>

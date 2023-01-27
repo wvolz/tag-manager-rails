@@ -10,5 +10,10 @@
         <%= @api_key.token %>
     </div>
 </div>
+<div class="row justify-content-md-center">
+    <div class="col-md-auto">
+        <%= link_to 'You can edit the comment here', edit_api_key_path(@api_key) %>
+    </div>
+</div>
 
 <%= link_to 'Back', api_keys_path %>

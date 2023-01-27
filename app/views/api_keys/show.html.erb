@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>API Key:</strong>
+  <%= @api_key.id %>
+</p>
+
+<p>
+  <strong>Bearer ID:</strong>
+  <%= @api_key.bearer_id %>
+</p>
+
+<p>
+  <strong>Bearer Type:</strong>
+  <%= @api_key.bearer_type %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @api_key.comment %>
+</p>
+
+<%= link_to 'Edit', edit_api_key_path(@api_key) %> |
+<%= link_to 'Back', api_keys_path %>

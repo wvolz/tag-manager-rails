@@ -3,7 +3,7 @@ class ApiKeysController < ApplicationController
   # TODO is the below include needed?
   include ApiKeyAuthenticatable
 
-  before_action :set_api_key, only: [:destroy]
+  before_action :set_api_key, only: [:show, :edit, :update, :destroy]
 
   # Require API key authentication
   #prepend_before_action :authenticate_with_api_key!, only: %i[index destroy]
@@ -32,6 +32,20 @@ class ApiKeysController < ApplicationController
     end
   end
 
+  # PATCH/PUT /api_key/1
+  # PATCH/PUT /api_key/1.json
+  def update
+    respond_to do |format|
+      if @api_key.update(api_key_params)
+        format.html { redirect_to @api_key, notice: 'Api Key was successfully updated.' }
+        format.json { render :show, status: :ok, location: @api_key }
+      else
+        format.html { render :edit }
+        format.json { render json: @api_key.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # DELETE /api_key/1
   # DELETE /api_key/1.json
   def destroy
@@ -50,4 +64,8 @@ class ApiKeysController < ApplicationController
       @api_key = ApiKey.find(params[:id])
     end
 
+    # Never trust parameters from the scary internet, only allow the white list through.
+    def api_key_params
+      params.require(:api_key).permit(:comment)
+    end
 end

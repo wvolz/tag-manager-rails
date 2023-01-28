@@ -5,19 +5,36 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <span class="navbar-brand" href="#">TagManager</span>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <% if signed_in? %>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Menu
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><%= link_to "Authorizations", authorizations_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "Tags", tags_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "Tag Scans", tagscans_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "Tag Types", tag_types_path, class: "dropdown-item" %></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><%= link_to "API Keys", api_keys_path, class: "dropdown-item" %></li>
+                  <li><%= link_to "Users", users_path, class: "dropdown-item" %></li>
+                </ul>
+              </li>
+            <% end %>
+          </ul>
           <div class="navbar-text ms-auto">
             <% if signed_in? %>
               <div><%= current_user.first_name %></div>

@@ -7,17 +7,16 @@ import Rails from "@rails/ujs"
 import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import "@fortawesome/fontawesome-free/js/fontawesome"
+import "@fortawesome/fontawesome-free/js/solid"
+import * as bootstrap from 'bootstrap'
+import { createPopper } from "@popperjs/core"
+import { LocalTime } from 'local-time'
+
+// CSS
+import 'scss/site'
 
 Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
-
-import "@fortawesome/fontawesome-free/js/fontawesome";
-import "@fortawesome/fontawesome-free/js/solid";
-import LocalTime from "local-time"
 LocalTime.start()
-import 'bootstrap'
-import { createPopper } from "@popperjs/core";
-
-// CSS
-import 'scss/site'

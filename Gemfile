@@ -63,7 +63,7 @@ gem "local_time", "~> 2.0"
 # Added at 2018-08-21 15:35:53 -0600 by volz:
 gem "bindata", "~> 2.4"
 
-gem 'pagy', '~> 4.10'
+gem 'pagy', '~> 6.0'
 
 gem "net-http-digest_auth", "~> 1.4"
 

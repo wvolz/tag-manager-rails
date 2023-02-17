@@ -11,6 +11,9 @@ module TagManagerRails
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
+    # set cache format to 7.0, prevents rollback to 6.x
+    config.active_support.cache_format_version = 7.0
+
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files

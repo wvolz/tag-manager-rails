@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_01_27_220034) do
-
+ActiveRecord::Schema[7.0].define(version: 2023_02_11_074204) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
     t.integer "record_id", null: false
     t.integer "blob_id", null: false
-    t.datetime "created_at", null: false
+    t.datetime "created_at", precision: nil, null: false
     t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
     t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
   end
@@ -28,8 +27,8 @@ ActiveRecord::Schema.define(version: 2023_01_27_220034) do
     t.string "content_type"
     t.text "metadata"
     t.integer "byte_size", null: false
-    t.string "checksum", null: false
-    t.datetime "created_at", null: false
+    t.string "checksum"
+    t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
@@ -44,8 +43,8 @@ ActiveRecord::Schema.define(version: 2023_01_27_220034) do
     t.integer "bearer_id", null: false
     t.string "bearer_type", null: false
     t.string "token_digest", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "comment"
     t.index ["bearer_id", "bearer_type"], name: "index_api_keys_on_bearer_id_and_bearer_type"
     t.index ["token_digest"], name: "index_api_keys_on_token_digest", unique: true
@@ -53,8 +52,8 @@ ActiveRecord::Schema.define(version: 2023_01_27_220034) do
 
   create_table "authorizations", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
   end
 
   create_table "authorizations_tags", id: false, force: :cascade do |t|
@@ -64,18 +63,18 @@ ActiveRecord::Schema.define(version: 2023_01_27_220034) do
 
   create_table "tag_types", force: :cascade do |t|
     t.string "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "decoder"
   end
 
   create_table "tags", force: :cascade do |t|
     t.string "epc", limit: 124
     t.string "pc", limit: 4
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "tag_type_id"
-    t.datetime "last_seen_at"
+    t.datetime "last_seen_at", precision: nil
     t.string "description"
     t.string "tid", limit: 124
     t.string "user_memory", limit: 124
@@ -84,15 +83,15 @@ ActiveRecord::Schema.define(version: 2023_01_27_220034) do
   create_table "tagscans", force: :cascade do |t|
     t.integer "antenna"
     t.integer "rssi"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at", precision: nil, null: false
+    t.datetime "updated_at", precision: nil, null: false
     t.integer "tag_id"
     t.index ["tag_id"], name: "index_tagscans_on_tag_id"
   end
 
   create_table "users", force: :cascade do |t|
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.string "email", null: false
     t.string "encrypted_password", limit: 128, null: false
     t.string "confirmation_token", limit: 128

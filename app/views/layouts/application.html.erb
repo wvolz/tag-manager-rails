@@ -43,7 +43,7 @@
           <div class="navbar-text ms-2">
             <div>
               <% if signed_in? %>
-              <%= button_to "Logout", sign_out_path, method: :delete %>
+              <%= button_to "Logout", sign_out_path, method: :delete, class: "btn btn-secondary" %>
               <% end %>
             </div>
           </div>

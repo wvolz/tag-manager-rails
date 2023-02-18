@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :readers
   resources :authorizations
   resources :users
   resources :tag_types

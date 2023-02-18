@@ -1,0 +1,26 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Readers</h1>
+
+<div id="readers">
+  <table class="table">
+  <thead>
+    <th>Name</th>
+    <th>Location</th>
+    <th></th>
+  </thead>
+  <tbody>
+    <% @readers.each do |reader| %>
+    <tr>
+      <td><%= reader.name %></td>
+      <td><%= reader.location %></td>
+      <td><%= link_to 'Show', reader %> |
+            <%= link_to 'Edit', edit_reader_path(reader) %> |
+            <%= link_to 'Destroy', reader_path(reader), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td></td>
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
+</div>
+
+<%= link_to "New reader", new_reader_path %>

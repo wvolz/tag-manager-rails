@@ -10,19 +10,21 @@ class ApiKeysController < ApplicationController
 
   def index
      @api_keys = ApiKey.order(created_at: :desc)
-      #format.json { render json: current_bearer.api_keys }
   end
 
   # GET /api-keys/new
   def new
-    @api_key = current_user.api_keys.create! token: SecureRandom.hex
+    @api_key = ApiKey.new
+    @api_key.token = SecureRandom.hex
+    @api_key.bearer_id = params['bearer_id']
+    @api_key.bearer_type = params['bearer_type']
   end
 
   # POST
   def create
     respond_to do |format|
-      api_key = current_user.api_keys.create! token: SecureRandom.hex
-      if api_key
+      @api_key = ApiKey.new(api_key_params)
+      if @api_key.save
         format.html { redirect_to @api_key, notice: 'Api Key was successfully created.' }
         format.json { render json: api_key, status: :created }
       else
@@ -49,8 +51,6 @@ class ApiKeysController < ApplicationController
   # DELETE /api_key/1
   # DELETE /api_key/1.json
   def destroy
-    #api_key = current_bearer.api_keys.find(params[:id])
-    #api_key.destroy
     @api_key.destroy
     respond_to do |format|
       format.html { redirect_to api_keys_url, notice: 'API Key was successfully destroyed.' }
@@ -66,6 +66,6 @@ class ApiKeysController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def api_key_params
-      params.require(:api_key).permit(:comment)
+      params.require(:api_key).permit(:bearer_id, :bearer_type, :comment, :token)
     end
 end

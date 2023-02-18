@@ -30,7 +30,7 @@
 <div class="row">
   <div class="col-sm">
       <strong>API Keys:</strong>
-      <%= link_to 'New API key', new_api_key_path %>
+      <%= link_to 'New API key', new_api_key_path(:bearer_id => @user, :bearer_type => User) %>
       <% if @user.api_keys.exists? %>
       <table class="table table-sm table-bordered">
         <thead>

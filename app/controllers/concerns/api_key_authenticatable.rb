@@ -21,6 +21,13 @@ module ApiKeyAuthenticatable
     @current_bearer = authenticate_with_http_token &method(:authenticator)
   end
 
+  def authenticate_with_api_key_json!
+    if request.format.json?
+      @current_bearer = authenticate_or_request_with_http_token &method(:authenticator)
+      current_user = @current_bearer
+    end
+  end
+
   private
 
   attr_writer :current_api_key

@@ -27,17 +27,17 @@ class Tagscan < ApplicationRecord
         url = Rails.configuration.grabphoto_camera_url
         uri = URI.parse(url)
         uri.user = Rails.application.credentials.grab_photo[:username]
-        uri.password = Rails.application.credentials.grab_photo[:password] 
+        uri.password = Rails.application.credentials.grab_photo[:password]
 
         h = Net::HTTP.new uri.host, uri.port
- 
+
         req = Net::HTTP::Get.new uri.request_uri
 
         res = h.request req
 
         digest_auth = Net::HTTP::DigestAuth.new
         auth = digest_auth.auth_header uri, res['www-authenticate'], 'GET'
- 
+
         req = Net::HTTP::Get.new uri.request_uri
         req.add_field 'Authorization', auth
 
@@ -51,17 +51,17 @@ class Tagscan < ApplicationRecord
             f.flush
             # reset ios to beginning of file
             f.rewind
-            current_date_time = DateTime.now.to_s(:number)
+            current_date_time = DateTime.now.to_fs(:number)
             self.image.attach(io: f,
                               filename: "#{current_date_time}-image.jpg",
-                              content_type: 'image/jpg')
+                              content_type: 'image/jpeg')
           end
         else
           # log issue grabbing image
           logger.info "Couldn't grab image from #{url} code #{res.code} msg #{res.msg}"
         end
     end
-    
+
     def update_last_seen_time
         tag.last_seen_at = DateTime.current
         tag.save

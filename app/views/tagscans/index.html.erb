@@ -34,7 +34,7 @@
         </td>
         <td><%= link_to 'Show', tagscan %></td>
         <td><%= link_to 'Edit', edit_tagscan_path(tagscan) %></td>
-        <td><%= link_to 'Destroy', tagscan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Destroy', tagscan_path(tagscan), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

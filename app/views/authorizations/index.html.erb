@@ -18,7 +18,7 @@
         <td><%= authorization.name %></td>
         <td><%= link_to 'Show', authorization %> |
         <%= link_to 'Edit', edit_authorization_path(authorization) %> |
-        <%= link_to 'Destroy', authorization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <%= link_to 'Destroy', authorization_path(authorization), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>

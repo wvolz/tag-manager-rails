@@ -25,6 +25,8 @@ module ApiKeyAuthenticatable
     if request.format.json?
       @current_bearer = authenticate_or_request_with_http_token &method(:authenticator)
       current_user = @current_bearer
+    else
+      require_login
     end
   end
 

@@ -18,7 +18,7 @@
   <tbody>
     <% @tagscans.each do |tagscan| %>
       <tr>
-        <td><%= tagscan.created_at %></td>
+        <td><%= local_time(tagscan.created_at) %></td>
         <% if tagscan.tag %>
         <td><%= tagscan.tag.epc %></td>
         <td><%= tagscan.tag.pc %></td>

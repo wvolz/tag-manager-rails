@@ -24,7 +24,7 @@
         <td><%= tag.description %></td>
         <td><% if tag.pc.present? %><%= tag.pc %><%else%>Unknown<%end%></td>
         <td><% if tag.tag_type %><%= tag.tag_type.name %><%else%>Unknown<%end%></td>
-        <td><% if tag.created_at.present? %><%= tag.created_at %><%else%>Unknown<%end%></td>
+        <td><% if tag.created_at.present? %><%= local_time(tag.created_at) %><%else%>Unknown<%end%></td>
         <td><% if tag.updated_at.present? %><%= local_time(tag.updated_at) %><%else%><%end%></td>
         <td><% if tag.last_seen_at.present? %><%= local_time(tag.last_seen_at) %><%else%><%end%></td>
         <td><%= link_to 'Show', tag %></td>

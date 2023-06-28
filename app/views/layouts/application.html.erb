@@ -38,7 +38,7 @@
           </ul>
           <div class="navbar-text ms-auto">
             <% if signed_in? %>
-              <div><%= current_user.first_name %></div>
+              <div><%= link_to current_user.first_name, user_path(current_user) %></div>
             <% end %>
           </div>
           <div class="navbar-text ms-2">

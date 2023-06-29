@@ -46,6 +46,10 @@ group :development, :test do
 end
 
 group :development do
+  gem "rubocop", require: false
+  gem "rubocop-performance", require: false
+  gem "rubocop-rails", require: false
+
   gem "sqlite3", "~> 1.4"
 
   # Use console on exceptions pages [https://github.com/rails/web-console]
@@ -83,3 +87,5 @@ gem "net-http-digest_auth", "~> 1.4"
 gem "clearance"
 
 gem "cssbundling-rails", "~> 1.1"
+
+gem "lefthook", "~> 1.4"

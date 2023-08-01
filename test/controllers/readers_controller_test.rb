@@ -7,17 +7,19 @@ class ReadersControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get readers_url
+
     assert_response :success
   end
 
   test "should get new" do
     get new_reader_url
+
     assert_response :success
   end
 
   test "should create reader" do
     assert_difference("Reader.count") do
-      post readers_url, params: { reader: { location: @reader.location, name: @reader.name } }
+      post readers_url, params: {reader: {location: @reader.location, name: @reader.name}}
     end
 
     assert_redirected_to reader_url(Reader.last)
@@ -25,16 +27,19 @@ class ReadersControllerTest < ActionDispatch::IntegrationTest
 
   test "should show reader" do
     get reader_url(@reader)
+
     assert_response :success
   end
 
   test "should get edit" do
     get edit_reader_url(@reader)
+
     assert_response :success
   end
 
   test "should update reader" do
-    patch reader_url(@reader), params: { reader: { location: @reader.location, name: @reader.name } }
+    patch reader_url(@reader), params: {reader: {location: @reader.location, name: @reader.name}}
+
     assert_redirected_to reader_url(@reader)
   end
 

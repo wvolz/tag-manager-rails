@@ -1,4 +1,4 @@
-app_dir = File.expand_path("../../..", __FILE__)
+app_dir = File.expand_path("../..", __dir__)
 tmp_dir = "#{app_dir}/tmp"
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers: a minimum and maximum.
@@ -6,13 +6,13 @@ tmp_dir = "#{app_dir}/tmp"
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
+max_threads_count = ENV.fetch("RAILS_MAX_THREADS", 5)
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
 #
-#port ENV.fetch("PORT") { 3000 }
+# port ENV.fetch("PORT") { 3000 }
 
 bind "unix:///#{tmp_dir}/sockets/puma.sock"
 

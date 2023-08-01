@@ -19,10 +19,10 @@ module TagManagerRails
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    config.time_zone = 'America/Denver'
+    config.time_zone = "America/Denver"
     # config.eager_load_paths << Rails.root.join("extras")
 
     # change to match your camera, expects a JPEG image
-    config.grabphoto_camera_url = 'http://10.11.50.178/cgi-bin/snapshot.cgi'
+    config.grabphoto_camera_url = "http://10.11.50.178/cgi-bin/snapshot.cgi"
   end
 end

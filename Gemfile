@@ -83,8 +83,8 @@ gem "bindata", "~> 2.4"
 
 gem "pagy", "~> 6.0"
 
-gem "net-http-digest_auth", "~> 1.4"
-
 gem "clearance"
 
 gem "cssbundling-rails", "~> 1.1"
+
+gem "typhoeus", "~> 1.4"

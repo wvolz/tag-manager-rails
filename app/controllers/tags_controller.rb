@@ -26,14 +26,14 @@ class TagsController < ApplicationController
 
   # GET /tags/:epc/authorize
   def authorize
-      @auth_response = 'unauthorized'
-      @db_result = nil
-      if (@tag.authorizations.exists?(params[:a]))
-        @db_result = @tag.authorizations.find(params[:a])
-        if (@db_result)
-            @auth_response = 'authorized'
-        end
+    @auth_response = "unauthorized"
+    @db_result = nil
+    if @tag.authorizations.exists?(params[:a])
+      @db_result = @tag.authorizations.find(params[:a])
+      if @db_result
+        @auth_response = "authorized"
       end
+    end
   end
 
   # POST /tags
@@ -43,7 +43,7 @@ class TagsController < ApplicationController
 
     respond_to do |format|
       if @tag.save
-        format.html { redirect_to @tag, notice: 'Tag was successfully created.' }
+        format.html { redirect_to @tag, notice: "Tag was successfully created." }
         format.json { render :show, status: :created, location: @tag }
       else
         format.html { render :new }
@@ -57,7 +57,7 @@ class TagsController < ApplicationController
   def update
     respond_to do |format|
       if @tag.update(tag_params)
-        format.html { redirect_to @tag, notice: 'Tag was successfully updated.' }
+        format.html { redirect_to @tag, notice: "Tag was successfully updated." }
         format.json { render :show, status: :ok, location: @tag }
       else
         format.html { render :edit }
@@ -71,34 +71,35 @@ class TagsController < ApplicationController
   def destroy
     @tag.destroy
     respond_to do |format|
-      format.html { redirect_to tags_url, notice: 'Tag was successfully destroyed.' }
+      format.html { redirect_to tags_url, notice: "Tag was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tag
-      @tag = Tag.find(params[:id])
-    end
 
-    def set_tag_by_epc
-      @tag = Tag.find_by(epc: params[:id])
-      unless @tag
-          raise ActiveRecord::RecordNotFound
-      end
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tag
+    @tag = Tag.find(params[:id])
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def tag_params
-      params.require(:tag).permit(:epc, :tid, :user_memory, :pc, :description, :tag_type_id, :authorization_ids => [])
+  def set_tag_by_epc
+    @tag = Tag.find_by(epc: params[:id])
+    unless @tag
+      raise ActiveRecord::RecordNotFound
     end
+  end
 
-    def sort_column
-      Tag.column_names.include?(params[:sort]) ? params[:sort] : "id"
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def tag_params
+    params.require(:tag).permit(:epc, :tid, :user_memory, :pc, :description, :tag_type_id, authorization_ids: [])
+  end
 
-    def sort_direction
-      %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
-    end
+  def sort_column
+    Tag.column_names.include?(params[:sort]) ? params[:sort] : "id"
+  end
+
+  def sort_direction
+    %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
 end

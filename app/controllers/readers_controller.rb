@@ -1,5 +1,5 @@
 class ReadersController < ApplicationController
-  before_action :set_reader, only: %i[ show edit update destroy ]
+  before_action :set_reader, only: %i[show edit update destroy]
 
   # GET /readers or /readers.json
   def index
@@ -58,13 +58,14 @@ class ReadersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_reader
-      @reader = Reader.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def reader_params
-      params.require(:reader).permit(:name, :location)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_reader
+    @reader = Reader.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def reader_params
+    params.require(:reader).permit(:name, :location)
+  end
 end

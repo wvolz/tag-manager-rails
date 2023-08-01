@@ -97,7 +97,6 @@ Rails.application.config.action_dispatch.default_headers = {
   "Referrer-Policy" => "strict-origin-when-cross-origin"
 }
 
-
 # ** Please read carefully, this must be configured in config/application.rb **
 # Change the format of the cache entry.
 # Changing this default means that all new cache entries added to the cache

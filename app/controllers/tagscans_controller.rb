@@ -34,7 +34,7 @@ class TagscansController < ApplicationController
       if @tagscan.save
         TagscansGrabphotoJob.perform_later(@tagscan)
 
-        format.html { redirect_to @tagscan, notice: 'Tagscan was successfully created.' }
+        format.html { redirect_to @tagscan, notice: "Tagscan was successfully created." }
         format.json { render :show, status: :created, location: @tagscan }
       else
         format.html { render :new }
@@ -48,7 +48,7 @@ class TagscansController < ApplicationController
   def update
     respond_to do |format|
       if @tagscan.update(tagscan_params)
-        format.html { redirect_to @tagscan, notice: 'Tagscan was successfully updated.' }
+        format.html { redirect_to @tagscan, notice: "Tagscan was successfully updated." }
         format.json { render :show, status: :ok, location: @tagscan }
       else
         format.html { render :edit }
@@ -62,19 +62,20 @@ class TagscansController < ApplicationController
   def destroy
     @tagscan.destroy
     respond_to do |format|
-      format.html { redirect_to tagscans_url, notice: 'Tagscan was successfully destroyed.' }
+      format.html { redirect_to tagscans_url, notice: "Tagscan was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tagscan
-      @tagscan = Tagscan.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def tagscan_params
-      params.require(:tagscan).permit(:tag_epc, :tag_pc, :antenna, :rssi)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tagscan
+    @tagscan = Tagscan.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def tagscan_params
+    params.require(:tagscan).permit(:tag_epc, :tag_pc, :antenna, :rssi)
+  end
 end

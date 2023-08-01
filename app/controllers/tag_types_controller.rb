@@ -28,7 +28,7 @@ class TagTypesController < ApplicationController
 
     respond_to do |format|
       if @tag_type.save
-        format.html { redirect_to @tag_type, notice: 'Tag type was successfully created.' }
+        format.html { redirect_to @tag_type, notice: "Tag type was successfully created." }
         format.json { render :show, status: :created, location: @tag_type }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class TagTypesController < ApplicationController
   def update
     respond_to do |format|
       if @tag_type.update(tag_type_params)
-        format.html { redirect_to @tag_type, notice: 'Tag type was successfully updated.' }
+        format.html { redirect_to @tag_type, notice: "Tag type was successfully updated." }
         format.json { render :show, status: :ok, location: @tag_type }
       else
         format.html { render :edit }
@@ -56,19 +56,20 @@ class TagTypesController < ApplicationController
   def destroy
     @tag_type.destroy
     respond_to do |format|
-      format.html { redirect_to tag_types_url, notice: 'Tag type was successfully destroyed.' }
+      format.html { redirect_to tag_types_url, notice: "Tag type was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_tag_type
-      @tag_type = TagType.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def tag_type_params
-      params.require(:tag_type).permit(:name, :decoder)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_tag_type
+    @tag_type = TagType.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def tag_type_params
+    params.require(:tag_type).permit(:name, :decoder)
+  end
 end

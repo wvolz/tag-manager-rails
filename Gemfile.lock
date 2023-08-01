@@ -106,6 +106,8 @@ GEM
     email_validator (2.2.4)
       activemodel
     erubi (1.12.0)
+    ethon (0.16.0)
+      ffi (>= 1.15.0)
     ffi (1.15.5)
     ffi-compiler (1.0.1)
       ffi (>= 1.0.0)
@@ -144,7 +146,6 @@ GEM
     mini_portile2 (2.8.1)
     minitest (5.17.0)
     msgpack (1.6.0)
-    net-http-digest_auth (1.4.1)
     net-imap (0.3.4)
       date
       net-protocol
@@ -255,6 +256,8 @@ GEM
       actionpack (>= 6.0.0)
       activejob (>= 6.0.0)
       railties (>= 6.0.0)
+    typhoeus (1.4.0)
+      ethon (>= 0.9.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
@@ -290,7 +293,6 @@ DEPENDENCIES
   jbuilder
   jsbundling-rails
   local_time (~> 2.0)
-  net-http-digest_auth (~> 1.4)
   pagy (~> 6.0)
   pg (~> 1.1)
   puma (~> 5.0)
@@ -307,6 +309,7 @@ DEPENDENCIES
   sqlite3 (~> 1.4)
   stimulus-rails
   turbo-rails
+  typhoeus (~> 1.4)
   tzinfo-data
   web-console
   webdrivers

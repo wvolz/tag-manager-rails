@@ -1,4 +1,4 @@
-require 'test_helper'
+require "test_helper"
 
 class TagsControllerTest < ActionDispatch::IntegrationTest
   setup do
@@ -7,17 +7,19 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
 
   test "should get index" do
     get tags_url
+
     assert_response :success
   end
 
   test "should get new" do
     get new_tag_url
+
     assert_response :success
   end
 
   test "should create tag" do
-    assert_difference('Tag.count') do
-      post tags_url, params: { tag: { epc: @tag.epc, pc: @tag.pc } }
+    assert_difference("Tag.count") do
+      post tags_url, params: {tag: {epc: @tag.epc, pc: @tag.pc}}
     end
 
     assert_redirected_to tag_url(Tag.last)
@@ -25,21 +27,24 @@ class TagsControllerTest < ActionDispatch::IntegrationTest
 
   test "should show tag" do
     get tag_url(@tag)
+
     assert_response :success
   end
 
   test "should get edit" do
     get edit_tag_url(@tag)
+
     assert_response :success
   end
 
   test "should update tag" do
-    patch tag_url(@tag), params: { tag: { epc: @tag.epc, pc: @tag.pc } }
+    patch tag_url(@tag), params: {tag: {epc: @tag.epc, pc: @tag.pc}}
+
     assert_redirected_to tag_url(@tag)
   end
 
   test "should destroy tag" do
-    assert_difference('Tag.count', -1) do
+    assert_difference("Tag.count", -1) do
       delete tag_url(@tag)
     end
 

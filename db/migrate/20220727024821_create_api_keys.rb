@@ -6,7 +6,7 @@ class CreateApiKeys < ActiveRecord::Migration[6.1]
       t.string :token_digest, null: false
       t.timestamps null: false
     end
-    
+
     add_index :api_keys, [:bearer_id, :bearer_type]
     add_index :api_keys, :token_digest, unique: true
   end

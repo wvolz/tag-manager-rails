@@ -28,7 +28,7 @@ class AuthorizationsController < ApplicationController
 
     respond_to do |format|
       if @authorization.save
-        format.html { redirect_to @authorization, notice: 'Authorization was successfully created.' }
+        format.html { redirect_to @authorization, notice: "Authorization was successfully created." }
         format.json { render :show, status: :created, location: @authorization }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class AuthorizationsController < ApplicationController
   def update
     respond_to do |format|
       if @authorization.update(authorization_params)
-        format.html { redirect_to @authorization, notice: 'Authorization was successfully updated.' }
+        format.html { redirect_to @authorization, notice: "Authorization was successfully updated." }
         format.json { render :show, status: :ok, location: @authorization }
       else
         format.html { render :edit }
@@ -56,19 +56,20 @@ class AuthorizationsController < ApplicationController
   def destroy
     @authorization.destroy
     respond_to do |format|
-      format.html { redirect_to authorizations_url, notice: 'Authorization was successfully destroyed.' }
+      format.html { redirect_to authorizations_url, notice: "Authorization was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_authorization
-      @authorization = Authorization.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def authorization_params
-      params.require(:authorization).permit(:name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_authorization
+    @authorization = Authorization.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def authorization_params
+    params.require(:authorization).permit(:name)
+  end
 end

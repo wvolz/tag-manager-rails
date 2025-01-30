@@ -67,7 +67,6 @@ group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
-  gem "webdrivers"
 end
 
 group :production do
@@ -88,3 +87,6 @@ gem "clearance"
 gem "cssbundling-rails", "~> 1.1"
 
 gem "typhoeus", "~> 1.4"
+
+# Added 01/30/2025 by volz for Rails <7.1 support
+gem "concurrent-ruby", "1.3.4"

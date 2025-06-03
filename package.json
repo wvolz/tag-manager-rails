@@ -1,22 +1,6 @@
 {
-  "name": "tag-manager-rails",
-  "private": true,
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.12.0",
-    "@hotwired/stimulus": "^3.2.1",
-    "@hotwired/turbo-rails": "^7.2.5",
-    "@popperjs/core": "^2.11.6",
-    "bootstrap": "^5.2.3",
-    "bootstrap-icons": "^1.10.3",
-    "local-time": "^2.0.1",
-    "sass": "^1.58.2"
-  },
-  "version": "0.2.1",
   "devDependencies": {
-    "esbuild": "^0.17.8"
-  },
-  "scripts": {
-    "build": "esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets",
-    "build:css": "sass ./app/assets/stylesheets/application.bootstrap.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules"
+    "eslint": "^9.28.0",
+    "stylelint": "^16.20.0"
   }
 }

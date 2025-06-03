@@ -10,9 +10,6 @@ gem "sprockets-rails"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 6.0"
 
-# Bundle and transpile JavaScript [https://github.com/rails/jsbundling-rails]
-gem "jsbundling-rails"
-
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
 gem "turbo-rails"
 
@@ -46,6 +43,7 @@ group :development, :test do
 end
 
 group :development do
+  gem "erb_lint", require: false
   gem "rubocop", require: false
   gem "rubocop-capybara", require: false
   gem "rubocop-minitest", require: false
@@ -74,8 +72,7 @@ group :production do
   gem "pg", "~> 1.1"
 end
 
-# Added at 2018-08-21 12:07:47 -0600 by volz:
-gem "local_time", "~> 2.0"
+gem "local_time", "~> 3.0.3"
 
 # Added at 2018-08-21 15:35:53 -0600 by volz:
 gem "bindata", "~> 2.4"
@@ -92,3 +89,9 @@ gem "typhoeus", "~> 1.4"
 gem "concurrent-ruby", "1.3.4"
 
 gem "ruby-vips", "~> 2.2"
+
+gem "importmap-rails", "~> 2.1"
+
+gem "bootstrap", "= 5.2.3"
+
+gem "font-awesome-sass", "~> 6.7"

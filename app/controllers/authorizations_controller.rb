@@ -1,5 +1,5 @@
 class AuthorizationsController < ApplicationController
-  before_action :set_authorization, only: [:show, :edit, :update, :destroy]
+  before_action :set_authorization, only: [ :show, :edit, :update, :destroy ]
 
   # GET /authorizations
   # GET /authorizations.json

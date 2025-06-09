@@ -19,7 +19,7 @@ class TagTypesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create tag_type" do
     assert_difference("TagType.count") do
-      post tag_types_url, params: {tag_type: {name: @tag_type.name}}
+      post tag_types_url, params: { tag_type: { name: @tag_type.name } }
     end
 
     assert_redirected_to tag_type_url(TagType.last)
@@ -38,7 +38,7 @@ class TagTypesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update tag_type" do
-    patch tag_type_url(@tag_type), params: {tag_type: {name: @tag_type.name}}
+    patch tag_type_url(@tag_type), params: { tag_type: { name: @tag_type.name } }
 
     assert_redirected_to tag_type_url(@tag_type)
   end

@@ -3,7 +3,7 @@ class ApiKeysController < ApplicationController
   # TODO is the below include needed?
   include ApiKeyAuthenticatable
 
-  before_action :set_api_key, only: [:show, :edit, :update, :destroy]
+  before_action :set_api_key, only: [ :show, :edit, :update, :destroy ]
 
   # Require API key authentication
   # prepend_before_action :authenticate_with_api_key!, only: %i[index destroy]

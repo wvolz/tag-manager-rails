@@ -1,7 +1,7 @@
 class TagType < ApplicationRecord
   has_many :tags, dependent: :destroy
 
-  enum decoder: {None: 0, E470: 1}
+  enum decoder: { None: 0, E470: 1 }
 
   class Classification < BinData::Record
     bit1 :vehicleClass
@@ -26,7 +26,7 @@ class TagType < ApplicationRecord
       @parsed_uii
     elsif decoder == "E470"
       unless epc.nil?
-        indata_array = [epc].pack("H*").bytes
+        indata_array = [ epc ].pack("H*").bytes
         indata = indata_array.pack("C*")
         @parsed_uii = SIXCTOCUII.read(indata)
       end

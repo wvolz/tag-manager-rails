@@ -19,7 +19,7 @@ class ReadersControllerTest < ActionDispatch::IntegrationTest
 
   test "should create reader" do
     assert_difference("Reader.count") do
-      post readers_url, params: {reader: {location: @reader.location, name: @reader.name}}
+      post readers_url, params: { reader: { location: @reader.location, name: @reader.name } }
     end
 
     assert_redirected_to reader_url(Reader.last)
@@ -38,7 +38,7 @@ class ReadersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update reader" do
-    patch reader_url(@reader), params: {reader: {location: @reader.location, name: @reader.name}}
+    patch reader_url(@reader), params: { reader: { location: @reader.location, name: @reader.name } }
 
     assert_redirected_to reader_url(@reader)
   end

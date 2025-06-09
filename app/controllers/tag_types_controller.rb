@@ -1,5 +1,5 @@
 class TagTypesController < ApplicationController
-  before_action :set_tag_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_tag_type, only: [ :show, :edit, :update, :destroy ]
 
   # GET /tag_types
   # GET /tag_types.json

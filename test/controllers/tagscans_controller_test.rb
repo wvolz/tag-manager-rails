@@ -20,7 +20,7 @@ class TagscansControllerTest < ActionDispatch::IntegrationTest
   test "should create tagscan" do
     assert_difference("Tagscan.count") do
       post tagscans_url,
-        params: {tagscan: {antenna: @tagscan.antenna, pc: @tagscan.pc, rssi: @tagscan.rssi, epc: @tagscan.epc}}
+        params: { tagscan: { antenna: @tagscan.antenna, pc: @tagscan.pc, rssi: @tagscan.rssi, epc: @tagscan.epc } }
     end
 
     assert_redirected_to tagscan_url(Tagscan.last)
@@ -40,7 +40,7 @@ class TagscansControllerTest < ActionDispatch::IntegrationTest
 
   test "should update tagscan" do
     patch tagscan_url(@tagscan),
-      params: {tagscan: {antenna: @tagscan.antenna, pc: @tagscan.pc, rssi: @tagscan.rssi, epc: @tagscan.epc}}
+      params: { tagscan: { antenna: @tagscan.antenna, pc: @tagscan.pc, rssi: @tagscan.rssi, epc: @tagscan.epc } }
 
     assert_redirected_to tagscan_url(@tagscan)
   end

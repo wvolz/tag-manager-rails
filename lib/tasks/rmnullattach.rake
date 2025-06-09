@@ -1,7 +1,7 @@
 namespace :tagmanager do
   desc "Removes attachments with a zero size"
 
-  task rmnullattach: [:environment] do
+  task rmnullattach: [ :environment ] do
     count_broken = 0
     Tagscan.with_attached_image.each do |p|
       next unless p.image.attached?

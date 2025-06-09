@@ -26,7 +26,7 @@ class Tag < ApplicationRecord
     if @parsed_pc
       @parsed_pc
     elsif !pc.nil?
-      indata_array = [pc].pack("H*").bytes
+      indata_array = [ pc ].pack("H*").bytes
       indata = indata_array.pack("C*")
       @parsed_pc = PC.read(indata)
     end

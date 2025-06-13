@@ -7,7 +7,7 @@ class TagsController < ApplicationController
   # GET /tags
   # GET /tags.json
   def index
-    @tags = Tag.order(sort_column + " " + sort_direction)
+    @tags = Tag.order({ sort_column => sort_direction })
   end
 
   # GET /tags/1
@@ -28,8 +28,8 @@ class TagsController < ApplicationController
   def authorize
     @auth_response = "unauthorized"
     @db_result = nil
-    if @tag.authorizations.exists?(params[:a])
-      @db_result = @tag.authorizations.find(params[:a])
+    if @tag.authorizations.exists?(id: params[:a])
+      @db_result = @tag.authorizations.find_by(id: params[:a])
       if @db_result
         @auth_response = "authorized"
       end

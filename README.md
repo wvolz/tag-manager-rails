@@ -2,6 +2,10 @@
 
 This application manages 6c tags and authorizations for an rfid reader.
 
+# Requirements
+
+- bundler version 2.7.0
+
 # INSTALL
 
 Run the following before going to production

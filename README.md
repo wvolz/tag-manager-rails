@@ -8,12 +8,16 @@ This application manages 6c tags and authorizations for an rfid reader.
 
 # INSTALL
 
-Run the following before going to production
+## Production
 
-`bundle install --deployment`
+Make sure that bundler is set for 'deployment'
+
+`bundle config set deployment true`
+
+Run the following
+
+`bundle install`
 
 `bundle exec rake db:migrate RAILS_ENV=production`
-
-`yarn install --production --pure-lockfile`
 
 `bundle exec rake assets:precompile RAILS_ENV=production`

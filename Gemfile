@@ -80,8 +80,6 @@ gem "pagy", "~> 6.0"
 
 gem "clearance"
 
-gem "cssbundling-rails", "~> 1.1"
-
 gem "typhoeus", "~> 1.4"
 
 # Added 01/30/2025 by volz for Rails <7.1 support
@@ -94,3 +92,5 @@ gem "importmap-rails", "~> 2.1"
 gem "bootstrap", "= 5.2.3"
 
 gem "font-awesome-sass", "~> 6.7"
+
+gem "sassc-rails"

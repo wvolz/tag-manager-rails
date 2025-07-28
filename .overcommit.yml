@@ -47,16 +47,17 @@ PreCommit:
     enabled: true
     required_executable: npx
     command: ["npx", "--no-install", "stylelint"]
+    exclude:
+      - app/assets/tailwind/application.css
     include:
       - app/assets/**/*.css
-      - app/components/**/*.css
-      - app/frontend/**/*.css
-      - app/javascript/**/*.css
 
   TrailingWhitespace:
     enabled: true
     exclude:
       - "**/db/structure.sql"
+      - app/assets/tailwind/daisyui-theme.js
+      - app/assets/tailwind/daisyui.js
 
   YarnCheck:
     enabled: true

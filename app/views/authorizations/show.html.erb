@@ -1,15 +1,19 @@
-<p id="notice"><%= notice %></p>
+<div class="mx-auto">
+
+<% if flash[:notice] %>
+<div role="alert" class="alert">
+    <p id="notice"><%= notice %></p>
+</div>
+<% end %>
 
 <div class="row">
-  <div class="col-sm">
-    <strong>Name:</strong>
+    <strong class="label">Name:</strong>
     <%= @authorization.name %>
-  </div>
 </div>
 
 <div class="row">
-  <div class="col-sm">
-    <%= link_to 'Edit', edit_authorization_path(@authorization) %> |
-    <%= link_to 'Back', authorizations_path %>
-  </div>
-<div class="row">
+    <%= link_to 'Edit', edit_authorization_path(@authorization), :class=>'link' %> |
+    <%= link_to 'Back', authorizations_path, :class=>'link' %>
+</div>
+
+</div>

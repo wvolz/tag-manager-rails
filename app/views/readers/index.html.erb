@@ -1,6 +1,12 @@
-<p style="color: green"><%= notice %></p>
+<div class="mx-auto">
 
-<h1>Readers</h1>
+<% if flash[:notice] %>
+<div role="alert" class="alert">
+    <p id="notice"><%= notice %></p>
+</div>
+<% end %>
+
+<h1 class="font-bold">Readers</h1>
 
 <div id="readers">
   <table class="table">
@@ -14,13 +20,16 @@
     <tr>
       <td><%= reader.name %></td>
       <td><%= reader.location %></td>
-      <td><%= link_to 'Show', reader %> |
-            <%= link_to 'Edit', edit_reader_path(reader) %> |
-            <%= link_to 'Destroy', reader_path(reader), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td></td>
+      <td><%= link_to 'Show', reader, :class=>'link' %> |
+            <%= link_to 'Edit', edit_reader_path(reader), :class=>'link' %> |
+            <%= link_to 'Destroy', reader_path(reader), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, :class=>'link' %>
+      </td>
     </tr>
   <% end %>
   </tbody>
   </table>
 </div>
 
-<%= link_to "New reader", new_reader_path %>
+<%= link_to "New reader", new_reader_path, :class=>'link' %>
+
+</div>

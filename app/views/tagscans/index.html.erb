@@ -1,4 +1,8 @@
-<p id="notice"><%= notice %></p>
+<% if flash[:notice] %>
+<div role="alert" class="alert">
+    <p id="notice"><%= notice %></p>
+</div>
+<% end %>
 
 <h1>Tagscans</h1>
 
@@ -32,9 +36,9 @@
             <%= image_tag "no-image-graphic.png" %>
           <% end %>
         </td>
-        <td><%= link_to 'Show', tagscan %></td>
-        <td><%= link_to 'Edit', edit_tagscan_path(tagscan) %></td>
-        <td><%= link_to 'Destroy', tagscan_path(tagscan), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Show', tagscan, :class=>'link' %></td>
+        <td><%= link_to 'Edit', edit_tagscan_path(tagscan), :class=>'link' %></td>
+        <td><%= link_to 'Destroy', tagscan_path(tagscan), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, :class=>'link' %></td>
       </tr>
     <% end %>
   </tbody>
@@ -42,6 +46,6 @@
 
 <br>
 
-<%= link_to 'New Tagscan', new_tagscan_path %>
+<%= link_to 'New Tagscan', new_tagscan_path, :class=>'link' %>
 
-<%== pagy_bootstrap_combo_nav_js(@pagy) %>
+<%== pagy_nav(@pagy) if @pagy.pages > 1 %>

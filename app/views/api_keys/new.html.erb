@@ -1,14 +1,17 @@
-<h1>New API Key</h1>
+<div class="mx-auto">
 
-<div class="row justify-content-md-center">
-    <div class="col-md-auto">
+<h1 class="font-bold">New API Key</h1>
+
+<div class="text-center">
+    <div class="m-2 alert alert-info">
         Token will only be shown once
     </div>
 </div>
+
 <div class="row justify-content-md-center">
-    <div class="col-md-auto">
-       <%= render "form", api_key: @api_key %>
-    </div>
+    <%= render "form", api_key: @api_key %>
 </div>
 
-<%= link_to 'Back', api_keys_path %>
+<%= link_to 'Back', api_keys_path, :class=>'link' %>
+
+</div>

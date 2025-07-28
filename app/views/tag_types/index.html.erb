@@ -1,31 +1,37 @@
-<p id="notice"><%= notice %></p>
+<div class="mx-auto">
+    <% if flash[:notice] %>
+    <div role="alert" class="alert">
+        <p id="notice"><%= notice %></p>
+    </div>
+    <% end %>
 
-<h1>Tag Types</h1>
+    <h1>Tag Types</h1>
 
-<div class="row">
-  <div class="col-3">
-    <table class="table table-sm table-striped">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @tag_types.each do |tag_type| %>
-          <tr>
-            <td><%= tag_type.name %></td>
-            <td><%= link_to 'Show', tag_type %> |
-            <%= link_to 'Edit', edit_tag_type_path(tag_type) %> |
-            <%= link_to 'Destroy', tag_type_path(tag_type), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
-<div class="row">
-  <div class="col-sm">
-    <%= link_to 'New Tag Type', new_tag_type_path %>
-  </div>
+    <div class="row">
+    <div class="col-3">
+        <table class="table table-sm table-striped">
+        <thead>
+            <tr>
+            <th scope="col">Name</th>
+            <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @tag_types.each do |tag_type| %>
+            <tr>
+                <td><%= tag_type.name %></td>
+                <td><%= link_to 'Show', tag_type, :class=>'link' %> |
+                <%= link_to 'Edit', edit_tag_type_path(tag_type), :class=>'link' %> |
+                <%= link_to 'Destroy', tag_type_path(tag_type), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, :class=>'link' %></td>
+            </tr>
+            <% end %>
+        </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col-sm">
+        <%= link_to 'New Tag Type', new_tag_type_path, :class=>'link' %>
+    </div>
+    </div>
 </div>

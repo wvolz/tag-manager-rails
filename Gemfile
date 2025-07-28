@@ -89,8 +89,7 @@ gem "ruby-vips", "~> 2.2"
 
 gem "importmap-rails", "~> 2.1"
 
-gem "bootstrap", "= 5.2.3"
+# Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
+gem "tailwindcss-rails"
 
 gem "font-awesome-sass", "~> 6.7"
-
-gem "sassc-rails"

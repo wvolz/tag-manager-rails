@@ -1,10 +1,14 @@
-<h1>Editing reader</h1>
+<div class="mx-auto">
 
-<%= render "form", reader: @reader %>
+    <h1 class="font-bold">Editing reader</h1>
 
-<br>
+    <%= render "form", reader: @reader %>
 
-<div>
-  <%= link_to "Show this reader", @reader %> |
-  <%= link_to "Back to readers", readers_path %>
+    <br>
+
+    <div>
+        <%= link_to "Show this reader", @reader, :class=>'link' %> |
+        <%= link_to "Back to readers", readers_path, :class=>'link' %>
+    </div>
+
 </div>

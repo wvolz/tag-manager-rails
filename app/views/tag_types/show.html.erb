@@ -1,14 +1,22 @@
-<p id="notice"><%= notice %></p>
+<div class="mx-auto">
+
+<% if flash[:notice] %>
+<div role="alert" class="alert">
+    <p id="notice"><%= notice %></p>
+</div>
+<% end %>
 
 <p>
-  <strong>Name:</strong>
+  <strong class="label">Name:</strong>
   <%= @tag_type.name %>
 </p>
 
 <p>
-  <strong>Decoder:</strong>
+  <strong class="label">Decoder:</strong>
   <%= @tag_type.decoder %>
 </p>
 
-<%= link_to 'Edit', edit_tag_type_path(@tag_type) %> |
-<%= link_to 'Back', tag_types_path %>
+<%= link_to 'Edit', edit_tag_type_path(@tag_type), :class=>'link' %> |
+<%= link_to 'Back', tag_types_path, :class=>'link' %>
+
+</div>

@@ -1,53 +1,41 @@
-<p id="notice"><%= notice %></p>
+<div class="mx-auto">
 
-<% if @tagscan.tag %>
-<div class="row">
-  <div class="col-1">
-    <strong>EPC:</strong>
-  </div>
-  <div class="col-sm">
-    <%= @tagscan.tag.epc %>
-  </div>
+    <% if flash[:notice] %>
+    <div role="alert" class="alert">
+        <p id="notice"><%= notice %></p>
+    </div>
+    <% end %>
+
+    <% if @tagscan.tag %>
+    <div class="">
+        <strong class="label">EPC:</strong>
+        <%= @tagscan.tag.epc %>
+    </div>
+
+    <div class="">
+        <strong class="label">Pc:</strong>
+        <%= @tagscan.tag.pc %>
+    </div>
+    <% end %>
+
+    <div class="">
+        <strong class="label">Antenna:</strong>
+        <%= @tagscan.antenna %>
+    </div>
+
+    <div class="">
+        <strong class="label">Rssi:</strong>
+        <%= @tagscan.rssi %>
+    </div>
+
+    <% if @tagscan.image.attached? %>
+    <div class="">
+        <strong class="label">Image:</strong>
+        <%= link_to(image_tag(@tagscan.image.variant(resize_to_limit: [100,100])), url_for(@tagscan.image)) %>
+    </div>
+    <% end %>
+
+    <%= link_to 'Edit', edit_tagscan_path(@tagscan), :class=>'link' %> |
+    <%= link_to 'Back', tagscans_path, :class=>'link' %>
+
 </div>
-
-<div class="row">
-  <div class="col-1">
-    <strong>Pc:</strong>
-  </div>
-  <div class="col-sm">
-    <%= @tagscan.tag.pc %>
-  </div>
-</div>
-<% end %>
-
-<div class="row">
-  <div class="col-1">
-    <strong>Antenna:</strong>
-  </div>
-  <div class="col-sm">
-    <%= @tagscan.antenna %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-1">
-    <strong>Rssi:</strong>
-  </div>
-  <div class="col-sm">
-    <%= @tagscan.rssi %>
-  </div>
-</div>
-
-<% if @tagscan.image.attached? %>
-<div class="row">
-  <div class="col-1">
-    <strong>Image:</strong>
-  </div>
-  <div class="col-sm">
-    <%= link_to(image_tag(@tagscan.image.variant(resize_to_limit: [100,100])), url_for(@tagscan.image)) %>
-  </div>
-</div>
-<% end %>
-
-<%= link_to 'Edit', edit_tagscan_path(@tagscan) %> |
-<%= link_to 'Back', tagscans_path %>

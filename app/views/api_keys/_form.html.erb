@@ -11,29 +11,29 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :bearer_id, class:"form-label" %>
-    <%= form.text_field :bearer_id, class:"form-control" %>
+  <div class="mt-1">
+    <%= form.label :bearer_id, class:"label" %>
+    <%= form.text_field :bearer_id, class:"input" %>
   </div>
 
-  <div class="field">
-    <%= form.label :bearer_type, class:"form-label" %>
-    <%= form.text_field :bearer_type, class:"form-control" %>
+  <div class="mt-1">
+    <%= form.label :bearer_type, class:"label" %>
+    <%= form.text_field :bearer_type, class:"input" %>
   </div>
 
-  <div class="field">
-    <%= form.label :comment, class:"form-label" %>
-    <%= form.text_field :comment, class:"form-control" %>
+  <div class="mt-1">
+    <%= form.label :comment, class:"label" %>
+    <%= form.text_field :comment, class:"input" %>
   </div>
 
 <% if api_key.token %>
-  <div class="field">
-    <%= form.label :token, class:"form-label" %>
-    <%= form.text_field :token, class:"form-control" %>
+  <div class="mt-1">
+    <%= form.label :token, class:"label" %>
+    <%= form.text_field :token, class:"input" %>
   </div>
 <% end %>
 
-  <div class="actions">
+  <div class="mt-1">
     <%= form.submit class:"btn btn-primary" %>
   </div>
 <% end %>

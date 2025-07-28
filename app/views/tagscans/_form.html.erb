@@ -11,27 +11,27 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :epc, class:"form-label" %>
-    <%= form.text_field :tag_epc, class:"form-control" %>
-  </div>
-  
-  <div class="field">
-    <%= form.label :pc, class:"form-label" %>
-    <%= form.text_field :tag_pc, class:"form-control" %>
+  <div class="mt-1">
+    <%= form.label :epc, class:"label" %>
+    <%= form.text_field :tag_epc, class:"input" %>
   </div>
 
-  <div class="field">
-    <%= form.label :antenna, class:"form-label" %>
-    <%= form.text_field :antenna, id: :tagscan_antenna, class:"form-control" %>
+  <div class="mt-1">
+    <%= form.label :pc, class:"label" %>
+    <%= form.text_field :tag_pc, class:"input" %>
   </div>
 
-  <div class="field">
-    <%= form.label :rssi, class:"form-label" %>
-    <%= form.text_field :rssi, id: :tagscan_rssi, class:"form-control" %>
+  <div class="mt-1">
+    <%= form.label :antenna, class:"label" %>
+    <%= form.text_field :antenna, id: :tagscan_antenna, class:"input" %>
   </div>
 
-  <div class="actions">
+  <div class="mt-1">
+    <%= form.label :rssi, class:"label" %>
+    <%= form.text_field :rssi, id: :tagscan_rssi, class:"input" %>
+  </div>
+
+  <div class="mt-1">
     <%= form.submit class:"btn btn-primary" %>
   </div>
 <% end %>

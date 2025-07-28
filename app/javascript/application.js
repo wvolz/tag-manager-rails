@@ -1,8 +1,8 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
-import "popper"
-import "bootstrap"
-import LocalTime from "local-time"
-LocalTime.start()
+import "@hotwired/turbo-rails";
+import "controllers";
+import LocalTime from "local-time";
+LocalTime.start();
 document.addEventListener("turbo:morph", () => {
-  LocalTime.run()
-})
+  LocalTime.run();
+});

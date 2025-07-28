@@ -1,8 +1,14 @@
-<p id="notice"><%= notice %></p>
+<div class="mx-auto">
 
-<h1>API Keys</h1>
+<% if flash[:notice] %>
+<div role="alert" class="alert">
+    <p id="notice"><%= notice %></p>
+</div>
+<% end %>
 
-<table class="table table-hover">
+<h1 class="font-bold">API Keys</h1>
+
+<table class="table">
   <thead>
     <tr>
       <th>ID</th>
@@ -16,16 +22,16 @@
 
   <tbody>
     <% @api_keys.each do |api_key| %>
-      <tr>
+      <tr class="hover:bg-base-300">
         <td><%= api_key.id %></td>
         <td><%= api_key.bearer_id %></td>
         <td><%= api_key.bearer_type %></td>
         <td><%= api_key.comment %></td>
         <td><%= api_key.created_at %></td>
-        <td><%= link_to 'Edit', edit_api_key_path(api_key) %> | <%= link_to 'Destroy', api_key_path(api_key), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_api_key_path(api_key), :class=>'link' %> | <%= link_to 'Destroy', api_key_path(api_key), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, :class=>'link' %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<br>
+</div>

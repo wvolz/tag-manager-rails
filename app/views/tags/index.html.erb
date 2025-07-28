@@ -1,8 +1,12 @@
-<p id="notice"><%= notice %></p>
+<% if flash[:notice] %>
+<div role="alert" class="alert">
+    <p id="notice"><%= notice %></p>
+</div>
+<% end %>
 
-<h1>Tags</h1>
+<h1 class="font-bold">Tags</h1>
 
-<table class="table table-hover">
+<table class="table">
   <thead>
     <tr>
       <th>EPC</th>
@@ -18,24 +22,24 @@
 
   <tbody>
     <% @tags.each do |tag| %>
-        <% if tag.id.present? %>
-      <tr>
-        <td><%= tag.epc %></td>
-        <td><%= tag.description %></td>
-        <td><% if tag.pc.present? %><%= tag.pc %><%else%>Unknown<%end%></td>
-        <td><% if tag.tag_type %><%= tag.tag_type.name %><%else%>Unknown<%end%></td>
-        <td><% if tag.created_at.present? %><%= local_time(tag.created_at) %><%else%>Unknown<%end%></td>
-        <td><% if tag.updated_at.present? %><%= local_time(tag.updated_at) %><%else%><%end%></td>
-        <td><% if tag.last_seen_at.present? %><%= local_time(tag.last_seen_at) %><%else%><%end%></td>
-        <td><%= link_to 'Show', tag %></td>
-        <td><%= link_to 'Edit', edit_tag_path(tag) %></td>
-        <td><%= link_to 'Destroy', tag_path(tag), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
-      </tr>
-        <% end %>
+      <% if tag.id.present? %>
+        <tr class="hover:bg-base-300">
+            <td><%= tag.epc %></td>
+            <td><%= tag.description %></td>
+            <td><% if tag.pc.present? %><%= tag.pc %><% else %>Unknown<% end %></td>
+            <td><% if tag.tag_type %><%= tag.tag_type.name %><% else %>Unknown<% end %></td>
+            <td><% if tag.created_at.present? %><%= local_time(tag.created_at) %><% else %>Unknown<% end %></td>
+            <td><% if tag.updated_at.present? %><%= local_time(tag.updated_at) %><% else %><% end %></td>
+            <td><% if tag.last_seen_at.present? %><%= local_time(tag.last_seen_at) %><% else %><% end %></td>
+            <td><%= link_to 'Show', tag, :class => "link" %></td>
+            <td><%= link_to 'Edit', edit_tag_path(tag), :class => "link" %></td>
+            <td><%= link_to 'Destroy', tag_path(tag), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, :class => "link" %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
 
 <br>
 
-<%= link_to 'New Tag', new_tag_path %>
+<%= link_to 'New Tag', new_tag_path, :class => "link" %>

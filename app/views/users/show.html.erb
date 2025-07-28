@@ -1,60 +1,52 @@
-<p id="notice"><%= notice %></p>
-
-<div class="row">
-  <div class="col-1">
-    <strong>First Name:</strong>
-  </div>
-  <div class="col-sm">
-    <%= @user.first_name %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-1">
-    <strong>Last Name:</strong>
-  </div>
-  <div class="col-sm">
-    <%= @user.last_name %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-1">
-    <strong>Email:</strong>
-  </div>
-  <div class="col-sm">
-    <%= @user.email %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm">
-      <strong>API Keys:</strong>
-      <%= link_to 'New API key', new_api_key_path(:bearer_id => @user, :bearer_type => User) %>
-      <% if @user.api_keys.exists? %>
-      <table class="table table-sm table-bordered">
-        <thead>
-          <tr>
-              <th>ID</th>
-              <th>Create Date</th>
-              <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @user.api_keys.each do |apikey| %>
-          <tr>
-            <td><%= apikey.id %></td>
-            <td><%= ApiKey.find(apikey.id).created_at %></td>
-            <td></td>
-          </tr>
-          <% end %>
-        </tbody>
-      </table>
-      <% else %>
-      None
-      <% end %>
+<div class="mx-auto">
+    <% if flash[:notice] %>
+    <div role="alert" class="alert">
+        <p id="notice"><%= notice %></p>
     </div>
-</div>
+    <% end %>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+    <div class="row">
+        <strong class="label">First Name:</strong>
+        <%= @user.first_name %>
+    </div>
+
+    <div class="row">
+        <strong class="label">Last Name:</strong>
+        <%= @user.last_name %>
+    </div>
+
+    <div class="row">
+        <strong class="label">Email:</strong>
+        <%= @user.email %>
+    </div>
+
+    <div class="row">
+      <strong class="label">API Keys:</strong>
+        <%= link_to 'New API key', new_api_key_path(:bearer_id => @user, :bearer_type => User), :class=>'link' %>
+        <% if @user.api_keys.exists? %>
+        <table class="table table-sm table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Create Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @user.api_keys.each do |apikey| %>
+            <tr>
+                <td><%= apikey.id %></td>
+                <td><%= ApiKey.find(apikey.id).created_at %></td>
+                <td></td>
+            </tr>
+            <% end %>
+            </tbody>
+        </table>
+        <% else %>
+        None
+        <% end %>
+    </div>
+
+    <%= link_to 'Edit', edit_user_path(@user), :class=>'link' %> |
+    <%= link_to 'Back', users_path, :class=>'link' %>
+</div>

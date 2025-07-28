@@ -1,24 +1,32 @@
-<p id="notice"><%= notice %></p>
+<div class="mx-auto">
 
-<p>
-  <strong>API Key:</strong>
-  <%= @api_key.id %>
-</p>
+    <% if flash[:notice] %>
+    <div role="alert" class="alert">
+        <p id="notice"><%= notice %></p>
+    </div>
+    <% end %>
 
-<p>
-  <strong>Bearer ID:</strong>
-  <%= @api_key.bearer_id %>
-</p>
+    <p>
+    <strong class="label">API Key:</strong>
+    <%= @api_key.id %>
+    </p>
 
-<p>
-  <strong>Bearer Type:</strong>
-  <%= @api_key.bearer_type %>
-</p>
+    <p>
+    <strong class="label">Bearer ID:</strong>
+    <%= @api_key.bearer_id %>
+    </p>
 
-<p>
-  <strong>Comment:</strong>
-  <%= @api_key.comment %>
-</p>
+    <p>
+    <strong class="label">Bearer Type:</strong>
+    <%= @api_key.bearer_type %>
+    </p>
 
-<%= link_to 'Edit', edit_api_key_path(@api_key) %> |
-<%= link_to 'Back', api_keys_path %>
+    <p>
+    <strong class="label">Comment:</strong>
+    <%= @api_key.comment %>
+    </p>
+
+    <%= link_to 'Edit', edit_api_key_path(@api_key), :class=>'link' %> |
+    <%= link_to 'Back', api_keys_path, :class=>'link' %>
+
+</div>

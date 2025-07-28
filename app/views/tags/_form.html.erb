@@ -12,43 +12,43 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :tag_type, class:"form-label" %>
-    <%= form.collection_select :tag_type_id, TagType.order(:name), :id, :name, {include_blank: true}, {class:"form-select"} %>
+    <%= form.label :tag_type, class:"label" %>
+    <%= form.collection_select :tag_type_id, TagType.order(:name), :id, :name, {include_blank: '-select-'}, {class: "select"} %>
   </div>
 
   <div class="field">
-    <%= form.label :epc, class:"form-label" %>
-    <%= form.text_field :epc, {id: :tag_epc, class:"form-control"} %>
+    <%= form.label :epc, class:"label" %>
+    <%= form.text_field :epc, {id: :tag_epc, class:"input"} %>
   </div>
 
   <div class="field">
-    <%= form.label :tid, class:"form-label" %>
-    <%= form.text_field :tid, {id: :tag_tid, class:"form-control"} %>
+    <%= form.label :tid, class:"label" %>
+    <%= form.text_field :tid, {id: :tag_tid, class:"input"} %>
   </div>
 
   <div class="field">
-    <%= form.label :user_memory, class:"form-label" %>
-    <%= form.text_field :user_memory, {id: :tag_user_memory, class:"form-control"} %>
+    <%= form.label :user_memory, class:"label" %>
+    <%= form.text_field :user_memory, {id: :tag_user_memory, class:"input"} %>
   </div>
 
   <div class="field">
-    <%= form.label :description, class:"form-label" %>
-    <%= form.text_field :description, {id: :tag_description, class:"form-control"} %>
+    <%= form.label :description, class:"label" %>
+    <%= form.text_field :description, {id: :tag_description, class:"input"} %>
   </div>
 
   <div class="field">
-    <%= form.label :pc, class:"form-label" %>
-    <%= form.text_field :pc, {id: :tag_pc, class:"form-control"} %>
+    <%= form.label :pc, class:"label" %>
+    <%= form.text_field :pc, {id: :tag_pc, class:"input"} %>
   </div>
 
   <div class="field">
-    <%= form.label :authorization, class:"form-label" %>
-    <div class="form-check">
-      <%= form.collection_check_boxes :authorization_ids, Authorization.order(:name), :id, :name do |b| %>
-        <%= b.check_box(class:"form-check-input") {b.label(class:"form-check-label") { b.text }} %>
-        <%= b.label(class:"form-check-label") { b.text } %>
-      <% end %>
-    </div>
+    <fieldset class="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4">
+      <legend class="fieldset-legend">Authorizations</legend>
+        <%= form.collection_check_boxes :authorization_ids, Authorization.order(:name), :id, :name do |b| %>
+            <%= b.check_box(class:"checkbox") %>
+            <%= b.label(class:"label") %>
+        <% end %>
+    </fieldset>
   </div>
 
   <div class="actions">

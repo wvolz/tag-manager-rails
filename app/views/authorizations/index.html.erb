@@ -1,32 +1,36 @@
-<p id="notice"><%= notice %></p>
+<div class="mx-auto">
 
-<h1>Authorizations</h1>
+<% if flash[:notice] %>
+<div role="alert" class="alert">
+    <p id="notice"><%= notice %></p>
+</div>
+<% end %>
 
-<div class="row">
-  <div class="col-3">
-<table class="table table-sm table-striped">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th></th>
-    </tr>
-  </thead>
+<h1 class="font-bold">Authorizations</h1>
+<div class="flex flex-row justify-start">
+  <div>
+    <table class="table table-sm table-zebra">
+        <thead>
+        <tr>
+        <th>Name</th>
+        <th></th>
+        </tr>
+        </thead>
 
-  <tbody>
-    <% @authorizations.each do |authorization| %>
-      <tr>
-        <td><%= authorization.name %></td>
-        <td><%= link_to 'Show', authorization %> |
-        <%= link_to 'Edit', edit_authorization_path(authorization) %> |
-        <%= link_to 'Destroy', authorization_path(authorization), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+        <tbody>
+        <% @authorizations.each do |authorization| %>
+        <tr>
+            <td><%= authorization.name %></td>
+            <td><%= link_to 'Show', authorization, :class=>'link' %> |
+            <%= link_to 'Edit', edit_authorization_path(authorization), :class=>'link' %> |
+            <%= link_to 'Destroy', authorization_path(authorization), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, :class=>'link' %></td>
+        </tr>
+        <% end %>
+        </tbody>
+    </table>
   </div>
 </div>
-<div class="row">
-  <div class="col-sm">
-    <%= link_to 'New Authorization', new_authorization_path %>
-  </div>
+
+<%= link_to 'New Authorization', new_authorization_path, :class=>'link' %>
+
 </div>

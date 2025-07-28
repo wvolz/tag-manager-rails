@@ -1,145 +1,129 @@
-<p id="notice"><%= notice %></p>
+<div class="justify-start gap-1 mx-auto">
+    <% if flash[:notice] %>
+    <div role="alert" class="alert">
+        <p id="notice"><%= notice %></p>
+    </div>
+    <% end %>
 
-<div class="row">
-  <div class="col-sm">
-    <strong>Epc:</strong>
-    <%= @tag.epc %>
-  </div>
-</div>
+    <div class="">
+        <strong class="opacity-60">Epc:</strong>
+        <%= @tag.epc %>
+    </div>
 
-<div class="row">
-  <div class="col-sm">
-    <strong>TID:</strong>
-    <%= @tag.tid %>
-  </div>
-</div>
+    <div class="">
+        <strong class="opacity-60">TID:</strong>
+        <%= @tag.tid %>
+    </div>
 
-<div class="row">
-  <div class="col-sm">
-    <strong>User Memory:</strong>
-    <%= @tag.user_memory %>
-  </div>
-</div>
+    <div class="">
+        <strong class="opacity-60">User Memory:</strong>
+        <%= @tag.user_memory %>
+    </div>
 
-<div class="row">
-  <div class="col-sm">
-    <strong>Description:</strong>
-    <%= @tag.description %>
-  </div>
-</div>
+    <div class="">
+        <strong class="opacity-60">Description:</strong>
+        <%= @tag.description %>
+    </div>
 
-<div class="row">
-  <div class="col-3">
-  <strong>PC:</strong>
-  <table class="table table-sm table-bordered">
-    <thead>
-      <tr>
-          <th>Raw</th>
-          <th>Len</th>
-          <th>UserMemory</th>
-          <th>XPC</th>
-          <th>NSI</th>
-          <th>AFI</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <% if !@tag.pc.blank? %>
-          <td><%= @tag.pc %></td>
-          <td>
-            <%= @tag.pc_decode.len %>
-          </td>
-          <td>
-            <%= @tag.pc_decode.user_memory %>
-          </td>
-          <td>
-            <%= @tag.pc_decode.xpc %>
-          </td>
-          <td>
-            <%= @tag.pc_decode.nsi %>
-          </td>
-          <td>
-            <%= @tag.pc_decode.afi.to_hex %>
-          </td>
+    <div class="my-5">
+        <strong class="opacity-60">PC:</strong>
+        <table class="table table-sm table-bordered">
+            <thead>
+            <tr>
+                <th>Raw</th>
+                <th>Len</th>
+                <th>UserMemory</th>
+                <th>XPC</th>
+                <th>NSI</th>
+                <th>AFI</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <% if !@tag.pc.blank? %>
+                <td><%= @tag.pc %></td>
+                <td>
+                    <%= @tag.pc_decode.len %>
+                </td>
+                <td>
+                    <%= @tag.pc_decode.user_memory %>
+                </td>
+                <td>
+                    <%= @tag.pc_decode.xpc %>
+                </td>
+                <td>
+                    <%= @tag.pc_decode.nsi %>
+                </td>
+                <td>
+                    <%= @tag.pc_decode.afi.to_hex %>
+                </td>
+                <% end %>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <% if @tag.tag_type %>
+    <div class="row">
+        <strong class="opacity-60">Tag Type:</strong>
+        <%= @tag.tag_type.name %>
+    </div>
+    <div class="row">
+        <strong class="opacity-60">Tag decoded data:</strong>
+        <%= render "uii_decode" %>
+    </div>
+    <% end %>
+
+    <div class="row">
+        <strong class="opacity-60">Last seen at:</strong>
+        <%= @tag.last_seen_at or "unknown" %>
+    </div>
+
+    <% if @tag.authorizations.size > 0 %>
+    <div class="row">
+        <strong class="opacity-60">Authorizations:</strong>
+        <ul class="list">
+        <% @tag.authorizations.ids.each do |auth_id| %>
+            <li class="list-row"><%= Authorization.find(auth_id).name %></li>
         <% end %>
-      </tr>
-    </tbody>
-  </table>
-  </div>
-</div>
-
-<% if @tag.tag_type %>
-  <div class="row">
-    <div class="col-sm">
-      <strong>Tag Type:</strong>
-      <%= @tag.tag_type.name %>
+        </ul>
     </div>
-</div>
-<div class="row">
-  <div class="col-sm-10">
-    <strong>Tag decoded data:</strong>
-    <%= render "uii_decode" %>
-  </div>
-</div>
-<% end %>
+    <% end %>
 
-<div class="row">
-  <div class="col-sm">
-    <strong>Last seen at:</strong>
-    <%= @tag.last_seen_at or "unknown" %>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-sm-5">
-    <strong>Last 20 scans</strong>
-    <table class="table table-sm table-bordered">
-      <thead>
-        <tr>
-            <th>TagScan ID</th>
-            <th>Antenna</th>
-            <th>RSSI</th>
-            <th>Create Date</th>
-            <th>Image</th>
-        </tr>
-      </thead>
-      <tbody>
-    <% @tag.tagscans.by_created.limit(20).each do |scan| %>
-        <tr>
-            <td><%= link_to(scan.id, url_for(scan)) %></td>
-            <td><%= scan.antenna %></td>
-            <td><%= scan.rssi %></td>
-            <td><%= scan.created_at %></td>
-            <td>
-              <% if scan.image.attached? %>
-                  <%= link_to(image_tag(scan.image.variant(resize_to_limit: [100,100])), url_for(scan.image)) %>
-              <% else %>
-                  <%= image_tag "no-image-graphic.png" %>
-              <% end %>
-            </td>
-        </tr>
-      <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
-
-<% if @tag.authorizations.size > 0 %>
-  <div class="row">
-    <div class="col-sm">
-       <strong>Authorizations:</strong>
-       <ul>
-       <% @tag.authorizations.ids.each do |auth_id| %>
-           <li><%= Authorization.find(auth_id).name %></li>
-       <% end %>
-       </ul>
+    <div class="text-center">
+        <%= link_to 'Edit', edit_tag_path(@tag), :class=>'link' %> |
+        <%= link_to 'Back', tags_path, :class=>'link' %>
     </div>
-  </div>
-<% end %>
 
-<div class="row">
-  <div class="col-sm-4">
-    <%= link_to 'Edit', edit_tag_path(@tag) %> |
-    <%= link_to 'Back', tags_path %>
-  </div>
+    <div class="">
+        <strong class="text-base opacity-60">Last 20 scans</strong>
+        <table class="table table-sm border border-gray-400">
+        <thead class="bg-gray-50 dark:bg-gray-700">
+            <tr>
+                <th class="border border-gray-300">TagScan ID</th>
+                <th class="border border-gray-300">Antenna</th>
+                <th class="border border-gray-300">RSSI</th>
+                <th class="border border-gray-300">Create Date</th>
+                <th class="border border-gray-300">Image</th>
+            </tr>
+        </thead>
+        <tbody>
+        <% @tag.tagscans.by_created.limit(20).each do |scan| %>
+            <tr>
+                <td class="border border-gray-200"><%= link_to(scan.id, url_for(scan), :class=> 'link') %></td>
+                <td class="border border-gray-200"><%= scan.antenna %></td>
+                <td class="border border-gray-200"><%= scan.rssi %></td>
+                <td class="border border-gray-200"><%= scan.created_at %></td>
+                <td class="border border-gray-200">
+                <% if scan.image.attached? %>
+                    <%= link_to(image_tag(scan.image.variant(resize_to_limit: [100,100]), :class=>'mx-auto'), url_for(scan.image)) %>
+                <% else %>
+                    <%= image_tag "no-image-graphic.png", :class=>'mx-auto' %>
+                <% end %>
+                </td>
+            </tr>
+        <% end %>
+        </tbody>
+        </table>
+    </div>
 </div>

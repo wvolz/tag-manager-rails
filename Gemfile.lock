@@ -198,7 +198,7 @@ GEM
     nokogiri (1.18.8)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
-    pagy (6.5.0)
+    pagy (9.3.5)
     parallel (1.27.0)
     parser (3.3.8.0)
       ast (~> 2.4.1)
@@ -369,7 +369,7 @@ DEPENDENCIES
   importmap-rails (~> 2.1)
   jbuilder
   local_time (~> 3.0.3)
-  pagy (~> 6.0)
+  pagy (~> 9.3)
   pg (~> 1.1)
   puma (~> 6.0)
   rack-mini-profiler

@@ -76,7 +76,7 @@ gem "local_time", "~> 3.0.3"
 # Added at 2018-08-21 15:35:53 -0600 by volz:
 gem "bindata", "~> 2.4"
 
-gem "pagy", "~> 6.0"
+gem "pagy", "~> 9.3"
 
 gem "clearance"
 

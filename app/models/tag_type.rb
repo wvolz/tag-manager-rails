@@ -1,7 +1,7 @@
 class TagType < ApplicationRecord
   has_many :tags, dependent: :destroy
 
-  enum decoder: { None: 0, E470: 1 }
+  enum :decoder, { None: 0, E470: 1 }
 
   class Classification < BinData::Record
     bit1 :vehicleClass

@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>TagManagerRails</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
@@ -52,7 +53,7 @@
         </div>
       </div>
     </nav>
-    <div class="flex flex-wrap flex-col justify-center">
+    <div class="flex flex-wrap flex-col justify-center mx-auto p-2">
       <%= yield %>
     </div>
   </body>

@@ -1,4 +1,4 @@
-<div class="justify-start gap-1 mx-auto">
+<div class="justify-start gap-1">
     <% if flash[:notice] %>
     <div role="alert" class="alert">
         <p id="notice"><%= notice %></p>
@@ -27,40 +27,42 @@
 
     <div class="my-5">
         <strong class="opacity-60">PC:</strong>
-        <table class="table table-sm table-bordered">
-            <thead>
-            <tr>
-                <th>Raw</th>
-                <th>Len</th>
-                <th>UserMemory</th>
-                <th>XPC</th>
-                <th>NSI</th>
-                <th>AFI</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <% if !@tag.pc.blank? %>
-                <td><%= @tag.pc %></td>
-                <td>
-                    <%= @tag.pc_decode.len %>
-                </td>
-                <td>
-                    <%= @tag.pc_decode.user_memory %>
-                </td>
-                <td>
-                    <%= @tag.pc_decode.xpc %>
-                </td>
-                <td>
-                    <%= @tag.pc_decode.nsi %>
-                </td>
-                <td>
-                    <%= @tag.pc_decode.afi.to_hex %>
-                </td>
-                <% end %>
-            </tr>
-            </tbody>
-        </table>
+        <div class="">
+            <table class="table table-sm table-bordered">
+                <thead>
+                <tr>
+                    <th>Raw</th>
+                    <th>Len</th>
+                    <th>UserMemory</th>
+                    <th>XPC</th>
+                    <th>NSI</th>
+                    <th>AFI</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <% if !@tag.pc.blank? %>
+                    <td><%= @tag.pc %></td>
+                    <td>
+                        <%= @tag.pc_decode.len %>
+                    </td>
+                    <td>
+                        <%= @tag.pc_decode.user_memory %>
+                    </td>
+                    <td>
+                        <%= @tag.pc_decode.xpc %>
+                    </td>
+                    <td>
+                        <%= @tag.pc_decode.nsi %>
+                    </td>
+                    <td>
+                        <%= @tag.pc_decode.afi.to_hex %>
+                    </td>
+                    <% end %>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <% if @tag.tag_type %>
@@ -70,7 +72,9 @@
     </div>
     <div class="row">
         <strong class="opacity-60">Tag decoded data:</strong>
-        <%= render "uii_decode" %>
+        <div class="mx-auto">
+            <%= render "uii_decode" %>
+        </div>
     </div>
     <% end %>
 
@@ -95,7 +99,7 @@
         <%= link_to 'Back', tags_path, :class=>'link' %>
     </div>
 
-    <div class="">
+    <div class="mx-auto w-fit">
         <strong class="text-base opacity-60">Last 20 scans</strong>
         <table class="table table-sm border border-gray-400">
         <thead class="bg-gray-50 dark:bg-gray-700">

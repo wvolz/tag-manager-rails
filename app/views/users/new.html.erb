@@ -1,4 +1,11 @@
 <div class="mx-auto">
-<h1 class="font-bold">Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+    <div class="card w-96 bg-base-100 shadow-xl">
+    <div class="card-body">
+      <h2 class="card-title">New User Infromation</h2>
+
+    <%= render 'form', user: @user %>
+
+    <%= link_to 'Back', users_path, class: 'link' %>
+    </div>
+    </div>
 </div>

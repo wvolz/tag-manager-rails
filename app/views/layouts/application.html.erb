@@ -41,7 +41,7 @@
       <div class="navbar-end">
         <div class="navbar-text ms-auto">
           <% if signed_in? %>
-            <div><%= link_to current_user.first_name, user_path(current_user) %></div>
+            <div><%= link_to current_user.first_name||current_user.email, user_path(current_user) %></div>
           <% end %>
         </div>
         <div class="navbar-text ms-2">

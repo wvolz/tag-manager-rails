@@ -20,9 +20,12 @@ class ApiKeysController < ApplicationController
   # GET /api_keys/new
   def new
     @api_key = ApiKey.new
-    @api_key.token = SecureRandom.hex
-    @api_key.bearer_id = params["bearer_id"]
-    @api_key.bearer_type = params["bearer_type"]
+    # pre-fill bearer if they clicked from a reader profile
+    if params["bearer_type"] && params["bearer_id"]
+      @api_key.bearer_string = "#{params["bearer_type"]}_#{params["bearer_id"]}"
+    else
+      @api_key.bearer_string = "User_#{current_user.id}"
+    end
   end
 
   # GET /api_keys/1/edit
@@ -33,11 +36,22 @@ class ApiKeysController < ApplicationController
   def create
     respond_to do |format|
       @api_key = ApiKey.new(api_key_params)
+      
+      # Security check: only allow creating keys for oneself or a valid Reader
+      unless @api_key.bearer_string.start_with?("Reader_") || @api_key.bearer_string == "User_#{current_user.id}"
+        @api_key.errors.add(:base, "Not authorized to create keys for this user")
+        format.html { render :new, status: :unprocessable_entity }
+        format.json { render json: @api_key.errors, status: :unprocessable_entity }
+        return
+      end
+
       if @api_key.save
-        format.html { redirect_to @api_key, notice: "Api Key was successfully created." }
-        format.json { render json: api_key, status: :created }
+        # Use flash to pass back the generated token since the model clears it from persistance
+        flash[:notice] = "API Key generated. The Token is: #{@api_key.token} - Please copy it now, it will not be shown again."
+        format.html { redirect_to @api_key }
+        format.json { render json: { id: @api_key.id, token: @api_key.token }, status: :created }
       else
-        format.html { render :new }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @api_key.errors, status: :unprocessable_entity }
       end
     end
@@ -51,7 +65,7 @@ class ApiKeysController < ApplicationController
         format.html { redirect_to @api_key, notice: "Api Key was successfully updated." }
         format.json { render :show, status: :ok, location: @api_key }
       else
-        format.html { render :edit }
+        format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @api_key.errors, status: :unprocessable_entity }
       end
     end
@@ -76,6 +90,6 @@ class ApiKeysController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def api_key_params
-    params.require(:api_key).permit(:bearer_id, :bearer_type, :comment, :token)
+    params.require(:api_key).permit(:bearer_string, :comment) # Token is automatically generated
   end
 end

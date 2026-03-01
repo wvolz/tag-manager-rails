@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [ :show, :edit, :update, :destroy ]
+  before_action :authorize_user!, only: [ :show, :edit, :update, :destroy ]
 
   # GET /users
   # GET /users.json
@@ -70,6 +71,15 @@ class UsersController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def authorize_user!
+    unless current_user == @user
+      respond_to do |format|
+        format.html { redirect_to users_path, alert: "You are not authorized to perform this action." }
+        format.json { render json: { error: 'Not Authorized' }, status: :unauthorized }
+      end
+    end
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

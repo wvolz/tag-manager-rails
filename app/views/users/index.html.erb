@@ -1,7 +1,12 @@
 <div class="mx-auto">
     <% if flash[:notice] %>
-    <div role="alert" class="alert">
-        <p id="notice"><%= notice %></p>
+    <div role="alert" class="alert alert-info shadow-lg mb-4">
+        <span><%= notice %></span>
+    </div>
+    <% end %>
+    <% if flash[:alert] %>
+    <div role="alert" class="alert alert-error shadow-lg mb-4">
+        <span><%= alert %></span>
     </div>
     <% end %>
 

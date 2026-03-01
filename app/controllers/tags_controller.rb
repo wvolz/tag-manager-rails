@@ -1,7 +1,10 @@
 class TagsController < ApplicationController
+  include ApiKeyAuthenticatable
+
   before_action :set_tag, only: [ :show, :edit, :update, :destroy ]
   before_action :set_tag_by_epc, only: [ :authorize ]
-  before_action :require_login, only: [ :index, :show, :edit, :update, :destroy, :new ]
+  skip_before_action :require_login, only: [ :authorize ]
+  prepend_before_action :authenticate_with_api_key_json!, only: [ :authorize ]
   helper_method :sort_column, :sort_direction
 
   # GET /tags

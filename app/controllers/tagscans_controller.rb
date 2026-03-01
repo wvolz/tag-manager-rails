@@ -2,7 +2,7 @@ class TagscansController < ApplicationController
   include ApiKeyAuthenticatable
 
   before_action :set_tagscan, only: [ :show, :edit, :update, :destroy ]
-  before_action :require_login, only: [ :index, :show, :edit, :update, :destroy, :new ]
+  skip_before_action :require_login, only: [ :create ]
   prepend_before_action :authenticate_with_api_key_json!, only: [ :create ]
 
   # GET /tagscans

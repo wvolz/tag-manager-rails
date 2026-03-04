@@ -8,4 +8,15 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, unless: -> { request.format.json? }
   # before_action :config_timezone
   before_action :require_login
+
+  private
+
+  def require_admin
+    unless current_user&.admin?
+      respond_to do |format|
+        format.html { redirect_to root_path, alert: "You must be an administrator to access this page." }
+        format.json { render json: { error: 'Forbidden' }, status: :forbidden }
+      end
+    end
+  end
 end

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [ :show, :edit, :update, :destroy ]
+  before_action :require_admin, only: [ :index, :new, :create ]
   before_action :authorize_user!, only: [ :show, :edit, :update, :destroy ]
 
   # GET /users
@@ -74,9 +75,9 @@ class UsersController < ApplicationController
   end
 
   def authorize_user!
-    unless current_user == @user
+    unless current_user == @user || current_user.admin?
       respond_to do |format|
-        format.html { redirect_to users_path, alert: "You are not authorized to perform this action." }
+        format.html { redirect_to root_path, alert: "You are not authorized to perform this action." }
         format.json { render json: { error: 'Not Authorized' }, status: :unauthorized }
       end
     end
@@ -84,6 +85,8 @@ class UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation)
+    permitted = [ :first_name, :last_name, :email, :password, :password_confirmation ]
+    permitted << :admin if current_user.admin?
+    params.require(:user).permit(permitted)
   end
 end

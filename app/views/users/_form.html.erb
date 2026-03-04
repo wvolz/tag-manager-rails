@@ -34,6 +34,13 @@
     <%= form.password_field :password_confirmation, class:"input" %>
   </div>
 
+  <% if current_user.admin? %>
+    <div class="mt-4 flex items-center justify-between">
+      <%= form.label :admin, "Administrator", class:"label font-bold cursor-pointer flex-grow" %>
+      <%= form.check_box :admin, class:"checkbox checkbox-primary" %>
+    </div>
+  <% end %>
+
   <div class="mt-6">
     <%= form.submit class:"btn btn-primary" %>
   </div>

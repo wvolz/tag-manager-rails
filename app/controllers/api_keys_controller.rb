@@ -46,8 +46,8 @@ class ApiKeysController < ApplicationController
       end
 
       if @api_key.save
-        # Use flash to pass back the generated token since the model clears it from persistance
-        flash[:notice] = "API Key generated. The Token is: #{@api_key.token} - Please copy it now, it will not be shown again."
+        # Pass token via dedicated flash key — show view renders a secure one-time reveal card
+        flash[:api_key_token] = @api_key.token
         format.html { redirect_to @api_key }
         format.json { render json: { id: @api_key.id, token: @api_key.token }, status: :created }
       else

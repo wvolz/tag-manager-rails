@@ -1,27 +1,25 @@
-<%= form_with(model: reader) do |form| %>
+<%= form_with(model: reader, class: "w-full max-w-md") do |form| %>
   <% if reader.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(reader.errors.count, "error") %> prohibited this reader from being saved:</h2>
-
-      <ul>
-        <% reader.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+    <div class="alert alert-error shadow-sm mb-4">
+      <ul class="list-disc list-inside text-sm">
+        <% reader.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="mt-1">
-    <%= form.label :name, style: "display: block", :class=>'label' %>
-    <%= form.text_field :name, :class=>'input' %>
+  <div class="form-control mb-3">
+    <%= form.label :name, class: "label" %>
+    <%= form.text_field :name, class: "input input-bordered w-full" %>
   </div>
 
-  <div class="mt-1">
-    <%= form.label :location, style: "display: block", :class=>'label' %>
-    <%= form.text_field :location, :class=>'input' %>
+  <div class="form-control mb-3">
+    <%= form.label :location, class: "label" %>
+    <%= form.text_field :location, class: "input input-bordered w-full" %>
   </div>
 
-  <div class="mt-1">
-    <%= form.submit class:"btn btn-primary" %>
+  <div class="mt-4">
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

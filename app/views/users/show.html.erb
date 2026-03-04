@@ -1,52 +1,71 @@
-<div class="mx-auto">
-    <% if flash[:notice] %>
-    <div role="alert" class="alert">
-        <p id="notice"><%= notice %></p>
+<% content_for :title, "#{@user.first_name || @user.email}" %>
+
+<div class="max-w-xl">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold">
+      <%= [@user.first_name, @user.last_name].compact.join(" ").presence || @user.email %>
+      <% if @user.admin? %>
+        <span class="badge badge-primary badge-sm align-middle ml-1">Admin</span>
+      <% end %>
+    </h1>
+    <div class="flex gap-2">
+      <%= link_to "Edit", edit_user_path(@user), class: "btn btn-outline btn-sm" %>
+      <% if current_user.admin? && current_user != @user %>
+        <%= link_to "Back", users_path, class: "btn btn-ghost btn-sm" %>
+      <% end %>
     </div>
+  </div>
+
+  <div class="card bg-base-200">
+    <div class="card-body gap-3">
+      <div class="flex gap-3">
+        <span class="text-base-content/50 w-28 shrink-0">First Name</span>
+        <span class="font-medium"><%= @user.first_name.presence || "—" %></span>
+      </div>
+      <div class="flex gap-3">
+        <span class="text-base-content/50 w-28 shrink-0">Last Name</span>
+        <span class="font-medium"><%= @user.last_name.presence || "—" %></span>
+      </div>
+      <div class="flex gap-3">
+        <span class="text-base-content/50 w-28 shrink-0">Email</span>
+        <span class="font-medium"><%= @user.email %></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-6">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-lg font-semibold">API Keys</h2>
+      <%= link_to "New API Key", new_api_key_path(bearer_type: "User", bearer_id: @user.id), class: "btn btn-outline btn-sm" %>
+    </div>
+
+    <% if @user.api_keys.exists? %>
+      <table class="table table-sm table-zebra">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Comment</th>
+            <th>Created</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @user.api_keys.each do |apikey| %>
+            <tr>
+              <td class="font-mono text-xs text-base-content/50">#<%= apikey.id %></td>
+              <td><%= apikey.comment.presence || "—" %></td>
+              <td class="text-sm"><%= apikey.created_at.strftime("%b %-d, %Y") %></td>
+              <td>
+                <%= link_to "Revoke", api_key_path(apikey), data: { turbo_method: :delete, turbo_confirm: "Revoke this API key?" }, class: "btn btn-xs btn-error btn-outline" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <div class="text-base-content/50 text-sm py-4 text-center border border-dashed border-base-300 rounded-box">
+        No API keys yet
+      </div>
     <% end %>
-
-    <div class="row">
-        <strong class="label">First Name:</strong>
-        <%= @user.first_name %>
-    </div>
-
-    <div class="row">
-        <strong class="label">Last Name:</strong>
-        <%= @user.last_name %>
-    </div>
-
-    <div class="row">
-        <strong class="label">Email:</strong>
-        <%= @user.email %>
-    </div>
-
-    <div class="row">
-      <strong class="label">API Keys:</strong>
-        <%= link_to 'New API key', new_api_key_path(:bearer_id => @user, :bearer_type => User), :class=>'link' %>
-        <% if @user.api_keys.exists? %>
-        <table class="table table-sm table-bordered">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Create Date</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% @user.api_keys.each do |apikey| %>
-            <tr>
-                <td><%= apikey.id %></td>
-                <td><%= ApiKey.find(apikey.id).created_at %></td>
-                <td></td>
-            </tr>
-            <% end %>
-            </tbody>
-        </table>
-        <% else %>
-        None
-        <% end %>
-    </div>
-
-    <%= link_to 'Edit', edit_user_path(@user), :class=>'link' %> |
-    <%= link_to 'Back', users_path, :class=>'link' %>
+  </div>
 </div>

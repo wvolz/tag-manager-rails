@@ -1,7 +1,7 @@
-<%= form_with(model: user, local: true) do |form| %>
+<%= form_with(model: user, local: true, class: "w-full max-w-md") do |form| %>
   <% if user.errors.any? %>
-    <div class="alert alert-error shadow-lg">
-      <ul class="list-disc">
+    <div class="alert alert-error shadow-sm mb-4">
+      <ul class="list-disc list-inside text-sm">
         <% user.errors.full_messages.each do |message| %>
           <li><%= message %></li>
         <% end %>
@@ -9,39 +9,42 @@
     </div>
   <% end %>
 
-  <div class="mt-1">
-    <%= form.label :first_name, class:"label" %>
-    <%= form.text_field :first_name, class:"input" %>
+  <div class="form-control mb-3">
+    <%= form.label :first_name, class: "label" %>
+    <span class="label-text font-medium"></span>
+    <%= form.text_field :first_name, class: "input input-bordered w-full" %>
   </div>
 
-  <div class="mt-1">
-    <%= form.label :last_name, class:"label" %>
-    <%= form.text_field :last_name, class:"input" %>
+  <div class="form-control mb-3">
+    <%= form.label :last_name, class: "label" %>
+    <%= form.text_field :last_name, class: "input input-bordered w-full" %>
   </div>
 
-  <div class="mt-1">
-    <div class="w-full"><%= form.label :email, class:"label" %></div>
-    <%= form.email_field :email, class:"input validator" %>
+  <div class="form-control mb-3">
+    <%= form.label :email, class: "label" %>
+    <%= form.email_field :email, class: "input input-bordered w-full" %>
   </div>
 
-  <div class="mt-1">
-    <%= form.label :password, class:"label" %>
-    <%= form.password_field :password, class:"input" %>
+  <div class="form-control mb-3">
+    <%= form.label :password, class: "label" %>
+    <%= form.password_field :password, class: "input input-bordered w-full" %>
   </div>
 
-  <div class="mt-1">
-    <%= form.label :password_confirmation, class:"label" %>
-    <%= form.password_field :password_confirmation, class:"input" %>
+  <div class="form-control mb-3">
+    <%= form.label :password_confirmation, class: "label" %>
+    <%= form.password_field :password_confirmation, class: "input input-bordered w-full" %>
   </div>
 
   <% if current_user.admin? %>
-    <div class="mt-4 flex items-center justify-between">
-      <%= form.label :admin, "Administrator", class:"label font-bold cursor-pointer flex-grow" %>
-      <%= form.check_box :admin, class:"checkbox checkbox-primary" %>
+    <div class="form-control mb-4">
+      <label class="label cursor-pointer justify-start gap-3">
+        <%= form.check_box :admin, class: "checkbox checkbox-primary" %>
+        <span class="label-text font-medium">Administrator</span>
+      </label>
     </div>
   <% end %>
 
-  <div class="mt-6">
-    <%= form.submit class:"btn btn-primary" %>
+  <div class="mt-4">
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

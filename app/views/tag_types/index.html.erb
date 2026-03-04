@@ -1,37 +1,39 @@
-<div class="mx-auto">
-    <% if flash[:notice] %>
-    <div role="alert" class="alert">
-        <p id="notice"><%= notice %></p>
-    </div>
-    <% end %>
+<% content_for :title, "Tag Types" %>
 
-    <h1>Tag Types</h1>
-
-    <div class="row">
-    <div class="col-3">
-        <table class="table table-sm table-striped">
-        <thead>
-            <tr>
-            <th scope="col">Name</th>
-            <th scope="col"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <% @tag_types.each do |tag_type| %>
-            <tr>
-                <td><%= tag_type.name %></td>
-                <td><%= link_to 'Show', tag_type, :class=>'link' %> |
-                <%= link_to 'Edit', edit_tag_type_path(tag_type), :class=>'link' %> |
-                <%= link_to 'Destroy', tag_type_path(tag_type), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, :class=>'link' %></td>
-            </tr>
-            <% end %>
-        </tbody>
-        </table>
-    </div>
-    </div>
-    <div class="row">
-    <div class="col-sm">
-        <%= link_to 'New Tag Type', new_tag_type_path, :class=>'link' %>
-    </div>
-    </div>
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-bold">Tag Types</h1>
+  <%= link_to "New Tag Type", new_tag_type_path, class: "btn btn-primary btn-sm" %>
 </div>
+
+<% if @tag_types.empty? %>
+  <div class="flex flex-col items-center justify-center py-16 text-center text-base-content/50">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 6h16M4 10h16M4 14h16M4 18h16" /></svg>
+    <p class="font-medium">No tag types defined</p>
+    <p class="text-sm mt-1">Tag types let you categorize and decode RFID tags by format.</p>
+  </div>
+<% else %>
+  <div class="overflow-x-auto">
+    <table class="table table-zebra w-auto">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @tag_types.each do |tag_type| %>
+          <tr class="hover:bg-base-200">
+            <td class="font-medium"><%= tag_type.name %></td>
+            <td>
+              <div class="flex gap-1">
+                <%= link_to "View", tag_type, class: "btn btn-xs btn-ghost" %>
+                <%= link_to "Edit", edit_tag_type_path(tag_type), class: "btn btn-xs btn-outline" %>
+                <%= link_to "Delete", tag_type_path(tag_type), data: { turbo_method: :delete, turbo_confirm: "Delete this tag type?" }, class: "btn btn-xs btn-error btn-outline" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% end %>

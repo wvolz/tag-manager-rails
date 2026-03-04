@@ -1,32 +1,56 @@
-<div class="mx-auto">
+<% content_for :title, "API Key ##{@api_key.id}" %>
 
-    <% if flash[:notice] %>
-    <div role="alert" class="alert">
-        <p id="notice"><%= notice %></p>
+<div class="max-w-xl">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold">API Key <span class="text-base-content/40 font-mono text-lg">#<%= @api_key.id %></span></h1>
+    <div class="flex gap-2">
+      <%= link_to "Edit", edit_api_key_path(@api_key), class: "btn btn-outline btn-sm" %>
+      <%= link_to "Back", api_keys_path, class: "btn btn-ghost btn-sm" %>
     </div>
-    <% end %>
+  </div>
 
-    <p>
-    <strong class="label">API Key:</strong>
-    <%= @api_key.id %>
-    </p>
+  <%# One-time token reveal — only shown immediately after creation via flash %>
+  <% raw_token = flash[:api_key_token] %>
+  <% if raw_token.present? %>
+    <div class="alert alert-warning shadow mb-6">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+      <div>
+        <p class="font-bold">Copy your API token now — it won't be shown again.</p>
+        <div class="flex items-center gap-2 mt-2">
+          <code id="api-token-value" class="bg-base-100 px-3 py-1 rounded font-mono text-sm break-all"><%= raw_token %></code>
+          <button
+            class="btn btn-xs btn-outline"
+            onclick="navigator.clipboard.writeText(document.getElementById('api-token-value').innerText).then(() => { this.textContent = 'Copied!'; setTimeout(() => this.textContent = 'Copy', 2000); })"
+          >Copy</button>
+        </div>
+      </div>
+    </div>
+  <% end %>
 
-    <p>
-    <strong class="label">Bearer ID:</strong>
-    <%= @api_key.bearer_id %>
-    </p>
-
-    <p>
-    <strong class="label">Bearer Type:</strong>
-    <%= @api_key.bearer_type %>
-    </p>
-
-    <p>
-    <strong class="label">Comment:</strong>
-    <%= @api_key.comment %>
-    </p>
-
-    <%= link_to 'Edit', edit_api_key_path(@api_key), :class=>'link' %> |
-    <%= link_to 'Back', api_keys_path, :class=>'link' %>
-
+  <div class="card bg-base-200">
+    <div class="card-body gap-3">
+      <div class="flex gap-3">
+        <span class="text-base-content/50 w-28 shrink-0">Bearer</span>
+        <span class="font-medium">
+          <% if @api_key.bearer_type == "User" %>
+            <span class="badge badge-info badge-sm mr-1">User</span>
+            <%= @api_key.bearer&.email || "unknown" %>
+          <% elsif @api_key.bearer_type == "Reader" %>
+            <span class="badge badge-warning badge-sm mr-1">Reader</span>
+            <%= @api_key.bearer&.name || "unknown" %>
+          <% else %>
+            <%= @api_key.bearer_type %> #<%= @api_key.bearer_id %>
+          <% end %>
+        </span>
+      </div>
+      <div class="flex gap-3">
+        <span class="text-base-content/50 w-28 shrink-0">Comment</span>
+        <span><%= @api_key.comment.presence || "—" %></span>
+      </div>
+      <div class="flex gap-3">
+        <span class="text-base-content/50 w-28 shrink-0">Created</span>
+        <span class="text-sm"><%= @api_key.created_at.strftime("%B %-d, %Y at %H:%M") %></span>
+      </div>
+    </div>
+  </div>
 </div>

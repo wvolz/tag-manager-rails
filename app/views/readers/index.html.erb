@@ -1,35 +1,45 @@
-<div class="mx-auto">
+<% content_for :title, "Readers" %>
 
-<% if flash[:notice] %>
-<div role="alert" class="alert">
-    <p id="notice"><%= notice %></p>
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-bold">Readers</h1>
+  <%= link_to "New Reader", new_reader_path, class: "btn btn-primary btn-sm" %>
 </div>
+
+<% if @readers.empty? %>
+  <div class="flex flex-col items-center justify-center py-16 text-center text-base-content/50">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18" /></svg>
+    <p class="font-medium">No readers configured</p>
+    <p class="text-sm mt-1">Add an RFID reader to start tracking scans.</p>
+  </div>
+<% else %>
+  <div class="overflow-x-auto">
+    <table class="table table-zebra">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Location</th>
+          <th>API Keys</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @readers.each do |reader| %>
+          <tr class="hover:bg-base-200">
+            <td class="font-medium"><%= reader.name %></td>
+            <td><%= reader.location.presence || "—" %></td>
+            <td>
+              <%= link_to "API Keys (#{reader.api_keys.count})", new_api_key_path(bearer_id: reader.id, bearer_type: "Reader"), class: "badge badge-outline badge-sm" %>
+            </td>
+            <td>
+              <div class="flex gap-1">
+                <%= link_to "View", reader, class: "btn btn-xs btn-ghost" %>
+                <%= link_to "Edit", edit_reader_path(reader), class: "btn btn-xs btn-outline" %>
+                <%= link_to "Delete", reader_path(reader), data: { turbo_method: :delete, turbo_confirm: "Delete this reader and all its API keys?" }, class: "btn btn-xs btn-error btn-outline" %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>
-
-<h1 class="font-bold">Readers</h1>
-
-<div id="readers">
-  <table class="table">
-  <thead>
-    <th>Name</th>
-    <th>Location</th>
-    <th></th>
-  </thead>
-  <tbody>
-    <% @readers.each do |reader| %>
-    <tr>
-      <td><%= reader.name %></td>
-      <td><%= reader.location %></td>
-      <td><%= link_to 'Show', reader, :class=>'link' %> |
-            <%= link_to 'Edit', edit_reader_path(reader), :class=>'link' %> |
-            <%= link_to 'Destroy', reader_path(reader), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, :class=>'link' %>
-      </td>
-    </tr>
-  <% end %>
-  </tbody>
-  </table>
-</div>
-
-<%= link_to "New reader", new_reader_path, :class=>'link' %>
-
-</div>

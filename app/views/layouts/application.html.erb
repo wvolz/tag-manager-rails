@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>TagManagerRails</title>
+    <title><%= content_for?(:title) ? "#{yield(:title)} — TagManager" : "TagManager" %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -11,12 +11,11 @@
   </head>
 
   <body>
-    <nav class="navbar bg-base-200">
+    <nav class="navbar bg-base-200 shadow-sm">
       <div class="navbar-start">
         <div class="dropdown">
           <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
-              <!-- TODO: Hero icon, do we want this? -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /> </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /> </svg>
           </div>
           <% if signed_in? %>
           <ul
@@ -38,24 +37,33 @@
         </div>
       </div>
       <div class="navbar-center">
-        <a class="btn btn-ghost text-xl" href="#">TagManager</a>
+        <%= link_to "TagManager", root_path, class: "btn btn-ghost text-xl" %>
       </div>
-      <div class="navbar-end">
-        <div class="navbar-text ms-auto">
-          <% if signed_in? %>
-            <div><%= link_to current_user.first_name||current_user.email, user_path(current_user) %></div>
-          <% end %>
-        </div>
-        <div class="navbar-text ms-2">
-          <div>
-            <% if signed_in? %>
-            <%= button_to "Logout", sign_out_path, method: :delete, class: "btn" %>
-            <% end %>
-          </div>
-        </div>
+      <div class="navbar-end gap-2">
+        <% if signed_in? %>
+          <%= link_to current_user.first_name || current_user.email, user_path(current_user), class: "btn btn-ghost btn-sm" %>
+          <%= button_to "Logout", sign_out_path, method: :delete, class: "btn btn-outline btn-sm" %>
+        <% end %>
       </div>
     </nav>
-    <div class="flex flex-wrap flex-col justify-center mx-auto p-2">
+
+    <%# Global flash messages — rendered once here so individual views don't need to repeat them %>
+    <div class="max-w-7xl mx-auto px-4 pt-4">
+      <% if flash[:notice] %>
+        <div role="alert" class="alert alert-success shadow-sm mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          <span><%= flash[:notice] %></span>
+        </div>
+      <% end %>
+      <% if flash[:alert] %>
+        <div role="alert" class="alert alert-error shadow-sm mb-3">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+          <span><%= flash[:alert] %></span>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 py-4">
       <%= yield %>
     </div>
   </body>

@@ -1,36 +1,39 @@
-<div class="mx-auto">
+<% content_for :title, "Authorizations" %>
 
-<% if flash[:notice] %>
-<div role="alert" class="alert">
-    <p id="notice"><%= notice %></p>
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-bold">Authorizations</h1>
+  <%= link_to "New Authorization", new_authorization_path, class: "btn btn-primary btn-sm" %>
 </div>
-<% end %>
 
-<h1 class="font-bold">Authorizations</h1>
-<div class="flex flex-row justify-start">
-  <div>
-    <table class="table table-sm table-zebra">
-        <thead>
+<% if @authorizations.empty? %>
+  <div class="flex flex-col items-center justify-center py-16 text-center text-base-content/50">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+    <p class="font-medium">No authorizations defined</p>
+    <p class="text-sm mt-1">Create authorization groups to control which tags are permitted through readers.</p>
+  </div>
+<% else %>
+  <div class="overflow-x-auto">
+    <table class="table table-zebra w-auto">
+      <thead>
         <tr>
-        <th>Name</th>
-        <th></th>
+          <th>Name</th>
+          <th></th>
         </tr>
-        </thead>
-
-        <tbody>
+      </thead>
+      <tbody>
         <% @authorizations.each do |authorization| %>
-        <tr>
-            <td><%= authorization.name %></td>
-            <td><%= link_to 'Show', authorization, :class=>'link' %> |
-            <%= link_to 'Edit', edit_authorization_path(authorization), :class=>'link' %> |
-            <%= link_to 'Destroy', authorization_path(authorization), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, :class=>'link' %></td>
-        </tr>
+          <tr class="hover:bg-base-200">
+            <td class="font-medium"><%= authorization.name %></td>
+            <td>
+              <div class="flex gap-1">
+                <%= link_to "View", authorization, class: "btn btn-xs btn-ghost" %>
+                <%= link_to "Edit", edit_authorization_path(authorization), class: "btn btn-xs btn-outline" %>
+                <%= link_to "Delete", authorization_path(authorization), data: { turbo_method: :delete, turbo_confirm: "Delete this authorization?" }, class: "btn btn-xs btn-error btn-outline" %>
+              </div>
+            </td>
+          </tr>
         <% end %>
-        </tbody>
+      </tbody>
     </table>
   </div>
-</div>
-
-<%= link_to 'New Authorization', new_authorization_path, :class=>'link' %>
-
-</div>
+<% end %>

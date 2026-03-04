@@ -1,34 +1,37 @@
-<%= form_with(model: api_key, local: true) do |form| %>
+<%= form_with(model: api_key, local: true, class: "w-full max-w-md") do |form| %>
   <% if api_key.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(api_key.errors.count, "error") %> prohibited this API Key from being saved:</h2>
-
-      <ul>
-      <% api_key.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+    <div class="alert alert-error shadow-sm mb-4">
+      <ul class="list-disc list-inside text-sm">
+        <% api_key.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div class="mt-1">
+  <div class="form-control mb-3">
     <%= form.label :bearer, "Associated With", class: "label" %>
-    <%= form.select :bearer_string, 
+    <%= form.select :bearer_string,
           options_for_select(
-            [["Myself (#{current_user.email})", "User_#{current_user.id}"]] + 
+            [["Myself (#{current_user.email})", "User_#{current_user.id}"]] +
             Reader.all.map { |r| ["Reader: #{r.name}", "Reader_#{r.id}"] },
-            api_key.bearer ? "#{api_key.bearer_type}_#{api_key.bearer_id}" : nil
-          ), 
-          {}, 
-          class: "select select-bordered w-full max-w-xs" %>
+            api_key.bearer ? "#{api_key.bearer_type}_#{api_key.bearer_id}" : "User_#{current_user.id}"
+          ),
+          {},
+          class: "select select-bordered w-full" %>
   </div>
 
-  <div class="mt-1">
-    <%= form.label :comment, "Comment / Description", class:"label" %>
-    <%= form.text_field :comment, class:"input input-bordered w-full max-w-xs" %>
+  <div class="form-control mb-3">
+    <%= form.label :comment, "Comment / Description", class: "label" %>
+    <%= form.text_field :comment, class: "input input-bordered w-full", placeholder: "e.g. Reader at front entrance" %>
   </div>
 
-  <div class="mt-1">
-    <%= form.submit class:"btn btn-primary" %>
+  <div class="alert alert-info shadow-sm mb-4 text-sm">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+    A secure token will be generated automatically. You'll only see it once after saving.
+  </div>
+
+  <div class="mt-4">
+    <%= form.submit class: "btn btn-primary" %>
   </div>
 <% end %>

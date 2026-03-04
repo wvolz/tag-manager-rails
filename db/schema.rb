@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2023_02_17_235549) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_01_072534) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -26,7 +26,7 @@ ActiveRecord::Schema[8.0].define(version: 2023_02_17_235549) do
     t.string "filename", null: false
     t.string "content_type"
     t.text "metadata"
-    t.integer "byte_size", null: false
+    t.bigint "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", precision: nil, null: false
     t.string "service_name", null: false
@@ -34,7 +34,7 @@ ActiveRecord::Schema[8.0].define(version: 2023_02_17_235549) do
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
+    t.integer "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
@@ -105,6 +105,7 @@ ActiveRecord::Schema[8.0].define(version: 2023_02_17_235549) do
     t.string "remember_token", limit: 128, null: false
     t.string "first_name"
     t.string "last_name"
+    t.boolean "admin", default: false, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email"
     t.index ["remember_token"], name: "index_users_on_remember_token", unique: true

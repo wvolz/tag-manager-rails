@@ -1,3 +1,6 @@
+[env]
+_.file = '.env'
+
 [tools]
 ruby = "3.3.7"
 node = "20.11.1"

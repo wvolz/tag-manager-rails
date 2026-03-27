@@ -13,10 +13,9 @@
 ## 2) Fast start (validated)
 Always run commands from repo root.
 
-1. `bundle install`
-2. `npm install`
-3. `bin/setup --skip-server`
-4. `bin/dev`
+1. `npm install`
+2. `bin/setup --skip-server`
+3. `bin/dev`
 
 Validated behavior:
 - `bin/setup --skip-server` succeeds and is idempotent; observed runtime ~2.6s.
@@ -63,7 +62,7 @@ Validated behavior:
 - No `.github/workflows` directory is present (no GitHub Actions currently configured here).
 - Local pre-commit policy is defined in `.overcommit.yml` and includes:
   - `BundleCheck`, `ErbLint`, `RuboCop`, `Stylelint`, `YarnCheck`, `RailsSchemaUpToDate`, whitespace/FIXME checks.
-- `overcommit` executable is not currently available via Bundler in this repo (`bundle exec overcommit` fails). Treat `.overcommit.yml` as policy documentation unless your environment has overcommit installed separately.
+- `overcommit` executable is available via Bundler in this repo (`bundle exec overcommit`). Treat `.overcommit.yml` as policy documentation if your environment does not have overcommit installed.
 
 ## 5) Architecture and where to edit
 

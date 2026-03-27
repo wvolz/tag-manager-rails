@@ -3,6 +3,8 @@ require "test_helper"
 class TagsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @tag = tags(:one)
+    @user = create_user
+    sign_in_as(@user)
   end
 
   test "should get index" do

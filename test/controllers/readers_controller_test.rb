@@ -3,6 +3,8 @@ require "test_helper"
 class ReadersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @reader = readers(:one)
+    @user = create_user
+    sign_in_as(@user)
   end
 
   test "should get index" do

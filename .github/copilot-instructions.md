@@ -39,13 +39,10 @@ Validated behavior:
 
 ### Test
 - Always run DB prep first: `bin/rails db:prepare RAILS_ENV=test`
-- Full suite currently fails in this repository baseline (not caused by your feature) due to pre-existing issues:
-  - `test/fixtures/tagscans.yml` references removed columns (`epc`, `pc`) on `tagscans`.
-  - Many controller tests expect no auth redirects, but app requires login and redirects to `/sign_in`.
-  - `test/controllers/users_controller_test.rb` uses invalid route helpers like `users_index_url`.
+- Current baseline (validated on 2026-03-27): `bin/rails test` passes with `42 runs, 67 assertions, 0 failures, 0 errors, 0 skips`.
 - Practical guidance:
   - Run targeted tests for touched files first.
-  - If full suite fails, confirm whether failures are pre-existing before changing broad behavior.
+  - Run the full suite before opening a PR to confirm no regressions.
 
 ### Ruby lint/static checks
 - `bundle exec rubocop` runs, but repository currently has existing offenses (observed: 8, mostly autocorrectable).

@@ -3,6 +3,8 @@ require "test_helper"
 class TagscansControllerTest < ActionDispatch::IntegrationTest
   setup do
     @tagscan = tagscans(:one)
+    @user = create_user
+    sign_in_as(@user)
   end
 
   test "should get index" do
@@ -20,7 +22,7 @@ class TagscansControllerTest < ActionDispatch::IntegrationTest
   test "should create tagscan" do
     assert_difference("Tagscan.count") do
       post tagscans_url,
-        params: { tagscan: { antenna: @tagscan.antenna, pc: @tagscan.pc, rssi: @tagscan.rssi, epc: @tagscan.epc } }
+        params: { tagscan: { antenna: @tagscan.antenna, rssi: @tagscan.rssi, tag_epc: @tagscan.tag_epc, tag_pc: @tagscan.tag_pc } }
     end
 
     assert_redirected_to tagscan_url(Tagscan.last)
@@ -40,7 +42,7 @@ class TagscansControllerTest < ActionDispatch::IntegrationTest
 
   test "should update tagscan" do
     patch tagscan_url(@tagscan),
-      params: { tagscan: { antenna: @tagscan.antenna, pc: @tagscan.pc, rssi: @tagscan.rssi, epc: @tagscan.epc } }
+      params: { tagscan: { antenna: @tagscan.antenna, rssi: @tagscan.rssi, tag_epc: @tagscan.tag_epc, tag_pc: @tagscan.tag_pc } }
 
     assert_redirected_to tagscan_url(@tagscan)
   end

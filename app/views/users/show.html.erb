@@ -1,71 +1,85 @@
 <% content_for :title, "#{@user.first_name || @user.email}" %>
 
-<div class="max-w-xl">
-  <div class="flex items-center justify-between mb-6">
-    <h1 class="text-2xl font-bold">
-      <%= [@user.first_name, @user.last_name].compact.join(" ").presence || @user.email %>
-      <% if @user.admin? %>
-        <span class="badge badge-primary badge-sm align-middle ml-1">Admin</span>
-      <% end %>
-    </h1>
-    <div class="flex gap-2">
-      <%= link_to "Edit", edit_user_path(@user), class: "btn btn-outline btn-sm" %>
-      <% if current_user.admin? && current_user != @user %>
-        <%= link_to "Back", users_path, class: "btn btn-ghost btn-sm" %>
-      <% end %>
-    </div>
-  </div>
+<%= render "shared/show_header",
+    title: [@user.first_name, @user.last_name].compact.join(" ").presence || @user.email,
+    subtitle: @user.admin? ? "Administrator" : "User",
+    back_path: users_path %>
 
-  <div class="card bg-base-200">
-    <div class="card-body gap-3">
-      <div class="flex gap-3">
-        <span class="text-base-content/50 w-28 shrink-0">First Name</span>
-        <span class="font-medium"><%= @user.first_name.presence || "—" %></span>
-      </div>
-      <div class="flex gap-3">
-        <span class="text-base-content/50 w-28 shrink-0">Last Name</span>
-        <span class="font-medium"><%= @user.last_name.presence || "—" %></span>
-      </div>
-      <div class="flex gap-3">
-        <span class="text-base-content/50 w-28 shrink-0">Email</span>
-        <span class="font-medium"><%= @user.email %></span>
-      </div>
-    </div>
-  </div>
-
-  <div class="mt-6">
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="text-lg font-semibold">API Keys</h2>
-      <%= link_to "New API Key", new_api_key_path(bearer_type: "User", bearer_id: @user.id), class: "btn btn-outline btn-sm" %>
-    </div>
-
-    <% if @user.api_keys.exists? %>
-      <table class="table table-sm table-zebra">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Comment</th>
-            <th>Created</th>
-            <th></th>
-          </tr>
-        </thead>
+<div class="max-w-3xl space-y-4">
+  <div class="card bg-base-100 shadow-sm border border-base-200">
+    <div class="card-body">
+      <table class="table table-sm">
         <tbody>
-          <% @user.api_keys.each do |apikey| %>
-            <tr>
-              <td class="font-mono text-xs text-base-content/50">#<%= apikey.id %></td>
-              <td><%= apikey.comment.presence || "—" %></td>
-              <td class="text-sm"><%= apikey.created_at.strftime("%b %-d, %Y") %></td>
-              <td>
-                <%= link_to "Revoke", api_key_path(apikey), data: { turbo_method: :delete, turbo_confirm: "Revoke this API key?" }, class: "btn btn-xs btn-error btn-outline" %>
-              </td>
-            </tr>
-          <% end %>
+          <tr>
+            <th class="w-32 text-base-content/60 font-medium">Name</th>
+            <td><%= [@user.first_name, @user.last_name].compact.join(" ").presence || "—" %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Email</th>
+            <td><%= @user.email %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Role</th>
+            <td>
+              <% if @user.admin? %>
+                <span class="badge badge-primary badge-sm">Administrator</span>
+              <% else %>
+                <span class="badge badge-outline badge-sm">User</span>
+              <% end %>
+            </td>
+          </tr>
         </tbody>
       </table>
-    <% else %>
-      <div class="text-base-content/50 text-sm py-4 text-center border border-dashed border-base-300 rounded-box">
-        No API keys yet
+
+      <div class="card-actions justify-end mt-4">
+        <%= link_to "Edit", edit_user_path(@user), class: "btn btn-outline btn-sm" %>
+        <% if current_user.admin? && current_user != @user %>
+          <%= link_to "Delete", user_path(@user),
+              data: { turbo_method: :delete, turbo_confirm: "Delete this user?" },
+              class: "btn btn-error btn-outline btn-sm" %>
+        <% end %>
       </div>
-    <% end %>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow-sm border border-base-200">
+    <div class="card-body">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="card-title text-lg">API Keys</h2>
+        <%= link_to "New API Key", new_api_key_path(bearer_type: "User", bearer_id: @user.id),
+            class: "btn btn-primary btn-xs" %>
+      </div>
+
+      <% if @user.api_keys.exists? %>
+        <div class="overflow-x-auto">
+          <table class="table table-sm table-zebra">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Comment</th>
+                <th>Created</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @user.api_keys.each do |api_key| %>
+                <tr>
+                  <td class="font-mono text-xs"><%= api_key.id %></td>
+                  <td><%= api_key.comment.presence || "—" %></td>
+                  <td><time datetime="<%= api_key.created_at.iso8601 %>"><%= api_key.created_at.strftime("%b %d, %Y") %></time></td>
+                  <td>
+                    <%= link_to "Revoke", api_key_path(api_key),
+                        data: { turbo_method: :delete, turbo_confirm: "Revoke this API key?" },
+                        class: "btn btn-xs btn-error btn-outline" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-sm text-base-content/50 py-4 text-center">No API keys yet.</p>
+      <% end %>
+    </div>
   </div>
 </div>

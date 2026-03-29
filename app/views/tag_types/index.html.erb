@@ -23,10 +23,11 @@
       <tbody>
         <% @tag_types.each do |tag_type| %>
           <tr class="hover:bg-base-200">
-            <td class="font-medium"><%= tag_type.name %></td>
+            <td class="font-medium">
+              <%= link_to tag_type.name, tag_type_path(tag_type), class: "link link-primary" %>
+            </td>
             <td>
               <div class="flex gap-1">
-                <%= link_to "View", tag_type, class: "btn btn-xs btn-ghost" %>
                 <%= link_to "Edit", edit_tag_type_path(tag_type), class: "btn btn-xs btn-outline" %>
                 <%= link_to "Delete", tag_type_path(tag_type), data: { turbo_method: :delete, turbo_confirm: "Delete this tag type?" }, class: "btn btn-xs btn-error btn-outline" %>
               </div>

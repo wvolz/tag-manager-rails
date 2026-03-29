@@ -1,8 +1,13 @@
-<div class="mx-auto">
-<h1 class="font-bold">Editing Tagscan</h1>
+<% content_for :title, "Edit Tag Scan" %>
 
-<%= render 'form', tagscan: @tagscan %>
+<div class="max-w-4xl">
+  <div class="mb-5 flex items-center justify-between gap-3">
+    <div>
+      <h1 class="text-2xl font-bold">Edit Tag Scan</h1>
+      <p class="text-sm text-base-content/60 mt-1">Adjust recorded scan metrics and associated tag identifiers.</p>
+    </div>
+    <%= link_to "View Scan", @tagscan, class: "btn btn-outline btn-sm" %>
+  </div>
 
-<%= link_to 'Show', @tagscan, :class=>'link' %> |
-<%= link_to 'Back', tagscans_path, :class=>'link' %>
+  <%= render "form", tagscan: @tagscan %>
 </div>

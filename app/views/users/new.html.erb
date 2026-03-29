@@ -1,11 +1,5 @@
-<div class="mx-auto">
-    <div class="card w-96 bg-base-100 shadow-xl">
-    <div class="card-body">
-      <h2 class="card-title">New User Infromation</h2>
+<% content_for :title, "New User" %>
 
-    <%= render 'form', user: @user %>
-
-    <%= link_to 'Back', users_path, class: 'link' %>
-    </div>
-    </div>
+<div class="max-w-2xl mx-auto">
+  <%= render "form", user: @user %>
 </div>

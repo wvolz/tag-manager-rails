@@ -26,7 +26,8 @@
         <% @users.each do |user| %>
           <tr class="hover:bg-base-200">
             <td class="font-medium">
-              <%= [user.first_name, user.last_name].compact.join(" ").presence || "—" %>
+              <% user_label = [user.first_name, user.last_name].compact.join(" ").presence || user.email %>
+              <%= link_to user_label, user_path(user), class: "link link-primary" %>
             </td>
             <td><%= user.email %></td>
             <td>
@@ -39,7 +40,6 @@
             <td class="text-sm text-base-content/70"><%= user.created_at.strftime("%b %-d, %Y") %></td>
             <td>
               <div class="flex gap-1">
-                <%= link_to "View", user, class: "btn btn-xs btn-ghost" %>
                 <%= link_to "Edit", edit_user_path(user), class: "btn btn-xs btn-outline" %>
                 <%= link_to "Delete", user_path(user), data: { turbo_method: :delete, turbo_confirm: "Delete this user?" }, class: "btn btn-xs btn-error btn-outline" %>
               </div>

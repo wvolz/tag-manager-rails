@@ -23,10 +23,11 @@
       <tbody>
         <% @authorizations.each do |authorization| %>
           <tr class="hover:bg-base-200">
-            <td class="font-medium"><%= authorization.name %></td>
+            <td class="font-medium">
+              <%= link_to authorization.name, authorization_path(authorization), class: "link link-primary" %>
+            </td>
             <td>
               <div class="flex gap-1">
-                <%= link_to "View", authorization, class: "btn btn-xs btn-ghost" %>
                 <%= link_to "Edit", edit_authorization_path(authorization), class: "btn btn-xs btn-outline" %>
                 <%= link_to "Delete", authorization_path(authorization), data: { turbo_method: :delete, turbo_confirm: "Delete this authorization?" }, class: "btn btn-xs btn-error btn-outline" %>
               </div>

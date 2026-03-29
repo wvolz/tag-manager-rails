@@ -1,8 +1,5 @@
-<div class="mx-auto">
-    <h1 class="font-bold">Editing User</h1>
+<% content_for :title, "Edit User" %>
 
-    <%= render 'form', user: @user %>
-
-    <%= link_to 'Show', @user, :class=>'link' %> |
-    <%= link_to 'Back', users_path, :class=>'link' %>
+<div class="max-w-2xl mx-auto">
+  <%= render "form", user: @user %>
 </div>

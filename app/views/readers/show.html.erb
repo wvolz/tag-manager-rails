@@ -1,43 +1,71 @@
-<div class="mx-auto">
-    <% if flash[:notice] %>
-    <div role="alert" class="alert">
-        <p id="notice"><%= notice %></p>
+<% content_for :title, @reader.name %>
+
+<%= render "shared/show_header",
+    title: @reader.name,
+    subtitle: "RFID Reader",
+    back_path: readers_path %>
+
+<div class="max-w-3xl space-y-4">
+  <div class="card bg-base-100 shadow-sm border border-base-200">
+    <div class="card-body">
+      <table class="table table-sm">
+        <tbody>
+          <tr>
+            <th class="w-32 text-base-content/60 font-medium">Name</th>
+            <td><%= @reader.name %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Location</th>
+            <td><%= @reader.location.presence || "—" %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Created</th>
+            <td><time datetime="<%= @reader.created_at.iso8601 %>"><%= @reader.created_at.strftime("%b %d, %Y") %></time></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card-actions justify-end mt-4">
+        <%= link_to "Edit", edit_reader_path(@reader), class: "btn btn-outline btn-sm" %>
+        <%= link_to "Delete", reader_path(@reader),
+            data: { turbo_method: :delete, turbo_confirm: "Delete this reader and all its API keys?" },
+            class: "btn btn-error btn-outline btn-sm" %>
+      </div>
     </div>
-    <% end %>
+  </div>
 
-    <%= render @reader %>
+  <div class="card bg-base-100 shadow-sm border border-base-200">
+    <div class="card-body">
+      <div class="flex items-center justify-between mb-2">
+        <h2 class="card-title text-lg">API Keys</h2>
+        <%= link_to "New API Key", new_api_key_path(bearer_id: @reader.id, bearer_type: "Reader"),
+            class: "btn btn-primary btn-xs" %>
+      </div>
 
-    <div class="row">
-        <strong class="label font-bold">API Keys:</strong>
-        <%= link_to 'New API key', new_api_key_path(:bearer_id => @reader, :bearer_type => Reader), :class=>'link' %>
-        <% if @reader.api_keys.exists? %>
-        <table class="table table-sm table-bordered">
+      <% if @reader.api_keys.exists? %>
+        <div class="overflow-x-auto">
+          <table class="table table-sm table-zebra">
             <thead>
-            <tr>
+              <tr>
                 <th>ID</th>
-                <th>Create Date</th>
-                <th>Actions</th>
-            </tr>
+                <th>Comment</th>
+                <th>Created</th>
+              </tr>
             </thead>
             <tbody>
-            <% @reader.api_keys.each do |apikey| %>
-            <tr>
-                <td><%= apikey.id %></td>
-                <td><%= ApiKey.find(apikey.id).created_at %></td>
-                <td></td>
-            </tr>
-            <% end %>
+              <% @reader.api_keys.each do |api_key| %>
+                <tr>
+                  <td class="font-mono text-xs"><%= api_key.id %></td>
+                  <td><%= api_key.comment.presence || "—" %></td>
+                  <td><time datetime="<%= api_key.created_at.iso8601 %>"><%= api_key.created_at.strftime("%b %d, %Y") %></time></td>
+                </tr>
+              <% end %>
             </tbody>
-        </table>
-        <% else %>
-        None
-        <% end %>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-sm text-base-content/50 py-4 text-center">No API keys yet.</p>
+      <% end %>
     </div>
-
-    <div>
-    <%= link_to "Edit this reader", edit_reader_path(@reader), :class=>'link' %> |
-    <%= link_to "Back to readers", readers_path, :class=>'link' %>
-
-    <%= button_to "Destroy this reader", @reader, method: :delete, data: { turbo_method: :delete, turbo_confirm: 'Are you sure?' }, class:"btn btn-danger" %>
-    </div>
+  </div>
 </div>

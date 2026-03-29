@@ -1,25 +1,25 @@
-<%= form_with(model: reader, class: "w-full max-w-md") do |form| %>
-  <% if reader.errors.any? %>
-    <div class="alert alert-error shadow-sm mb-4">
-      <ul class="list-disc list-inside text-sm">
-        <% reader.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: reader, local: true) do |form| %>
+  <% render "shared/form_card",
+      title: reader.new_record? ? "New Reader" : "Edit Reader",
+      model: reader,
+      form: form,
+      back_path: readers_path,
+      submit_label: reader.new_record? ? "Create Reader" : "Update Reader" do %>
+
+    <div class="form-control">
+      <%= form.label :name, "Name", class: "label" %>
+      <%= form.text_field :name,
+          class: "input input-bordered w-full",
+          placeholder: "e.g. Front Door Reader",
+          required: true %>
     </div>
+
+    <div class="form-control">
+      <%= form.label :location, "Location", class: "label" %>
+      <%= form.text_field :location,
+          class: "input input-bordered w-full",
+          placeholder: "e.g. Building A, Floor 3" %>
+    </div>
+
   <% end %>
-
-  <div class="form-control mb-3">
-    <%= form.label :name, class: "label" %>
-    <%= form.text_field :name, class: "input input-bordered w-full" %>
-  </div>
-
-  <div class="form-control mb-3">
-    <%= form.label :location, class: "label" %>
-    <%= form.text_field :location, class: "input input-bordered w-full" %>
-  </div>
-
-  <div class="mt-4">
-    <%= form.submit class: "btn btn-primary" %>
-  </div>
 <% end %>

@@ -1,20 +1,19 @@
-<%= form_with(model: authorization, local: true, class: "w-full max-w-md") do |form| %>
-  <% if authorization.errors.any? %>
-    <div class="alert alert-error shadow-sm mb-4">
-      <ul class="list-disc list-inside text-sm">
-        <% authorization.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: authorization, local: true) do |form| %>
+  <% render "shared/form_card",
+      title: authorization.new_record? ? "New Authorization" : "Edit Authorization",
+      model: authorization,
+      form: form,
+      back_path: authorizations_path,
+      submit_label: authorization.new_record? ? "Create Authorization" : "Update Authorization" do %>
+
+    <div class="form-control">
+      <%= form.label :name, "Name", class: "label" %>
+      <%= form.text_field :name,
+          id: :authorization_name,
+          class: "input input-bordered w-full",
+          placeholder: "e.g. Building A Access",
+          required: true %>
     </div>
+
   <% end %>
-
-  <div class="form-control mb-3">
-    <%= form.label :name, class: "label" %>
-    <%= form.text_field :name, id: :authorization_name, class: "input input-bordered w-full" %>
-  </div>
-
-  <div class="mt-4">
-    <%= form.submit class: "btn btn-primary" %>
-  </div>
 <% end %>

@@ -33,7 +33,11 @@
       <tbody>
         <% @tagscans.each do |tagscan| %>
           <tr class="hover:bg-base-200">
-            <td class="text-sm"><%= local_time(tagscan.created_at) %></td>
+            <td class="text-sm">
+              <%= link_to tagscan_path(tagscan), class: "link link-primary" do %>
+                <%= local_time(tagscan.created_at) %>
+              <% end %>
+            </td>
             <% if tagscan.tag %>
               <td class="font-mono text-xs"><%= tagscan.tag.epc %></td>
               <td class="font-mono text-xs"><%= tagscan.tag.pc %></td>
@@ -52,7 +56,6 @@
             </td>
             <td>
               <div class="flex gap-1">
-                <%= link_to "View", tagscan, class: "btn btn-xs btn-ghost" %>
                 <%= link_to "Edit", edit_tagscan_path(tagscan), class: "btn btn-xs btn-outline" %>
                 <%= link_to "Delete", tagscan_path(tagscan), data: { turbo_method: :delete, turbo_confirm: "Delete this scan?" }, class: "btn btn-xs btn-error btn-outline" %>
               </div>

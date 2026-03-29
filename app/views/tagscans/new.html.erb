@@ -1,5 +1,10 @@
-<h1>New Tagscan</h1>
+<% content_for :title, "New Tag Scan" %>
 
-<%= render 'form', tagscan: @tagscan %>
+<div class="max-w-4xl">
+  <div class="mb-5">
+    <h1 class="text-2xl font-bold">New Tag Scan</h1>
+    <p class="text-sm text-base-content/60 mt-1">Enter a scan event manually for troubleshooting or data correction.</p>
+  </div>
 
-<%= link_to 'Back', tagscans_path %>
+  <%= render "form", tagscan: @tagscan %>
+</div>

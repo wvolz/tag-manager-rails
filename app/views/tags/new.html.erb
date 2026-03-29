@@ -1,7 +1,5 @@
-<div class="mx-auto">
-<h1>New Tag</h1>
+<% content_for :title, "New Tag" %>
 
-<%= render 'form', tag: @tag %>
-
-<%= link_to 'Back', tags_path %>
+<div class="max-w-2xl mx-auto">
+  <%= render "form", tag: @tag %>
 </div>

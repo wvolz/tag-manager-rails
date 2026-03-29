@@ -30,7 +30,9 @@
         <% @tags.each do |tag| %>
           <% next unless tag.id.present? %>
           <tr class="hover:bg-base-200">
-            <td class="font-mono text-xs"><%= tag.epc %></td>
+            <td class="font-mono text-xs">
+              <%= link_to tag.epc, tag_path(tag), class: "link link-primary" %>
+            </td>
             <td><%= tag.description.presence || "—" %></td>
             <td class="font-mono text-xs"><%= tag.pc.presence || "—" %></td>
             <td><%= tag.tag_type&.name || "—" %></td>
@@ -39,7 +41,6 @@
             <td class="text-sm"><%= local_time(tag.last_seen_at) if tag.last_seen_at %></td>
             <td>
               <div class="flex gap-1">
-                <%= link_to "View", tag, class: "btn btn-xs btn-ghost" %>
                 <%= link_to "Edit", edit_tag_path(tag), class: "btn btn-xs btn-outline" %>
                 <%= link_to "Delete", tag_path(tag), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this tag?" }, class: "btn btn-xs btn-error btn-outline" %>
               </div>

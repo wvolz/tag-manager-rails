@@ -1,41 +1,63 @@
-<div class="mx-auto">
+<% content_for :title, "Tag Scan ##{@tagscan.id}" %>
 
-    <% if flash[:notice] %>
-    <div role="alert" class="alert">
-        <p id="notice"><%= notice %></p>
-    </div>
-    <% end %>
-
-    <% if @tagscan.tag %>
-    <div class="">
-        <strong class="label">EPC:</strong>
-        <%= @tagscan.tag.epc %>
-    </div>
-
-    <div class="">
-        <strong class="label">Pc:</strong>
-        <%= @tagscan.tag.pc %>
-    </div>
-    <% end %>
-
-    <div class="">
-        <strong class="label">Antenna:</strong>
-        <%= @tagscan.antenna %>
+<div class="max-w-4xl space-y-5">
+    <div class="flex items-start justify-between gap-3">
+        <div>
+            <h1 class="text-2xl font-bold">Tag Scan #<%= @tagscan.id %></h1>
+            <p class="text-sm text-base-content/60 mt-1">
+                <time datetime="<%= @tagscan.created_at.iso8601 %>"><%= @tagscan.created_at.strftime("%b %d, %Y at %H:%M:%S") %></time>
+            </p>
+        </div>
+        <div class="flex items-center gap-2">
+            <%= link_to "Edit", edit_tagscan_path(@tagscan), class: "btn btn-outline btn-sm" %>
+            <%= link_to "Delete", tagscan_path(@tagscan), data: { turbo_method: :delete, turbo_confirm: "Delete this scan?" }, class: "btn btn-error btn-outline btn-sm" %>
+            <%= link_to "Back", tagscans_path, class: "btn btn-ghost btn-sm" %>
+        </div>
     </div>
 
-    <div class="">
-        <strong class="label">Rssi:</strong>
-        <%= @tagscan.rssi %>
+    <div class="card bg-base-100 border border-base-300 shadow-sm">
+        <div class="card-body gap-5">
+            <%# ── Scan details ─────────────────────────────── %>
+            <div class="overflow-x-auto">
+                <table class="table table-sm">
+                    <tbody>
+                        <tr>
+                            <th class="w-36 text-base-content/60 font-medium">Antenna</th>
+                            <td><%= @tagscan.antenna.presence || "—" %></td>
+                        </tr>
+                        <tr>
+                            <th class="text-base-content/60 font-medium">RSSI</th>
+                            <td><%= @tagscan.rssi.presence || "—" %></td>
+                        </tr>
+                        <tr>
+                            <th class="text-base-content/60 font-medium">Tag</th>
+                            <td>
+                                <% if @tagscan.tag %>
+                                    <%= link_to tag_path(@tagscan.tag), class: "link link-primary" do %>
+                                        <%= @tagscan.tag.description.presence || "Tag ##{@tagscan.tag.id}" %>
+                                    <% end %>
+                                    <% if @tagscan.tag.epc.present? %>
+                                        <code class="ml-2 text-xs bg-base-200 px-2 py-0.5 rounded break-all"><%= @tagscan.tag.epc %></code>
+                                    <% end %>
+                                <% else %>
+                                    <span class="text-base-content/40">No linked tag</span>
+                                <% end %>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <%# ── Snapshot ─────────────────────────────────── %>
+            <% if @tagscan.image.attached? %>
+                <div>
+                    <h2 class="text-sm font-semibold text-base-content/60 mb-2">Snapshot</h2>
+                    <%= link_to url_for(@tagscan.image), target: "_blank", rel: "noopener", class: "block max-w-md" do %>
+                        <%= image_tag @tagscan.image.variant(resize_to_limit: [480, 480]), class: "w-full rounded border border-base-300", alt: "Scan snapshot for tag scan #{@tagscan.id}" %>
+                    <% end %>
+                    <p class="text-xs text-base-content/60 mt-1">Click to open full size.</p>
+                </div>
+            <% end %>
+        </div>
     </div>
-
-    <% if @tagscan.image.attached? %>
-    <div class="">
-        <strong class="label">Image:</strong>
-        <%= link_to(image_tag(@tagscan.image.variant(resize_to_limit: [100,100])), url_for(@tagscan.image)) %>
-    </div>
-    <% end %>
-
-    <%= link_to 'Edit', edit_tagscan_path(@tagscan), :class=>'link' %> |
-    <%= link_to 'Back', tagscans_path, :class=>'link' %>
-
 </div>

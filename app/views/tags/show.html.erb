@@ -1,133 +1,147 @@
-<div class="justify-start gap-1">
-    <% if flash[:notice] %>
-    <div role="alert" class="alert">
-        <p id="notice"><%= notice %></p>
-    </div>
-    <% end %>
+<% content_for :title, @tag.description.presence || @tag.epc %>
 
-    <div class="">
-        <strong class="opacity-60">Epc:</strong>
-        <%= @tag.epc %>
-    </div>
+<%= render "shared/show_header",
+    title: @tag.description.presence || @tag.epc,
+    subtitle: "RFID Tag",
+    back_path: tags_path %>
 
-    <div class="">
-        <strong class="opacity-60">TID:</strong>
-        <%= @tag.tid %>
-    </div>
-
-    <div class="">
-        <strong class="opacity-60">User Memory:</strong>
-        <%= @tag.user_memory %>
-    </div>
-
-    <div class="">
-        <strong class="opacity-60">Description:</strong>
-        <%= @tag.description %>
-    </div>
-
-    <div class="my-5">
-        <strong class="opacity-60">PC:</strong>
-        <div class="">
-            <table class="table table-sm table-bordered">
-                <thead>
-                <tr>
-                    <th>Raw</th>
-                    <th>Len</th>
-                    <th>UserMemory</th>
-                    <th>XPC</th>
-                    <th>NSI</th>
-                    <th>AFI</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <% if !@tag.pc.blank? %>
-                    <td><%= @tag.pc %></td>
-                    <td>
-                        <%= @tag.pc_decode.len %>
-                    </td>
-                    <td>
-                        <%= @tag.pc_decode.user_memory %>
-                    </td>
-                    <td>
-                        <%= @tag.pc_decode.xpc %>
-                    </td>
-                    <td>
-                        <%= @tag.pc_decode.nsi %>
-                    </td>
-                    <td>
-                        <%= @tag.pc_decode.afi.to_hex %>
-                    </td>
-                    <% end %>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <% if @tag.tag_type %>
-    <div class="row">
-        <strong class="opacity-60">Tag Type:</strong>
-        <%= @tag.tag_type.name %>
-    </div>
-    <div class="row">
-        <strong class="opacity-60">Tag decoded data:</strong>
-        <div class="mx-auto">
-            <%= render "uii_decode" %>
-        </div>
-    </div>
-    <% end %>
-
-    <div class="row">
-        <strong class="opacity-60">Last seen at:</strong>
-        <%= @tag.last_seen_at or "unknown" %>
-    </div>
-
-    <% if @tag.authorizations.size > 0 %>
-    <div class="row">
-        <strong class="opacity-60">Authorizations:</strong>
-        <ul class="list">
-        <% @tag.authorizations.ids.each do |auth_id| %>
-            <li class="list-row"><%= Authorization.find(auth_id).name %></li>
-        <% end %>
-        </ul>
-    </div>
-    <% end %>
-
-    <div class="text-center">
-        <%= link_to 'Edit', edit_tag_path(@tag), :class=>'link' %> |
-        <%= link_to 'Back', tags_path, :class=>'link' %>
-    </div>
-
-    <div class="mx-auto w-fit">
-        <strong class="text-base opacity-60">Last 20 scans</strong>
-        <table class="table table-sm border border-gray-400">
-        <thead class="bg-gray-50 dark:bg-gray-700">
-            <tr>
-                <th class="border border-gray-300">TagScan ID</th>
-                <th class="border border-gray-300">Antenna</th>
-                <th class="border border-gray-300">RSSI</th>
-                <th class="border border-gray-300">Create Date</th>
-                <th class="border border-gray-300">Image</th>
-            </tr>
-        </thead>
+<div class="max-w-4xl space-y-4">
+  <%# ── Tag details card ─────────────────────────── %>
+  <div class="card bg-base-100 shadow-sm border border-base-200">
+    <div class="card-body">
+      <table class="table table-sm">
         <tbody>
-        <% @tag.tagscans.by_created.limit(20).each do |scan| %>
+          <tr>
+            <th class="w-36 text-base-content/60 font-medium">EPC</th>
+            <td><code class="text-xs bg-base-200 px-2 py-1 rounded break-all"><%= @tag.epc %></code></td>
+          </tr>
+          <% if @tag.tid.present? %>
             <tr>
-                <td class="border border-gray-200"><%= link_to(scan.id, url_for(scan), :class=> 'link') %></td>
-                <td class="border border-gray-200"><%= scan.antenna %></td>
-                <td class="border border-gray-200"><%= scan.rssi %></td>
-                <td class="border border-gray-200"><%= scan.created_at %></td>
-                <td class="border border-gray-200">
-                <% if scan.image.attached? %>
-                    <%= link_to(image_tag(scan.image.variant(resize_to_limit: [100,100]), :class=>'mx-auto'), url_for(scan.image)) %>
-                <% else %>
-                    <%= image_tag "no-image-graphic.png", :class=>'mx-auto' %>
-                <% end %>
-                </td>
+              <th class="text-base-content/60 font-medium">TID</th>
+              <td><code class="text-xs bg-base-200 px-2 py-1 rounded break-all"><%= @tag.tid %></code></td>
             </tr>
-        <% end %>
+          <% end %>
+          <% if @tag.pc.present? %>
+            <tr>
+              <th class="text-base-content/60 font-medium">PC</th>
+              <td><code class="text-xs bg-base-200 px-2 py-1 rounded"><%= @tag.pc %></code></td>
+            </tr>
+            <tr>
+              <th class="text-base-content/60 font-medium">PC Decode</th>
+              <td>
+                <div class="flex flex-wrap gap-1 text-xs">
+                  <span class="badge badge-outline">Len: <%= @tag.pc_decode.len %></span>
+                  <span class="badge badge-outline">User: <%= @tag.pc_decode.user_memory %></span>
+                  <span class="badge badge-outline">XPC: <%= @tag.pc_decode.xpc %></span>
+                  <span class="badge badge-outline">NSI: <%= @tag.pc_decode.nsi %></span>
+                  <span class="badge badge-outline">AFI: <%= @tag.pc_decode.afi.to_hex %></span>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+          <tr>
+            <th class="text-base-content/60 font-medium">Description</th>
+            <td><%= @tag.description.presence || "—" %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Tag Type</th>
+            <td>
+              <% if @tag.tag_type %>
+                <%= link_to @tag.tag_type.name, tag_type_path(@tag.tag_type), class: "link link-primary" %>
+              <% else %>
+                —
+              <% end %>
+            </td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Last Seen</th>
+            <td>
+              <% if @tag.last_seen_at %>
+                <time datetime="<%= @tag.last_seen_at.iso8601 %>"><%= @tag.last_seen_at.strftime("%b %d, %Y %H:%M") %></time>
+              <% else %>
+                —
+              <% end %>
+            </td>
+          </tr>
+          <% if @tag.user_memory.present? %>
+            <tr>
+              <th class="text-base-content/60 font-medium">User Memory</th>
+              <td><code class="text-xs bg-base-200 px-2 py-1 rounded break-all"><%= @tag.user_memory %></code></td>
+            </tr>
+          <% end %>
+          <tr>
+            <th class="text-base-content/60 font-medium">Authorizations</th>
+            <td>
+              <% if @tag.authorizations.exists? %>
+                <div class="flex flex-wrap gap-1">
+                  <% @tag.authorizations.each do |auth| %>
+                    <%= link_to auth.name, authorization_path(auth), class: "badge badge-outline" %>
+                  <% end %>
+                </div>
+              <% else %>
+                <span class="text-base-content/40">None</span>
+              <% end %>
+            </td>
+          </tr>
         </tbody>
-        </table>
+      </table>
+
+      <div class="card-actions justify-end mt-4">
+        <%= link_to "Edit", edit_tag_path(@tag), class: "btn btn-outline btn-sm" %>
+        <%= link_to "Delete", tag_path(@tag),
+            data: { turbo_method: :delete, turbo_confirm: "Delete this tag?" },
+            class: "btn btn-error btn-outline btn-sm" %>
+      </div>
     </div>
+  </div>
+
+  <%# ── Tag type decoded data ────────────────────── %>
+  <% if @tag.tag_type %>
+    <div class="card bg-base-100 shadow-sm border border-base-200">
+      <div class="card-body">
+        <h2 class="card-title text-lg mb-2">Decoded Data</h2>
+        <%= render "uii_decode" %>
+      </div>
+    </div>
+  <% end %>
+
+  <%# ── Recent scans ────────────────────────────── %>
+  <div class="card bg-base-100 shadow-sm border border-base-200">
+    <div class="card-body">
+      <h2 class="card-title text-lg mb-2">Recent Scans</h2>
+
+      <% if @tag.tagscans.exists? %>
+        <div class="overflow-x-auto">
+          <table class="table table-sm table-zebra">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Antenna</th>
+                <th>RSSI</th>
+                <th>Time</th>
+                <th>Image</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @tag.tagscans.by_created.limit(20).each do |scan| %>
+                <tr>
+                  <td><%= link_to scan.id, url_for(scan), class: "link link-primary" %></td>
+                  <td><%= scan.antenna %></td>
+                  <td><%= scan.rssi %></td>
+                  <td><time datetime="<%= scan.created_at.iso8601 %>"><%= scan.created_at.strftime("%b %d, %H:%M:%S") %></time></td>
+                  <td>
+                    <% if scan.image.attached? %>
+                      <%= link_to image_tag(scan.image.variant(resize_to_limit: [80, 80]), class: "h-10 w-10 object-cover rounded"), url_for(scan.image), target: "_blank" %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-sm text-base-content/50 py-4 text-center">No scans recorded yet.</p>
+      <% end %>
+    </div>
+  </div>
 </div>

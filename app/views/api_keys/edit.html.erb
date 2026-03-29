@@ -1,8 +1,16 @@
-<div class="mx-auto">
-<h1 class="font-bold">Editing API Key</h1>
+<% content_for :title, "Edit API Key" %>
 
-<%= render 'form', api_key: @api_key %>
+<div class="max-w-xl space-y-4">
+  <div>
+    <h1 class="text-2xl font-bold">Edit API Key</h1>
+    <p class="text-sm text-base-content/60 mt-1">
+      <%= link_to "View current key details", @api_key, class: "link link-primary" %>
+    </p>
+  </div>
 
-<%= link_to 'Show', @api_key, :class=>'link' %> |
-<%= link_to 'Back', api_keys_path, :class=>'link' %>
+  <div class="card bg-base-100 shadow-sm border border-base-200">
+    <div class="card-body">
+      <%= render "form", api_key: @api_key %>
+    </div>
+  </div>
 </div>

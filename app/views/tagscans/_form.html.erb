@@ -1,6 +1,6 @@
-<%= form_with(model: tagscan, local: true, class: "w-full max-w-md") do |form| %>
+<%= form_with(model: tagscan, local: true, class: "space-y-4") do |form| %>
   <% if tagscan.errors.any? %>
-    <div class="alert alert-error shadow-sm mb-4">
+    <div class="alert alert-error shadow-sm" role="alert">
       <ul class="list-disc list-inside text-sm">
         <% tagscan.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -9,27 +9,43 @@
     </div>
   <% end %>
 
-  <div class="form-control mb-3">
-    <%= form.label :tag_epc, "EPC", class: "label" %>
-    <%= form.text_field :tag_epc, class: "input input-bordered w-full font-mono" %>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <div class="form-control">
+      <%= form.label :tag_epc, "EPC", class: "label" %>
+      <%= form.text_field :tag_epc,
+          class: "input input-bordered w-full font-mono text-sm",
+          placeholder: "3009A6000000000000000123" %>
+    </div>
+
+    <div class="form-control">
+      <%= form.label :tag_pc, "PC", class: "label" %>
+      <%= form.text_field :tag_pc,
+          class: "input input-bordered w-full font-mono text-sm",
+          placeholder: "3000" %>
+    </div>
+
+    <div class="form-control">
+      <%= form.label :antenna, "Antenna", class: "label" %>
+      <%= form.number_field :antenna,
+          id: :tagscan_antenna,
+          class: "input input-bordered w-full",
+          placeholder: "1",
+          min: 0,
+          step: 1 %>
+    </div>
+
+    <div class="form-control">
+      <%= form.label :rssi, "RSSI", class: "label" %>
+      <%= form.number_field :rssi,
+          id: :tagscan_rssi,
+          class: "input input-bordered w-full",
+          placeholder: "-55",
+          step: 1 %>
+    </div>
   </div>
 
-  <div class="form-control mb-3">
-    <%= form.label :tag_pc, "PC", class: "label" %>
-    <%= form.text_field :tag_pc, class: "input input-bordered w-full font-mono" %>
-  </div>
-
-  <div class="form-control mb-3">
-    <%= form.label :antenna, class: "label" %>
-    <%= form.text_field :antenna, id: :tagscan_antenna, class: "input input-bordered w-full" %>
-  </div>
-
-  <div class="form-control mb-3">
-    <%= form.label :rssi, "RSSI", class: "label" %>
-    <%= form.text_field :rssi, id: :tagscan_rssi, class: "input input-bordered w-full" %>
-  </div>
-
-  <div class="mt-4">
-    <%= form.submit class: "btn btn-primary" %>
+  <div class="flex items-center justify-between pt-2">
+    <%= link_to "← Back", tagscans_path, class: "btn btn-ghost btn-sm" %>
+    <%= form.submit(tagscan.new_record? ? "Create Scan" : "Update Scan", class: "btn btn-primary btn-sm") %>
   </div>
 <% end %>

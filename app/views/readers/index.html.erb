@@ -25,14 +25,15 @@
       <tbody>
         <% @readers.each do |reader| %>
           <tr class="hover:bg-base-200">
-            <td class="font-medium"><%= reader.name %></td>
+            <td class="font-medium">
+              <%= link_to reader.name, reader_path(reader), class: "link link-primary" %>
+            </td>
             <td><%= reader.location.presence || "—" %></td>
             <td>
               <%= link_to "API Keys (#{reader.api_keys.count})", new_api_key_path(bearer_id: reader.id, bearer_type: "Reader"), class: "badge badge-outline badge-sm" %>
             </td>
             <td>
               <div class="flex gap-1">
-                <%= link_to "View", reader, class: "btn btn-xs btn-ghost" %>
                 <%= link_to "Edit", edit_reader_path(reader), class: "btn btn-xs btn-outline" %>
                 <%= link_to "Delete", reader_path(reader), data: { turbo_method: :delete, turbo_confirm: "Delete this reader and all its API keys?" }, class: "btn btn-xs btn-error btn-outline" %>
               </div>

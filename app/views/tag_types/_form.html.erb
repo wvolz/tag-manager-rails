@@ -1,25 +1,28 @@
-<%= form_with(model: tag_type, class: "w-full max-w-md") do |form| %>
-  <% if tag_type.errors.any? %>
-    <div class="alert alert-error shadow-sm mb-4">
-      <ul class="list-disc list-inside text-sm">
-        <% tag_type.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
+<%= form_with(model: tag_type, local: true) do |form| %>
+  <% render "shared/form_card",
+      title: tag_type.new_record? ? "New Tag Type" : "Edit Tag Type",
+      model: tag_type,
+      form: form,
+      back_path: tag_types_path,
+      submit_label: tag_type.new_record? ? "Create Tag Type" : "Update Tag Type" do %>
+
+    <div class="form-control">
+      <%= form.label :name, "Name", class: "label" %>
+      <%= form.text_field :name,
+          id: :tag_type_name,
+          class: "input input-bordered w-full",
+          placeholder: "e.g. EPC Gen 2",
+          required: true %>
     </div>
+
+    <div class="form-control">
+      <%= form.label :decoder, "Decoder", class: "label" %>
+      <%= form.select :decoder,
+          TagType.decoders.keys,
+          { include_blank: "Select a decoder\u2026" },
+          { class: "select select-bordered w-full",
+            required: true } %>
+    </div>
+
   <% end %>
-
-  <div class="form-control mb-3">
-    <%= form.label :name, class: "label" %>
-    <%= form.text_field :name, id: :tag_type_name, class: "input input-bordered w-full" %>
-  </div>
-
-  <div class="form-control mb-3">
-    <%= form.label :decoder, class: "label" %>
-    <%= form.select :decoder, TagType.decoders.keys, {}, { class: "select select-bordered w-full" } %>
-  </div>
-
-  <div class="mt-4">
-    <%= form.submit class: "btn btn-primary" %>
-  </div>
 <% end %>

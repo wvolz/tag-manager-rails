@@ -6,7 +6,7 @@ class ApiKey < ApplicationRecord
   before_create :generate_token_hmac_digest
 
   # Virtual attribute for raw token value, allowing us to respond with the
-  # API key's non-hashed token value. but only directly after creation.
+  # API key's non-hashed token value, but only directly after creation.
 
   attr_accessor :token, :bearer_string
 
@@ -27,7 +27,7 @@ class ApiKey < ApplicationRecord
   # the token's HMAC digest
   def serializable_hash(options = nil)
     h = super options.merge(except: "token_digest")
-    h["token"] => token if token.present?
+    h.merge! 'token' => token if token.present?
     h
   end
 

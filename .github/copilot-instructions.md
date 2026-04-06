@@ -47,7 +47,7 @@ Validated behavior:
 ### Ruby lint/static checks
 - `bundle exec rubocop` runs, but repository currently has existing offenses (observed: 8, mostly autocorrectable).
 - `bundle exec erb_lint ...` runs without local `.erb_lint.yml` (default config warning only).
-- `bin/brakeman -q` runs; observed only version warning (`7.1.0` not latest).
+- `bin/brakeman -q` runs
 
 ### JS/CSS lint
 - `npm install` is required before `npx --no-install ...` commands.

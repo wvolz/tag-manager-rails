@@ -78,7 +78,7 @@ class UsersController < ApplicationController
     unless current_user == @user || current_user.admin?
       respond_to do |format|
         format.html { redirect_to root_path, alert: "You are not authorized to perform this action." }
-        format.json { render json: { error: 'Not Authorized' }, status: :unauthorized }
+        format.json { render json: { error: "Not Authorized" }, status: :unauthorized }
       end
     end
   end

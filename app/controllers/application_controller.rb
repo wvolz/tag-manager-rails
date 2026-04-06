@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
     unless current_user&.admin?
       respond_to do |format|
         format.html { redirect_to root_path, alert: "You must be an administrator to access this page." }
-        format.json { render json: { error: 'Forbidden' }, status: :forbidden }
+        format.json { render json: { error: "Forbidden" }, status: :forbidden }
       end
     end
   end

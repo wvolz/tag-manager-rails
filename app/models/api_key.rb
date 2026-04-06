@@ -27,7 +27,7 @@ class ApiKey < ApplicationRecord
   # the token's HMAC digest
   def serializable_hash(options = nil)
     h = super options.merge(except: "token_digest")
-    h.merge! 'token' => token if token.present?
+    h.merge! "token" => token if token.present?
     h
   end
 
@@ -35,9 +35,9 @@ class ApiKey < ApplicationRecord
 
   def assign_bearer_from_string
     return unless bearer_string.present?
-    b_type, b_id = bearer_string.split('_')
+    b_type, b_id = bearer_string.split("_")
     # Validate the models just to be safe
-    if ['User', 'Reader'].include?(b_type)
+    if [ "User", "Reader" ].include?(b_type)
       self.bearer_type = b_type
       self.bearer_id = b_id
     end

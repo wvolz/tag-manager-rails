@@ -36,7 +36,7 @@ class ApiKeysController < ApplicationController
   def create
     respond_to do |format|
       @api_key = ApiKey.new(api_key_params)
-      
+
       # Security check: only allow creating keys for oneself or a valid Reader
       unless @api_key.bearer_string.start_with?("Reader_") || @api_key.bearer_string == "User_#{current_user.id}"
         @api_key.errors.add(:base, "Not authorized to create keys for this user")

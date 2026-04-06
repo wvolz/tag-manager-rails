@@ -47,12 +47,10 @@
                             <th class="text-base-content/60 font-medium">Tag</th>
                             <td>
                                 <% if @tagscan.tag %>
-                                    <%= link_to tag_path(@tagscan.tag), class: "link link-primary" do %>
-                                        <%= @tagscan.tag.description.presence || "Tag ##{@tagscan.tag.id}" %>
-                                    <% end %>
-                                    <% if @tagscan.tag.epc.present? %>
-                                        <code class="ml-2 text-xs bg-base-200 px-2 py-0.5 rounded break-all"><%= @tagscan.tag.epc %></code>
-                                    <% end %>
+                                    <%= link_to(@tagscan.tag.epc.presence || "Tag ##{@tagscan.tag.id}", tag_path(@tagscan.tag), class: "link link-primary font-mono text-xs break-all") %>
+                                    <span class="ml-2 text-xs text-base-content/50">
+                                        [<%= @tagscan.tag.description.presence || "Tag ##{@tagscan.tag.id}" %>]
+                                    </span>
                                 <% else %>
                                     <span class="text-base-content/40">No linked tag</span>
                                 <% end %>

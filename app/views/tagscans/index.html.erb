@@ -50,6 +50,13 @@
             <td>
               <% if tagscan.image.attached? %>
                 <%= link_to(image_tag(tagscan.image.variant(resize_to_limit: [60, 60]), class: "rounded"), url_for(tagscan.image)) %>
+                <div class="mt-1">
+                  <%= button_to tagscan.image_protected? ? "Protected" : "Protect",
+                      tagscan_path(tagscan),
+                      method: :patch,
+                      params: { tagscan: { image_protected: !tagscan.image_protected? } },
+                      class: "btn btn-xs #{tagscan.image_protected? ? 'btn-success' : 'btn-ghost btn-outline'}" %>
+                </div>
               <% else %>
                 <%= image_tag "no-image-graphic.png", class: "h-10 w-10 opacity-30" %>
               <% end %>

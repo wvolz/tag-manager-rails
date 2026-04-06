@@ -1,0 +1,54 @@
+<% content_for :title, "Settings" %>
+
+<div class="max-w-2xl space-y-6">
+  <h1 class="text-2xl font-bold">Settings</h1>
+
+  <div class="card bg-base-100 border border-base-300 shadow-sm">
+    <div class="card-body space-y-5">
+      <h2 class="card-title text-lg">Image Purge</h2>
+
+      <%= form_with url: settings_path, method: :patch, local: true, class: "space-y-5" do |form| %>
+        <div class="form-control">
+          <label class="label cursor-pointer justify-start gap-4">
+            <input type="checkbox" name="settings[image_purge_enabled]" value="1"
+                   class="toggle toggle-primary"
+                   <%= "checked" if @purge_enabled %>>
+            <div>
+              <span class="label-text font-medium">Enable automatic scheduled purge</span>
+              <p class="text-xs text-base-content/60 mt-0.5">When enabled, images are purged daily at 2:00 AM according to the retention period below.</p>
+            </div>
+          </label>
+        </div>
+
+        <div class="form-control max-w-xs">
+          <%= form.label :image_retention_days, "Retain images for (days)", class: "label" %>
+          <%= form.number_field :image_retention_days,
+              name: "settings[image_retention_days]",
+              value: @retention_days,
+              min: 1,
+              step: 1,
+              class: "input input-bordered w-full" %>
+          <p class="text-xs text-base-content/60 mt-1">Images attached to scans older than this many days will be eligible for purging.</p>
+        </div>
+
+        <div>
+          <%= form.submit "Save Settings", class: "btn btn-primary btn-sm" %>
+        </div>
+      <% end %>
+
+      <div class="divider"></div>
+
+      <div>
+        <h3 class="font-medium mb-1">Manual Purge</h3>
+        <p class="text-sm text-base-content/60 mb-3">Immediately enqueue a purge using the current retention period above. This runs regardless of whether automatic purging is enabled.</p>
+        <%= button_to "Purge Images Now",
+            purge_images_settings_path,
+            method: :post,
+            class: "btn btn-warning btn-sm",
+            data: {
+              turbo_confirm: "This will permanently delete all unprotected images from scans older than #{@retention_days} day(s). This cannot be undone. Continue?"
+            } %>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,6 +3,11 @@ class Tagscan < ApplicationRecord
   has_one_attached :image
   after_create :update_last_seen_time
   scope :by_created, -> { order(received_at: :desc) }
+  scope :purgeable_images, ->(cutoff_days) {
+    joins(:image_attachment)
+      .where(image_protected: false)
+      .where("received_at < ?", cutoff_days.days.ago)
+  }
 
   def tag_epc
     tag.try(:epc)

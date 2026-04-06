@@ -9,6 +9,11 @@ Rails.application.routes.draw do
     end
   end
   resources :tagscans
+  resource :settings, only: [ :edit, :update ] do
+    collection do
+      post :purge_images
+    end
+  end
   # resources :api_keys, path: 'api-keys', only: %i[index new create destroy]
   resources :api_keys
 

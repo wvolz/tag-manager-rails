@@ -56,4 +56,17 @@ class TagscansControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to tagscans_url
   end
+
+  test "should protect tagscan image" do
+    patch tagscan_url(@tagscan), params: { tagscan: { image_protected: true } }
+    assert_redirected_to tagscan_url(@tagscan)
+    assert @tagscan.reload.image_protected?
+  end
+
+  test "should unprotect tagscan image" do
+    @tagscan.update!(image_protected: true)
+    patch tagscan_url(@tagscan), params: { tagscan: { image_protected: false } }
+    assert_redirected_to tagscan_url(@tagscan)
+    assert_not @tagscan.reload.image_protected?
+  end
 end

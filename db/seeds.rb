@@ -5,3 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+# Default image purge settings
+Setting.find_or_create_by(key: Setting::IMAGE_PURGE_ENABLED_KEY) { |s| s.value = "false" }
+Setting.find_or_create_by(key: Setting::IMAGE_RETENTION_DAYS_KEY) { |s| s.value = "30" }

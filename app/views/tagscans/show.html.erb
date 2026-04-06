@@ -63,7 +63,14 @@
             <%# ── Snapshot ─────────────────────────────────── %>
             <% if @tagscan.image.attached? %>
                 <div>
-                    <h2 class="text-sm font-semibold text-base-content/60 mb-2">Snapshot</h2>
+                    <div class="flex items-center gap-3 mb-2">
+                        <h2 class="text-sm font-semibold text-base-content/60">Snapshot</h2>
+                        <%= button_to @tagscan.image_protected? ? "Protected" : "Protect Image",
+                            tagscan_path(@tagscan),
+                            method: :patch,
+                            params: { tagscan: { image_protected: !@tagscan.image_protected? } },
+                            class: "btn btn-xs #{@tagscan.image_protected? ? 'btn-success' : 'btn-ghost btn-outline'}" %>
+                    </div>
                     <%= link_to url_for(@tagscan.image), target: "_blank", rel: "noopener", class: "block max-w-md" do %>
                         <%= image_tag @tagscan.image.variant(resize_to_limit: [480, 480]), class: "w-full rounded border border-base-300", alt: "Scan snapshot for tag scan #{@tagscan.id}" %>
                     <% end %>

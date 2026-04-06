@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_06_044156) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_06_154822) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -68,6 +68,14 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_06_044156) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "settings", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_settings_on_key", unique: true
+  end
+
   create_table "tag_types", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: nil, null: false
@@ -95,6 +103,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_06_044156) do
     t.integer "tag_id"
     t.datetime "received_at"
     t.string "event_id"
+    t.boolean "image_protected", default: false, null: false
     t.index ["event_id"], name: "index_tagscans_on_event_id", unique: true
     t.index ["tag_id"], name: "index_tagscans_on_tag_id"
   end

@@ -2,7 +2,7 @@ class Tagscan < ApplicationRecord
   belongs_to :tag
   has_one_attached :image
   after_create :update_last_seen_time
-  scope :by_created, -> { order(created_at: :desc) }
+  scope :by_created, -> { order(received_at: :desc) }
 
   def tag_epc
     tag.try(:epc)
@@ -55,7 +55,7 @@ class Tagscan < ApplicationRecord
   end
 
   def update_last_seen_time
-    tag.last_seen_at = DateTime.current
+    tag.last_seen_at = received_at || DateTime.current
     tag.save
   end
 

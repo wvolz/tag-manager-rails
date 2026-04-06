@@ -128,7 +128,7 @@
                   <td><%= link_to scan.id, url_for(scan), class: "link link-primary" %></td>
                   <td><%= scan.antenna %></td>
                   <td><%= scan.rssi %></td>
-                  <td><time datetime="<%= scan.created_at.iso8601 %>"><%= scan.created_at.strftime("%b %d, %H:%M:%S") %></time></td>
+                  <td><time datetime="<%= scan.received_at.iso8601 %>"><%= scan.received_at.strftime("%b %d, %H:%M:%S") %></time></td>
                   <td>
                     <% if scan.image.attached? %>
                       <%= link_to image_tag(scan.image.variant(resize_to_limit: [80, 80]), class: "h-10 w-10 object-cover rounded"), url_for(scan.image), target: "_blank" %>

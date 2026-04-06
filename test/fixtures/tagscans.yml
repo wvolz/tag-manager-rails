@@ -4,8 +4,12 @@ one:
   tag: one
   antenna: 1
   rssi: -40
+  received_at: 2026-01-01 10:00:00
+  event_id: 550e8400-e29b-41d4-a716-446655440001
 
 two:
   tag: two
   antenna: 2
+  received_at: 2026-01-02 12:00:00
+  event_id: 550e8400-e29b-41d4-a716-446655440002
   rssi: -55

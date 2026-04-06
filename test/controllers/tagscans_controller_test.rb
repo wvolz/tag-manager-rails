@@ -22,7 +22,8 @@ class TagscansControllerTest < ActionDispatch::IntegrationTest
   test "should create tagscan" do
     assert_difference("Tagscan.count") do
       post tagscans_url,
-        params: { tagscan: { antenna: @tagscan.antenna, rssi: @tagscan.rssi, tag_epc: @tagscan.tag_epc, tag_pc: @tagscan.tag_pc } }
+        params: { tagscan: { antenna: @tagscan.antenna, rssi: @tagscan.rssi, tag_epc: @tagscan.tag_epc, tag_pc: @tagscan.tag_pc,
+                             received_at: Time.current, event_id: SecureRandom.uuid } }
     end
 
     assert_redirected_to tagscan_url(Tagscan.last)
@@ -42,7 +43,8 @@ class TagscansControllerTest < ActionDispatch::IntegrationTest
 
   test "should update tagscan" do
     patch tagscan_url(@tagscan),
-      params: { tagscan: { antenna: @tagscan.antenna, rssi: @tagscan.rssi, tag_epc: @tagscan.tag_epc, tag_pc: @tagscan.tag_pc } }
+      params: { tagscan: { antenna: @tagscan.antenna, rssi: @tagscan.rssi, tag_epc: @tagscan.tag_epc, tag_pc: @tagscan.tag_pc,
+                           received_at: @tagscan.received_at, event_id: @tagscan.event_id } }
 
     assert_redirected_to tagscan_url(@tagscan)
   end

@@ -8,7 +8,7 @@ class TagscansController < ApplicationController
   # GET /tagscans
   # GET /tagscans.json
   def index
-    @pagy, @tagscans = pagy(Tagscan.order(created_at: :desc))
+    @pagy, @tagscans = pagy(Tagscan.order(received_at: :desc))
   end
 
   # GET /tagscans/1
@@ -76,6 +76,6 @@ class TagscansController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def tagscan_params
-    params.require(:tagscan).permit(:tag_epc, :tag_pc, :antenna, :rssi)
+    params.require(:tagscan).permit(:tag_epc, :tag_pc, :antenna, :rssi, :received_at, :event_id)
   end
 end

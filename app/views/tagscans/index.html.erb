@@ -35,7 +35,7 @@
           <tr class="hover:bg-base-200">
             <td class="text-sm">
               <%= link_to tagscan_path(tagscan), class: "link link-primary" do %>
-                <%= local_time(tagscan.created_at) %>
+                <%= local_time(tagscan.received_at) %>
               <% end %>
             </td>
             <% if tagscan.tag %>

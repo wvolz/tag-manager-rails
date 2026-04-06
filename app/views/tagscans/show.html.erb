@@ -5,7 +5,7 @@
         <div>
             <h1 class="text-2xl font-bold">Tag Scan #<%= @tagscan.id %></h1>
             <p class="text-sm text-base-content/60 mt-1">
-                <time datetime="<%= @tagscan.created_at.iso8601 %>"><%= @tagscan.created_at.strftime("%b %d, %Y at %H:%M:%S") %></time>
+                <time datetime="<%= @tagscan.received_at.iso8601 %>"><%= @tagscan.received_at.strftime("%b %d, %Y at %H:%M:%S") %></time>
             </p>
         </div>
         <div class="flex items-center gap-2">
@@ -22,6 +22,14 @@
                 <table class="table table-sm">
                     <tbody>
                         <tr>
+                            <th class="w-36 text-base-content/60 font-medium">Scan time</th>
+                            <td><time datetime="<%= @tagscan.received_at.iso8601 %>"><%= @tagscan.received_at.strftime("%b %d, %Y at %H:%M:%S") %></time></td>
+                        </tr>
+                        <tr>
+                            <th class="text-base-content/60 font-medium">Inserted at</th>
+                            <td><time datetime="<%= @tagscan.created_at.iso8601 %>"><%= @tagscan.created_at.strftime("%b %d, %Y at %H:%M:%S") %></time></td>
+                        </tr>
+                        <tr>
                             <th class="w-36 text-base-content/60 font-medium">Antenna</th>
                             <td><%= @tagscan.antenna.presence || "—" %></td>
                         </tr>
@@ -29,6 +37,12 @@
                             <th class="text-base-content/60 font-medium">RSSI</th>
                             <td><%= @tagscan.rssi.presence || "—" %></td>
                         </tr>
+                        <% if @tagscan.event_id.present? %>
+                        <tr>
+                            <th class="text-base-content/60 font-medium">Event ID</th>
+                            <td><code class="text-xs bg-base-200 px-2 py-0.5 rounded"><%= @tagscan.event_id %></code></td>
+                        </tr>
+                        <% end %>
                         <tr>
                             <th class="text-base-content/60 font-medium">Tag</th>
                             <td>

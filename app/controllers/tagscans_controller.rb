@@ -2,8 +2,10 @@ class TagscansController < ApplicationController
   include ApiKeyAuthenticatable
 
   before_action :set_tagscan, only: [ :show, :edit, :update, :destroy ]
-  skip_before_action :require_login, only: [ :create ]
+  skip_before_action :verify_authenticity_token, only: [ :upload_photo ]
+  skip_before_action :require_login, only: [ :create, :upload_photo ]
   prepend_before_action :authenticate_with_api_key_json!, only: [ :create ]
+  prepend_before_action :authenticate_with_api_key!, only: [ :upload_photo ]
 
   # GET /tagscans
   # GET /tagscans.json
@@ -32,8 +34,6 @@ class TagscansController < ApplicationController
 
     respond_to do |format|
       if @tagscan.save
-        TagscansGrabphotoJob.perform_later(@tagscan)
-
         format.html { redirect_to @tagscan, notice: "Tagscan was successfully created." }
         format.json { render :show, status: :created, location: @tagscan }
       else
@@ -55,6 +55,24 @@ class TagscansController < ApplicationController
         format.json { render json: @tagscan.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  # POST /tagscans/:event_id/photo
+  def upload_photo
+    tagscan = Tagscan.find_by!(event_id: params[:event_id])
+
+    if tagscan.image.attached?
+      render json: { error: "Image already attached" }, status: :conflict
+      return
+    end
+
+    unless params[:photo].present?
+      render json: { error: "No photo provided" }, status: :unprocessable_entity
+      return
+    end
+
+    tagscan.image.attach(params[:photo])
+    render json: {}, status: :created
   end
 
   # DELETE /tagscans/1

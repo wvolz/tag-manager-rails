@@ -90,8 +90,6 @@ gem "pagy", "~> 9.3"
 
 gem "clearance"
 
-gem "typhoeus", "~> 1.4"
-
 # Added 01/30/2025 by volz for Rails <7.1 support
 gem "concurrent-ruby", "1.3.4"
 

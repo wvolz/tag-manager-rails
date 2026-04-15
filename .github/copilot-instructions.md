@@ -71,13 +71,11 @@ Validated behavior:
 - Models: `app/models/*`.
   - RFID/tag logic: `Tag`, `Tagscan`, `TagType`, `Authorization`, `Reader`.
   - API auth: `ApiKey` (token digest/HMAC).
-- Jobs: `app/jobs/tagscans_grabphoto_job.rb`.
+- Jobs: `app/jobs/purge_tagscan_images_job.rb`.
 - Views: ERB + Jbuilder under `app/views`.
 
 ### Important non-obvious dependencies
-- Camera snapshot integration:
-  - URL configured in `config/application.rb` (`config.grabphoto_camera_url`).
-  - Credentials expected in Rails credentials under `grab_photo`.
+- Camera photo upload: the Node authorizer app captures photos and uploads them via `POST /tagscans/:event_id/photo` (multipart, field name `photo`, Bearer auth). Returns 201 on success, 409 if image already attached, 404 if event_id not found.
 - API key digest secret expected in credentials (`api_key_hmac_secret_key`).
 - ActiveStorage is used for scan images (`Tagscan#image`).
 

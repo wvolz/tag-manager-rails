@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
   end
   resources :tagscans
+  post 'tagscans/:event_id/photo', to: 'tagscans#upload_photo', as: :tagscan_photo
   resource :settings, only: [ :edit, :update ] do
     collection do
       post :purge_images

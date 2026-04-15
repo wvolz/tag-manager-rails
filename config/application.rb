@@ -23,8 +23,5 @@ module TagManagerRails
     #
     config.time_zone = "America/Denver"
     # config.eager_load_paths << Rails.root.join("extras")
-
-    # change to match your camera, expects a JPEG image
-    config.grabphoto_camera_url = "http://10.11.50.178/cgi-bin/snapshot.cgi"
   end
 end

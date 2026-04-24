@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception, unless: -> { request.format.json? }
   # before_action :config_timezone
   before_action :require_login
+  helper_method :current_authorizer_app
 
   private
 
@@ -18,5 +19,9 @@ class ApplicationController < ActionController::Base
         format.json { render json: { error: "Forbidden" }, status: :forbidden }
       end
     end
+  end
+
+  def current_authorizer_app
+    @current_authorizer_app ||= AuthorizerApp.find_by(name: "Primary Authorizer") || AuthorizerApp.order(:id).first
   end
 end

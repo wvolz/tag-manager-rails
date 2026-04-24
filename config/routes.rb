@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resource :authorizer_app, only: [ :show, :edit, :update ]
   resources :readers
   resources :authorizations
   resources :users

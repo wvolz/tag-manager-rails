@@ -9,3 +9,8 @@
 # Default image purge settings
 Setting.find_or_create_by(key: Setting::IMAGE_PURGE_ENABLED_KEY) { |s| s.value = "false" }
 Setting.find_or_create_by(key: Setting::IMAGE_RETENTION_DAYS_KEY) { |s| s.value = "30" }
+
+# Default machine bearer for API keys used by authorizer services.
+AuthorizerApp.find_or_create_by!(name: "Primary Authorizer") do |app|
+  app.description = "Default authorizer app"
+end

@@ -1,5 +1,6 @@
 class Tagscan < ApplicationRecord
   belongs_to :tag
+  belongs_to :reader, optional: true
   has_one_attached :image
   after_create :update_last_seen_time
   scope :by_created, -> { order(received_at: :desc) }

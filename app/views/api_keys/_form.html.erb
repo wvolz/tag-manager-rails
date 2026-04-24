@@ -11,12 +11,12 @@
 
   <div class="form-control mb-3">
     <%= form.label :bearer, "Associated With", class: "label" %>
+    <% bearer_options = [["Myself (#{current_user.email})", "User_#{current_user.id}"]] %>
+    <% if current_user.admin? && current_authorizer_app.present? %>
+      <% bearer_options << ["Authorizer App: #{current_authorizer_app.name}", "AuthorizerApp_#{current_authorizer_app.id}"] %>
+    <% end %>
     <%= form.select :bearer_string,
-          options_for_select(
-            [["Myself (#{current_user.email})", "User_#{current_user.id}"]] +
-            Reader.all.map { |r| ["Reader: #{r.name}", "Reader_#{r.id}"] },
-            api_key.bearer ? "#{api_key.bearer_type}_#{api_key.bearer_id}" : "User_#{current_user.id}"
-          ),
+          options_for_select(bearer_options, api_key.bearer ? "#{api_key.bearer_type}_#{api_key.bearer_id}" : api_key.bearer_string || "User_#{current_user.id}"),
           {},
           class: "select select-bordered w-full" %>
   </div>

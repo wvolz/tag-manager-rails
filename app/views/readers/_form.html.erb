@@ -15,10 +15,82 @@
     </div>
 
     <div class="form-control">
+      <%= form.label :mac_address, "MAC Address", class: "label" %>
+      <%= form.text_field :mac_address,
+          class: "input input-bordered w-full font-mono",
+          placeholder: "00:DE:AD:BE:EF:11" %>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div class="form-control">
+        <%= form.label :reader_name, "Reader Name", class: "label" %>
+        <%= form.text_field :reader_name,
+            class: "input input-bordered w-full",
+            placeholder: "From #ReaderName header" %>
+      </div>
+
+      <div class="form-control">
+        <%= form.label :hostname, "Hostname", class: "label" %>
+        <%= form.text_field :hostname,
+            class: "input input-bordered w-full",
+            placeholder: "From #Hostname header" %>
+      </div>
+    </div>
+
+    <div class="form-control">
       <%= form.label :location, "Location", class: "label" %>
       <%= form.text_field :location,
           class: "input input-bordered w-full",
           placeholder: "e.g. Building A, Floor 3" %>
+    </div>
+
+    <% if reader.persisted? %>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <div class="text-xs font-semibold uppercase tracking-wide text-base-content/60 mb-1">Source IP</div>
+          <div class="font-mono text-sm"><%= reader.source_ip.presence || "—" %></div>
+        </div>
+        <div>
+          <div class="text-xs font-semibold uppercase tracking-wide text-base-content/60 mb-1">Last Seen</div>
+          <div class="text-sm"><%= reader.last_seen_at ? local_time(reader.last_seen_at) : "—" %></div>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="border border-base-300 rounded-lg p-3">
+      <h3 class="font-semibold mb-2">Antenna Authorization Mapping</h3>
+      <p class="text-xs text-base-content/70 mb-3">Set an authorization per antenna. Blank authorization means capture-only (`record_only`).</p>
+
+      <div class="space-y-3">
+        <%= form.fields_for :reader_antennas do |antenna_fields| %>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 items-end border border-base-200 rounded-md p-3">
+            <div class="form-control">
+              <%= antenna_fields.label :antenna, "Antenna", class: "label" %>
+              <%= antenna_fields.number_field :antenna, class: "input input-bordered w-full", min: 0 %>
+            </div>
+
+            <div class="form-control md:col-span-2">
+              <%= antenna_fields.label :authorization_id, "Authorization", class: "label" %>
+              <%= antenna_fields.collection_select :authorization_id,
+                  Authorization.order(:name),
+                  :id,
+                  :name,
+                  { include_blank: "Capture only (record_only)" },
+                  { class: "select select-bordered w-full" } %>
+            </div>
+
+            <%= antenna_fields.hidden_field :id if antenna_fields.object.persisted? %>
+            <% if antenna_fields.object.persisted? %>
+              <div class="md:col-span-3">
+                <label class="label cursor-pointer justify-start gap-2">
+                  <%= antenna_fields.check_box :_destroy, class: "checkbox checkbox-sm" %>
+                  <span class="label-text">Remove this antenna mapping</span>
+                </label>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
     </div>
 
   <% end %>

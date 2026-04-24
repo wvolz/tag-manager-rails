@@ -20,7 +20,7 @@ class ApiKeysController < ApplicationController
   # GET /api_keys/new
   def new
     @api_key = ApiKey.new
-    # pre-fill bearer if they clicked from a reader profile
+    # pre-fill bearer if requested from a specific context
     if params["bearer_type"] && params["bearer_id"]
       @api_key.bearer_string = "#{params["bearer_type"]}_#{params["bearer_id"]}"
     else
@@ -37,8 +37,12 @@ class ApiKeysController < ApplicationController
     respond_to do |format|
       @api_key = ApiKey.new(api_key_params)
 
-      # Security check: only allow creating keys for oneself or a valid Reader
-      unless @api_key.bearer_string.start_with?("Reader_") || @api_key.bearer_string == "User_#{current_user.id}"
+      allowed_bearers = [ "User_#{current_user.id}" ]
+      if current_user.admin? && current_authorizer_app.present?
+        allowed_bearers << "AuthorizerApp_#{current_authorizer_app.id}"
+      end
+
+      unless allowed_bearers.include?(@api_key.bearer_string)
         @api_key.errors.add(:base, "Not authorized to create keys for this user")
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @api_key.errors, status: :unprocessable_entity }

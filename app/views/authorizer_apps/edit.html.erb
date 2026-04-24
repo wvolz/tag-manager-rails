@@ -1,0 +1,28 @@
+<% content_for :title, "Edit Authorizer App" %>
+
+<div class="max-w-2xl mx-auto">
+  <%= form_with(model: @authorizer_app, url: authorizer_app_path, local: true) do |form| %>
+    <% render "shared/form_card",
+        title: "Edit Authorizer App",
+        model: @authorizer_app,
+        form: form,
+        back_path: authorizer_app_path,
+        submit_label: "Update Authorizer App" do %>
+
+      <div class="form-control">
+        <%= form.label :name, "Name", class: "label" %>
+        <%= form.text_field :name,
+            class: "input input-bordered w-full",
+            required: true %>
+      </div>
+
+      <div class="form-control">
+        <%= form.label :description, "Description", class: "label" %>
+        <%= form.text_area :description,
+            class: "textarea textarea-bordered w-full",
+            rows: 4 %>
+      </div>
+
+    <% end %>
+  <% end %>
+</div>

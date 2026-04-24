@@ -1,0 +1,14 @@
+one_auth:
+  reader: one
+  antenna: 1
+  authorization: one
+
+one_record_only:
+  reader: one
+  antenna: 2
+  authorization:
+
+two_auth:
+  reader: two
+  antenna: 1
+  authorization: two

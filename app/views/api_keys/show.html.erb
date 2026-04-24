@@ -33,8 +33,8 @@
               <% if @api_key.bearer_type == "User" %>
                 <span class="badge badge-info badge-sm mr-1">User</span>
                 <%= @api_key.bearer&.email || "unknown" %>
-              <% elsif @api_key.bearer_type == "Reader" %>
-                <span class="badge badge-warning badge-sm mr-1">Reader</span>
+              <% elsif @api_key.bearer_type == "AuthorizerApp" %>
+                <span class="badge badge-warning badge-sm mr-1">Authorizer App</span>
                 <%= @api_key.bearer&.name || "unknown" %>
               <% else %>
                 <%= @api_key.bearer_type %> #<%= @api_key.bearer_id %>

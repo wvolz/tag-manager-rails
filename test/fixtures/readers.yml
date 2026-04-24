@@ -1,9 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  location: MyString
+  authorizer_app: one
+  name: Reader One
+  location: Building A
+  mac_address: 00:DE:AD:BE:EF:11
+  reader_name: RFID Reader
+  hostname: rfid-BEEF11
+  source_ip: 192.168.0.11
+  last_seen_at: 2026-04-01 10:00:00
 
 two:
-  name: MyString
-  location: MyString
+  authorizer_app: two
+  name: Reader Two
+  location: Building B
+  mac_address: 00:DE:AD:BE:EF:12
+  reader_name: RFID Reader
+  hostname: rfid-BEEF12
+  source_ip: 192.168.0.12
+  last_seen_at: 2026-04-01 10:05:00

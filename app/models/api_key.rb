@@ -1,5 +1,6 @@
 class ApiKey < ApplicationRecord
   HMAC_SECRET_KEY = Rails.application.credentials.api_key_hmac_secret_key
+  ALLOWED_BEARER_TYPES = [ "User", "AuthorizerApp" ].freeze
 
   belongs_to :bearer, polymorphic: true
 
@@ -37,7 +38,7 @@ class ApiKey < ApplicationRecord
     return unless bearer_string.present?
     b_type, b_id = bearer_string.split("_")
     # Validate the models just to be safe
-    if [ "User", "Reader" ].include?(b_type)
+    if ALLOWED_BEARER_TYPES.include?(b_type)
       self.bearer_type = b_type
       self.bearer_id = b_id
     end

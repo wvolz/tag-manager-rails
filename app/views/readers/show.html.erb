@@ -19,6 +19,26 @@
             <td><%= @reader.location.presence || "—" %></td>
           </tr>
           <tr>
+            <th class="text-base-content/60 font-medium">MAC Address</th>
+            <td class="font-mono text-xs"><%= @reader.mac_address.presence || "—" %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Reader Name</th>
+            <td><%= @reader.reader_name.presence || "—" %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Hostname</th>
+            <td><%= @reader.hostname.presence || "—" %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Source IP</th>
+            <td class="font-mono text-xs"><%= @reader.source_ip.presence || "—" %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Last Seen</th>
+            <td><%= @reader.last_seen_at ? local_time(@reader.last_seen_at) : "—" %></td>
+          </tr>
+          <tr>
             <th class="text-base-content/60 font-medium">Created</th>
             <td><time datetime="<%= @reader.created_at.iso8601 %>"><%= @reader.created_at.strftime("%b %d, %Y") %></time></td>
           </tr>
@@ -28,7 +48,7 @@
       <div class="card-actions justify-end mt-4">
         <%= link_to "Edit", edit_reader_path(@reader), class: "btn btn-outline btn-sm" %>
         <%= link_to "Delete", reader_path(@reader),
-            data: { turbo_method: :delete, turbo_confirm: "Delete this reader and all its API keys?" },
+            data: { turbo_method: :delete, turbo_confirm: "Delete this reader?" },
             class: "btn btn-error btn-outline btn-sm" %>
       </div>
     </div>
@@ -36,35 +56,29 @@
 
   <div class="card bg-base-100 shadow-sm border border-base-200">
     <div class="card-body">
-      <div class="flex items-center justify-between mb-2">
-        <h2 class="card-title text-lg">API Keys</h2>
-        <%= link_to "New API Key", new_api_key_path(bearer_id: @reader.id, bearer_type: "Reader"),
-            class: "btn btn-primary btn-xs" %>
-      </div>
+      <h2 class="card-title text-lg mb-2">Antenna Authorization Mapping</h2>
 
-      <% if @reader.api_keys.exists? %>
+      <% if @reader.reader_antennas.exists? %>
         <div class="overflow-x-auto">
           <table class="table table-sm table-zebra">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Comment</th>
-                <th>Created</th>
+                <th>Antenna</th>
+                <th>Authorization</th>
               </tr>
             </thead>
             <tbody>
-              <% @reader.api_keys.each do |api_key| %>
+              <% @reader.reader_antennas.order(:antenna).each do |reader_antenna| %>
                 <tr>
-                  <td class="font-mono text-xs"><%= api_key.id %></td>
-                  <td><%= api_key.comment.presence || "—" %></td>
-                  <td><time datetime="<%= api_key.created_at.iso8601 %>"><%= api_key.created_at.strftime("%b %d, %Y") %></time></td>
+                  <td><%= reader_antenna.antenna %></td>
+                  <td><%= reader_antenna.authorization&.name || "Capture only (record_only)" %></td>
                 </tr>
               <% end %>
             </tbody>
           </table>
         </div>
       <% else %>
-        <p class="text-sm text-base-content/50 py-4 text-center">No API keys yet.</p>
+        <p class="text-sm text-base-content/50 py-4 text-center">No antenna mappings yet.</p>
       <% end %>
     </div>
   </div>

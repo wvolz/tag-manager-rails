@@ -30,10 +30,21 @@ class TagscansController < ApplicationController
   # POST /tagscans
   # POST /tagscans.json
   def create
-    @tagscan = Tagscan.new(tagscan_params)
+    attributes = tagscan_params.to_h.symbolize_keys
+    mac = Reader.normalize_mac(attributes.delete(:mac) || params[:mac])
+    source_ip = attributes.delete(:source_ip) || params[:source_ip]
+    reader_name = attributes.delete(:reader_name)
+    hostname = attributes.delete(:hostname)
+
+    resolved_reader = resolve_reader_for_mac(mac)
+    return if performed?
+
+    @tagscan = Tagscan.new(attributes)
+    @tagscan.reader = resolved_reader if resolved_reader
 
     respond_to do |format|
       if @tagscan.save
+        update_reader_activity(resolved_reader, source_ip:, reader_name:, hostname:) if resolved_reader
         format.html { redirect_to @tagscan, notice: "Tagscan was successfully created." }
         format.json { render :show, status: :created, location: @tagscan }
       else
@@ -94,6 +105,43 @@ class TagscansController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def tagscan_params
-    params.require(:tagscan).permit(:tag_epc, :tag_pc, :antenna, :rssi, :received_at, :event_id, :image_protected)
+    params.require(:tagscan).permit(
+      :tag_epc,
+      :tag_pc,
+      :antenna,
+      :rssi,
+      :received_at,
+      :event_id,
+      :image_protected,
+      :mac,
+      :source_ip,
+      :reader_name,
+      :hostname
+    )
+  end
+
+  def resolve_reader_for_mac(mac)
+    return if mac.blank?
+
+    unless current_bearer.is_a?(AuthorizerApp)
+      render json: { error: "Forbidden" }, status: :forbidden
+      return
+    end
+
+    reader = current_bearer.readers.find_by(mac_address: mac)
+    unless reader
+      render json: { error: "Forbidden" }, status: :forbidden
+      return
+    end
+
+    reader
+  end
+
+  def update_reader_activity(reader, source_ip:, reader_name:, hostname:)
+    reader.last_seen_at = @tagscan.received_at || Time.current
+    reader.source_ip = source_ip.presence || request.remote_ip
+    reader.reader_name = reader_name if reader_name.present?
+    reader.hostname = hostname if hostname.present?
+    reader.save! if reader.changed?
   end
 end

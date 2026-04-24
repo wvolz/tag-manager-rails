@@ -29,13 +29,10 @@ class TagsController < ApplicationController
 
   # GET /tags/:epc/authorize
   def authorize
-    @auth_response = "unauthorized"
-    @db_result = nil
-    if @tag.authorizations.exists?(id: params[:a])
-      @db_result = @tag.authorizations.find_by(id: params[:a])
-      if @db_result
-        @auth_response = "authorized"
-      end
+    if params[:mac].present? || params[:antenna].present?
+      authorize_by_mac_and_antenna
+    else
+      authorize_by_legacy_param
     end
   end
 
@@ -104,5 +101,49 @@ class TagsController < ApplicationController
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
+  def authorize_by_mac_and_antenna
+    unless params[:mac].present? && params[:antenna].present?
+      render json: { error: "mac and antenna are required" }, status: :bad_request
+      return
+    end
+
+    unless current_bearer.is_a?(AuthorizerApp)
+      render json: { error: "Forbidden" }, status: :forbidden
+      return
+    end
+
+    antenna_value = Integer(params[:antenna], exception: false)
+    if antenna_value.nil?
+      render json: { error: "antenna must be an integer" }, status: :bad_request
+      return
+    end
+
+    normalized_mac = Reader.normalize_mac(params[:mac])
+    reader = current_bearer.readers.find_by(mac_address: normalized_mac)
+    unless reader
+      render json: { error: "Forbidden" }, status: :forbidden
+      return
+    end
+
+    reader_antenna = reader.reader_antennas.find_by(antenna: antenna_value)
+    if reader_antenna.nil? || reader_antenna.authorization_id.nil?
+      @auth_response = "record_only"
+      @db_result = nil
+      return
+    end
+
+    @db_result = Authorization.find_by(id: reader_antenna.authorization_id)
+    @auth_response = @tag.authorizations.exists?(id: reader_antenna.authorization_id) ? "authorized" : "unauthorized"
+  end
+
+  def authorize_by_legacy_param
+    @auth_response = "unauthorized"
+    @db_result = nil
+    if @tag.authorizations.exists?(id: params[:a])
+      @db_result = @tag.authorizations.find_by(id: params[:a])
+      @auth_response = "authorized" if @db_result
+    end
   end
 end

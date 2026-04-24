@@ -17,8 +17,10 @@
       <thead>
         <tr>
           <th>Name</th>
+          <th>MAC Address</th>
           <th>Location</th>
-          <th>API Keys</th>
+          <th>Antennas</th>
+          <th>Last Seen</th>
           <th></th>
         </tr>
       </thead>
@@ -28,14 +30,14 @@
             <td class="font-medium">
               <%= link_to reader.name, reader_path(reader), class: "link link-primary" %>
             </td>
+            <td class="font-mono text-xs"><%= reader.mac_address.presence || "—" %></td>
             <td><%= reader.location.presence || "—" %></td>
-            <td>
-              <%= link_to "API Keys (#{reader.api_keys.count})", new_api_key_path(bearer_id: reader.id, bearer_type: "Reader"), class: "badge badge-outline badge-sm" %>
-            </td>
+            <td><%= reader.reader_antennas.count %></td>
+            <td><%= reader.last_seen_at ? local_time(reader.last_seen_at) : "—" %></td>
             <td>
               <div class="flex gap-1">
                 <%= link_to "Edit", edit_reader_path(reader), class: "btn btn-xs btn-outline" %>
-                <%= link_to "Delete", reader_path(reader), data: { turbo_method: :delete, turbo_confirm: "Delete this reader and all its API keys?" }, class: "btn btn-xs btn-error btn-outline" %>
+                <%= link_to "Delete", reader_path(reader), data: { turbo_method: :delete, turbo_confirm: "Delete this reader?" }, class: "btn btn-xs btn-error btn-outline" %>
               </div>
             </td>
           </tr>

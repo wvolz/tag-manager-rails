@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_06_154822) do
+ActiveRecord::Schema[8.0].define(version: 2026_04_23_100005) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -61,11 +61,37 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_06_154822) do
     t.integer "authorization_id", null: false
   end
 
+  create_table "authorizer_apps", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reader_antennas", force: :cascade do |t|
+    t.integer "reader_id", null: false
+    t.integer "antenna", null: false
+    t.integer "authorization_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["authorization_id"], name: "index_reader_antennas_on_authorization_id"
+    t.index ["reader_id", "antenna"], name: "index_reader_antennas_on_reader_id_and_antenna", unique: true
+    t.index ["reader_id"], name: "index_reader_antennas_on_reader_id"
+  end
+
   create_table "readers", force: :cascade do |t|
     t.string "name"
     t.string "location"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "authorizer_app_id"
+    t.string "mac_address"
+    t.string "reader_name"
+    t.string "hostname"
+    t.string "source_ip"
+    t.datetime "last_seen_at"
+    t.index ["authorizer_app_id"], name: "index_readers_on_authorizer_app_id"
+    t.index ["mac_address"], name: "index_readers_on_mac_address", unique: true
   end
 
   create_table "settings", force: :cascade do |t|
@@ -104,7 +130,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_06_154822) do
     t.datetime "received_at"
     t.string "event_id"
     t.boolean "image_protected", default: false, null: false
+    t.integer "reader_id"
     t.index ["event_id"], name: "index_tagscans_on_event_id", unique: true
+    t.index ["reader_id"], name: "index_tagscans_on_reader_id"
     t.index ["tag_id"], name: "index_tagscans_on_tag_id"
   end
 
@@ -125,5 +153,9 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_06_154822) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "reader_antennas", "authorizations"
+  add_foreign_key "reader_antennas", "readers"
+  add_foreign_key "readers", "authorizer_apps"
+  add_foreign_key "tagscans", "readers"
   add_foreign_key "tagscans", "tags"
 end

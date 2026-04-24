@@ -1,0 +1,7 @@
+one:
+  name: Primary Authorizer
+  description: Default authorizer app
+
+two:
+  name: Secondary Authorizer
+  description: Other app for scoping checks

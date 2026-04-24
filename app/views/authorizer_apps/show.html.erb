@@ -1,0 +1,70 @@
+<% content_for :title, @authorizer_app.name %>
+
+<%= render "shared/show_header",
+    title: @authorizer_app.name,
+    subtitle: "Authorizer App",
+    back_path: root_path %>
+
+<div class="max-w-4xl space-y-4">
+  <div class="card bg-base-100 shadow-sm border border-base-200">
+    <div class="card-body">
+      <table class="table table-sm">
+        <tbody>
+          <tr>
+            <th class="w-40 text-base-content/60 font-medium">Name</th>
+            <td><%= @authorizer_app.name %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Description</th>
+            <td><%= @authorizer_app.description.presence || "—" %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">Readers</th>
+            <td><%= @authorizer_app.readers.count %></td>
+          </tr>
+          <tr>
+            <th class="text-base-content/60 font-medium">API Keys</th>
+            <td><%= @authorizer_app.api_keys.count %></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card-actions justify-end mt-4">
+        <%= link_to "Edit", edit_authorizer_app_path, class: "btn btn-outline btn-sm" %>
+        <%= link_to "New API Key", new_api_key_path(bearer_id: @authorizer_app.id, bearer_type: "AuthorizerApp"), class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow-sm border border-base-200">
+    <div class="card-body">
+      <h2 class="card-title text-lg">Readers</h2>
+      <% if @authorizer_app.readers.exists? %>
+        <div class="overflow-x-auto">
+          <table class="table table-sm table-zebra">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>MAC Address</th>
+                <th>Hostname</th>
+                <th>Last Seen</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @authorizer_app.readers.order(:name).each do |reader| %>
+                <tr>
+                  <td><%= link_to reader.name, reader_path(reader), class: "link link-primary" %></td>
+                  <td class="font-mono text-xs"><%= reader.mac_address.presence || "—" %></td>
+                  <td><%= reader.hostname.presence || "—" %></td>
+                  <td><%= reader.last_seen_at ? local_time(reader.last_seen_at) : "—" %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-sm text-base-content/50">No readers configured yet.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

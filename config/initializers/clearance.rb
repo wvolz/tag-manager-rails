@@ -3,4 +3,5 @@ Clearance.configure do |config|
   config.mailer_sender = "reply@example.com"
   config.rotate_csrf_on_sign_in = true
   config.signed_cookie = true
+  config.redirect_url = "#{ENV.fetch('RAILS_RELATIVE_URL_ROOT', '')}/"
 end

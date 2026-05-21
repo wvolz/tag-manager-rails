@@ -32,21 +32,60 @@ module ApplicationHelper
       html.html_safe
   end
 
-  # rubocop:disable Rails/OutputSafety
   def sortable(column, title = nil)
     title ||= column.titleize
-    css_class = column == sort_column ? "current #{sort_direction}" : nil
-    direction = column == sort_column && sort_direction == "asc" ? "desc" : "asc"
-    link_to({ sort: column, direction: }, { class: css_class }) do
-      "#{title} #{if css_class.present?
-                    content_tag(
-                      :i,
-                      "",
-                      class: "fas fa-chevron-#{direction == "asc" ? "up" : "down"}",
-                      style: "font-size: 6px;"
-                    )
-                  end}".html_safe
+    active = column == sort_column
+    current_direction = active ? sort_direction : nil
+    next_direction = active && sort_direction == "asc" ? "desc" : "asc"
+
+    link_classes = [
+      "inline-flex items-center gap-1 rounded px-2 py-1 transition-colors",
+      (active ? "bg-base-200 text-base-content font-semibold ring-1 ring-base-300" : "text-base-content/70 hover:text-base-content hover:bg-base-200/70")
+    ].join(" ")
+
+    sort_state = if current_direction == "asc"
+      "currently sorted ascending"
+    elsif current_direction == "desc"
+      "currently sorted descending"
+    else
+      "not currently sorted"
+    end
+
+    aria_label = "Sort by #{title}, #{sort_state}"
+
+    link_to(request.query_parameters.merge(sort: column, direction: next_direction), class: link_classes, aria: { label: aria_label }) do
+      safe_join([
+        content_tag(:span, title),
+        sort_indicator_icon(current_direction, active)
+      ])
     end
   end
-  # rubocop:enable Rails/OutputSafety
+
+  def sort_indicator_icon(direction, active)
+    icon_classes = [
+      "h-4 w-4",
+      (active ? "text-primary" : "text-base-content/60")
+    ].join(" ")
+
+    content_tag(:svg, class: icon_classes, viewBox: "0 0 20 20", fill: "currentColor", aria: { hidden: true }) do
+      paths = if direction == "asc"
+        [
+          tag.path(d: "M10 4l4.5 5h-9L10 4z"),
+          tag.rect(x: "9", y: "9", width: "2", height: "7", rx: "1")
+        ]
+      elsif direction == "desc"
+        [
+          tag.rect(x: "9", y: "4", width: "2", height: "7", rx: "1"),
+          tag.path(d: "M10 16l-4.5-5h9L10 16z")
+        ]
+      else
+        [
+          tag.path(d: "M10 3.5l4 4.5h-8L10 3.5z"),
+          tag.path(d: "M10 16.5l-4-4.5h8L10 16.5z")
+        ]
+      end
+
+      safe_join(paths)
+    end
+  end
 end

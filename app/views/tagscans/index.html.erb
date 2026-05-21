@@ -105,7 +105,7 @@
               <% if tagscan.image.attached? %>
                 <%= link_to(
                       image_tag(
-                        tagscan.image.variant(resize_to_limit: [60, 60]),
+                        tagscan.image.variant(:thumbnail),
                         class: "rounded",
                         loading: "lazy",
                         decoding: "async",

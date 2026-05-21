@@ -3,7 +3,9 @@ class Tagscan < ApplicationRecord
 
   belongs_to :tag
   belongs_to :reader, optional: true
-  has_one_attached :image
+  has_one_attached :image do |attachable|
+    attachable.variant :thumbnail, resize_to_limit: [ 60, 60 ], preprocessed: true
+  end
   after_create :update_last_seen_time
   scope :by_created, -> { order(received_at: :desc) }
   scope :with_image_attachment, -> { joins(:image_attachment) }

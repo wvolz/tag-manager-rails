@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_05_121500) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_20_143000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -119,6 +119,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_05_05_121500) do
     t.string "description"
     t.string "tid", limit: 124
     t.string "user_memory", limit: 124
+    t.index ["created_at", "id"], name: "index_tags_on_created_at_and_id"
+    t.index ["updated_at", "id"], name: "index_tags_on_updated_at_and_id"
   end
 
   create_table "tagscans", force: :cascade do |t|

@@ -10,7 +10,8 @@ class TagsController < ApplicationController
   # GET /tags
   # GET /tags.json
   def index
-    @tags = Tag.order({ sort_column => sort_direction })
+    ordered_tags = Tag.includes(:tag_type).order(sort_order)
+    @pagy, @tags = pagy(ordered_tags)
   end
 
   # GET /tags/1
@@ -96,11 +97,19 @@ class TagsController < ApplicationController
   end
 
   def sort_column
-    Tag.column_names.include?(params[:sort]) ? params[:sort] : "id"
+    %w[id created_at updated_at].include?(params[:sort]) ? params[:sort] : "id"
   end
 
   def sort_direction
     %w[asc desc].include?(params[:direction]) ? params[:direction] : "asc"
+  end
+
+  def sort_order
+    if sort_column == "id"
+      { id: sort_direction }
+    else
+      { sort_column => sort_direction, id: sort_direction }
+    end
   end
 
   def authorize_by_mac_and_antenna

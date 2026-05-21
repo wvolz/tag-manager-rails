@@ -84,6 +84,20 @@ class TagscansControllerTest < ActionDispatch::IntegrationTest
     assert @tagscan.reload.image.attached?
   end
 
+  test "should enqueue classification after photo upload when enabled" do
+    Setting.image_classification_enabled = true
+    api_key = ApiKey.create!(bearer: @user)
+    photo = fixture_file_upload("test.jpg", "image/jpeg")
+
+    assert_enqueued_with(job: ClassifyTagscanImageJob, args: [ @tagscan.id ]) do
+      post tagscan_photo_url(@tagscan.event_id),
+        params: { photo: photo },
+        headers: { "Authorization" => "Bearer #{api_key.token}" }
+    end
+
+    assert_equal "queued", @tagscan.reload.image_classification_status
+  end
+
   test "should reject photo upload when image already attached" do
     @tagscan.image.attach(io: StringIO.new("existing"), filename: "old.jpg", content_type: "image/jpeg")
     api_key = ApiKey.create!(bearer: @user)
@@ -185,5 +199,38 @@ class TagscansControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :created
     assert_nil Tagscan.last.reader_id
+  end
+
+  test "index filters by relevant detection" do
+    matching_tag = Tag.create!(epc: "E20000000000000000000001")
+    non_matching_tag = Tag.create!(epc: "E20000000000000000000002")
+
+    matching_scan = Tagscan.create!(
+      tag: matching_tag,
+      antenna: 1,
+      rssi: -40,
+      received_at: Time.current,
+      event_id: SecureRandom.uuid,
+      image_classification_status: "classified",
+      contains_person: true,
+      person_confidence: 0.95
+    )
+    matching_scan.image.attach(io: StringIO.new("img"), filename: "match.jpg", content_type: "image/jpeg")
+
+    non_matching_scan = Tagscan.create!(
+      tag: non_matching_tag,
+      antenna: 1,
+      rssi: -41,
+      received_at: Time.current,
+      event_id: SecureRandom.uuid,
+      image_classification_status: "classified"
+    )
+    non_matching_scan.image.attach(io: StringIO.new("img"), filename: "other.jpg", content_type: "image/jpeg")
+
+    get tagscans_url, params: { detection: "person", with_image: "1" }
+
+    assert_response :success
+    assert_includes @response.body, matching_tag.epc
+    assert_not_includes @response.body, non_matching_tag.epc
   end
 end

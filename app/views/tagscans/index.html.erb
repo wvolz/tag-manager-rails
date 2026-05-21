@@ -10,6 +10,59 @@
   <%= link_to "New Scan", new_tagscan_path, class: "btn btn-primary btn-sm" %>
 </div>
 
+<div class="card bg-base-100 border border-base-300 shadow-sm mb-4">
+  <div class="card-body gap-4">
+    <div>
+      <h2 class="card-title text-lg">Filters</h2>
+      <p class="text-sm text-base-content/60">Filter scans by attached image, classification state, and detected people, vehicles, or animals.</p>
+    </div>
+
+    <%= form_with url: tagscans_path, method: :get, local: true, class: "grid gap-4 md:grid-cols-4 items-end" do |form| %>
+      <div class="form-control">
+        <%= form.label :with_image, "Image", class: "label" %>
+        <%= form.select :with_image,
+            options_for_select([["All scans", "0"], ["Only scans with images", "1"]], @filters[:with_image].presence || "0"),
+            {},
+            class: "select select-bordered w-full" %>
+      </div>
+
+      <div class="form-control">
+        <%= form.label :classification_status, "Classification", class: "label" %>
+        <%= form.select :classification_status,
+            options_for_select([
+              ["Any status", nil],
+              ["Unclassified", "unclassified"],
+              ["Queued", "queued"],
+              ["Processing", "processing"],
+              ["Classified", "classified"],
+              ["Failed", "failed"]
+            ], @filters[:classification_status]),
+            {},
+            class: "select select-bordered w-full" %>
+      </div>
+
+      <div class="form-control">
+        <%= form.label :detection, "Contains", class: "label" %>
+        <%= form.select :detection,
+            options_for_select([
+              ["Anything", nil],
+              ["Person", "person"],
+              ["Vehicle", "vehicle"],
+              ["Animal", "animal"],
+              ["Any relevant detection", "relevant"]
+            ], @filters[:detection]),
+            {},
+            class: "select select-bordered w-full" %>
+      </div>
+
+      <div class="flex gap-2">
+        <%= form.submit "Apply", class: "btn btn-primary btn-sm" %>
+        <%= link_to "Reset", tagscans_path, class: "btn btn-ghost btn-sm" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
 <% if @tagscans.empty? %>
   <div class="flex flex-col items-center justify-center py-16 text-center text-base-content/50">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
@@ -27,6 +80,7 @@
           <th>Antenna</th>
           <th>RSSI</th>
           <th>Image</th>
+          <th>Classification</th>
           <th></th>
         </tr>
       </thead>
@@ -59,6 +113,13 @@
                 </div>
               <% else %>
                 <%= image_tag "no-image-graphic.png", class: "h-10 w-10 opacity-30" %>
+              <% end %>
+            </td>
+            <td class="min-w-44">
+              <% if tagscan.image.attached? %>
+                <%= render "image_classification_badges", tagscan: tagscan %>
+              <% else %>
+                <span class="text-base-content/40">—</span>
               <% end %>
             </td>
             <td>

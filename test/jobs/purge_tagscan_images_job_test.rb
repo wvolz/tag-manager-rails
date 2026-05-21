@@ -54,4 +54,38 @@ class PurgeTagscanImagesJobTest < ActiveJob::TestCase
 
     assert recent_scan.reload.image.attached?
   end
+
+  test "does not purge unclassified images when detection-aware purge rule is enabled" do
+    Setting.image_purge_enabled = true
+    Setting.image_purge_without_relevant_detections_enabled = true
+    Setting.image_purge_without_relevant_detections_min_confidence = 0.6
+    old_scan = Tagscan.create!(tag: tags(:one), received_at: 100.days.ago)
+    old_scan.image.attach(io: StringIO.new("img"), filename: "x.jpg", content_type: "image/jpeg")
+
+    PurgeTagscanImagesJob.perform_now
+
+    assert old_scan.reload.image.attached?
+  end
+
+  test "purges classified images with no relevant detections when detection-aware purge rule is enabled" do
+    Setting.image_purge_enabled = true
+    Setting.image_purge_without_relevant_detections_enabled = true
+    Setting.image_purge_without_relevant_detections_min_confidence = 0.6
+    old_scan = Tagscan.create!(
+      tag: tags(:one),
+      received_at: 100.days.ago,
+      image_classification_status: "classified",
+      contains_person: false,
+      contains_vehicle: false,
+      contains_animal: false,
+      person_confidence: 0.3,
+      vehicle_confidence: 0.2,
+      animal_confidence: 0.1
+    )
+    old_scan.image.attach(io: StringIO.new("img"), filename: "x.jpg", content_type: "image/jpeg")
+
+    PurgeTagscanImagesJob.perform_now
+
+    assert_not old_scan.reload.image.attached?
+  end
 end

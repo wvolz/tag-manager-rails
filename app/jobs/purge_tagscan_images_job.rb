@@ -8,7 +8,13 @@ class PurgeTagscanImagesJob < ApplicationJob
     end
 
     retention_days = Setting.image_retention_days
-    candidates = Tagscan.purgeable_images(retention_days)
+    require_no_relevant_detection = Setting.image_purge_without_relevant_detections_enabled?
+    relevant_min_confidence = Setting.image_purge_without_relevant_detections_min_confidence
+    candidates = Tagscan.purgeable_images(
+      retention_days,
+      require_no_relevant_detection:,
+      relevant_min_confidence:
+    )
     count = 0
 
     candidates.find_each do |tagscan|
@@ -16,6 +22,9 @@ class PurgeTagscanImagesJob < ApplicationJob
       count += 1
     end
 
-    logger.info "PurgeTagscanImagesJob: purged #{count} image(s) older than #{retention_days} day(s)"
+    logger.info(
+      "PurgeTagscanImagesJob: purged #{count} image(s) older than #{retention_days} day(s)" \
+      " (require_no_relevant_detection=#{require_no_relevant_detection}, min_confidence=#{relevant_min_confidence})"
+    )
   end
 end

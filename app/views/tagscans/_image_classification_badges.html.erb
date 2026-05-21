@@ -1,0 +1,14 @@
+<div class="flex flex-wrap gap-1 items-center">
+  <% if local_assigns.fetch(:show_status, true) %>
+    <span class="badge <%= tagscan_classification_status_badge_class(tagscan) %>">
+      <%= tagscan_classification_status_label(tagscan) %>
+    </span>
+  <% end %>
+
+  <% tagscan.image_detection_summary.each do |entry| %>
+    <span class="badge <%= tagscan_detection_badge_class(entry[:type]) %>">
+      <%= entry[:type].to_s.capitalize %>
+      <%= format_detection_confidence(entry[:confidence]) %>
+    </span>
+  <% end %>
+</div>

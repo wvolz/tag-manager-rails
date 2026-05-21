@@ -30,10 +30,47 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
     assert_not Setting.image_purge_enabled?
   end
 
+  test "should update classification settings" do
+    patch settings_url, params: {
+      settings: {
+        image_retention_days: 30,
+        image_purge_enabled: "0",
+        image_classification_enabled: "1",
+        image_classification_endpoint: "http://cpai.local:32168",
+        image_classification_min_confidence: "0.55",
+        image_purge_without_relevant_detections_enabled: "1",
+        image_purge_without_relevant_detections_min_confidence: "0.7"
+      }
+    }
+
+    assert_redirected_to edit_settings_url
+    assert Setting.image_classification_enabled?
+    assert_equal "http://cpai.local:32168", Setting.image_classification_endpoint
+    assert_equal 0.55, Setting.image_classification_min_confidence
+    assert Setting.image_purge_without_relevant_detections_enabled?
+    assert_equal 0.7, Setting.image_purge_without_relevant_detections_min_confidence
+  end
+
   test "should enqueue purge job on purge_images" do
     assert_enqueued_with(job: PurgeTagscanImagesJob) do
       post purge_images_settings_url
     end
+    assert_redirected_to edit_settings_url
+  end
+
+  test "should enqueue backfill job for unclassified images" do
+    assert_enqueued_with(job: BackfillTagscanImageClassificationsJob, args: [ { force: false } ]) do
+      post classify_unclassified_images_settings_url
+    end
+
+    assert_redirected_to edit_settings_url
+  end
+
+  test "should enqueue full reclassification job" do
+    assert_enqueued_with(job: BackfillTagscanImageClassificationsJob, args: [ { force: true } ]) do
+      post reclassify_images_settings_url
+    end
+
     assert_redirected_to edit_settings_url
   end
 

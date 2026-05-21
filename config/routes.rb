@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   resource :settings, only: [ :edit, :update ] do
     collection do
       post :purge_images
+      post :classify_unclassified_images
+      post :reclassify_images
     end
   end
   # resources :api_keys, path: 'api-keys', only: %i[index new create destroy]

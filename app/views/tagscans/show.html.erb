@@ -76,6 +76,55 @@
                     <% end %>
                     <p class="text-xs text-base-content/60 mt-1">Click to open full size.</p>
                 </div>
+
+                <div>
+                    <h2 class="text-sm font-semibold text-base-content/60 mb-2">Image Classification</h2>
+                    <div class="space-y-3">
+                        <%= render "image_classification_badges", tagscan: @tagscan %>
+
+                        <% if @tagscan.image_classified_at.present? %>
+                            <p class="text-xs text-base-content/60">
+                                Classified <time datetime="<%= @tagscan.image_classified_at.iso8601 %>"><%= @tagscan.image_classified_at.strftime("%b %d, %Y at %H:%M:%S") %></time>
+                            </p>
+                        <% end %>
+
+                        <% if @tagscan.image_classification_error.present? %>
+                            <div class="alert alert-error text-sm py-2">
+                                <span><%= @tagscan.image_classification_error %></span>
+                            </div>
+                        <% end %>
+
+                        <% if @tagscan.image_predictions.any? %>
+                            <details class="collapse collapse-arrow border border-base-300 bg-base-100">
+                                <summary class="collapse-title text-sm font-medium">Detection details</summary>
+                                <div class="collapse-content px-4 pb-4">
+                                    <div class="overflow-x-auto">
+                                        <table class="table table-sm">
+                                            <thead>
+                                                <tr>
+                                                    <th>Label</th>
+                                                    <th>Confidence</th>
+                                                    <th>Bounds</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% @tagscan.image_predictions.each do |prediction| %>
+                                                    <tr>
+                                                        <td><%= prediction["label"] %></td>
+                                                        <td><%= format_detection_confidence(prediction["confidence"]) %></td>
+                                                        <td class="font-mono text-xs">
+                                                            [<%= prediction["x_min"] %>, <%= prediction["y_min"] %>] - [<%= prediction["x_max"] %>, <%= prediction["y_max"] %>]
+                                                        </td>
+                                                    </tr>
+                                                <% end %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </details>
+                        <% end %>
+                    </div>
+                </div>
             <% end %>
         </div>
     </div>

@@ -10,7 +10,9 @@ class TagscansController < ApplicationController
   # GET /tagscans
   # GET /tagscans.json
   def index
-    @pagy, @tagscans = pagy(Tagscan.order(received_at: :desc))
+    @filters = tagscan_filters
+    tagscans = apply_tagscan_filters(Tagscan.order(received_at: :desc))
+    @pagy, @tagscans = pagy(tagscans)
   end
 
   # GET /tagscans/1
@@ -83,6 +85,7 @@ class TagscansController < ApplicationController
     end
 
     tagscan.image.attach(params[:photo])
+    queue_image_classification(tagscan)
     render json: {}, status: :created
   end
 
@@ -143,5 +146,46 @@ class TagscansController < ApplicationController
     reader.reader_name = reader_name if reader_name.present?
     reader.hostname = hostname if hostname.present?
     reader.save! if reader.changed?
+  end
+
+  def apply_tagscan_filters(scope)
+    scope = scope.with_attached_image if @filters[:with_image] == "1"
+
+    scope = case @filters[:classification_status]
+    when "unclassified"
+      scope.unclassified_images
+    when "classified"
+      scope.classified_images
+    when "failed"
+      scope.failed_classification_images
+    when "queued", "processing"
+      scope.classification_status(@filters[:classification_status])
+    else
+      scope
+    end
+
+    case @filters[:detection]
+    when "person"
+      scope.containing_person
+    when "vehicle"
+      scope.containing_vehicle
+    when "animal"
+      scope.containing_animal
+    when "relevant"
+      scope.with_relevant_detection
+    else
+      scope
+    end
+  end
+
+  def tagscan_filters
+    params.permit(:with_image, :classification_status, :detection)
+  end
+
+  def queue_image_classification(tagscan)
+    return unless Setting.image_classification_enabled?
+
+    tagscan.mark_image_classification_queued!
+    ClassifyTagscanImageJob.perform_later(tagscan.id)
   end
 end

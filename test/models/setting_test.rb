@@ -31,4 +31,18 @@ class SettingTest < ActiveSupport::TestCase
     Setting.image_purge_enabled = false
     assert_not Setting.image_purge_enabled?
   end
+
+  test "image classification settings are stored and normalized" do
+    Setting.image_classification_enabled = true
+    Setting.image_classification_endpoint = " http://cpai.local:32168 "
+    Setting.image_classification_min_confidence = 2
+    Setting.image_purge_without_relevant_detections_enabled = true
+    Setting.image_purge_without_relevant_detections_min_confidence = -1
+
+    assert Setting.image_classification_enabled?
+    assert_equal "http://cpai.local:32168", Setting.image_classification_endpoint
+    assert_equal 1.0, Setting.image_classification_min_confidence
+    assert Setting.image_purge_without_relevant_detections_enabled?
+    assert_equal 0.0, Setting.image_purge_without_relevant_detections_min_confidence
+  end
 end

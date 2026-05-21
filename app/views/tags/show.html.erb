@@ -120,6 +120,7 @@
                 <th>RSSI</th>
                 <th>Time</th>
                 <th>Image</th>
+                <th>Classification</th>
               </tr>
             </thead>
             <tbody>
@@ -132,6 +133,13 @@
                   <td>
                     <% if scan.image.attached? %>
                       <%= link_to image_tag(scan.image.variant(resize_to_limit: [80, 80]), class: "h-10 w-10 object-cover rounded"), url_for(scan.image), target: "_blank" %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <% if scan.image.attached? %>
+                      <%= render "tagscans/image_classification_badges", tagscan: scan %>
+                    <% else %>
+                      <span class="text-base-content/40">—</span>
                     <% end %>
                   </td>
                 </tr>

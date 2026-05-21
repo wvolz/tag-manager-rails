@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_04_23_100005) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_05_121500) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -131,7 +131,21 @@ ActiveRecord::Schema[8.0].define(version: 2026_04_23_100005) do
     t.string "event_id"
     t.boolean "image_protected", default: false, null: false
     t.integer "reader_id"
+    t.string "image_classification_status"
+    t.datetime "image_classified_at"
+    t.text "image_classification_error"
+    t.text "image_classification_payload"
+    t.boolean "contains_person", default: false, null: false
+    t.boolean "contains_vehicle", default: false, null: false
+    t.boolean "contains_animal", default: false, null: false
+    t.decimal "person_confidence", precision: 5, scale: 4
+    t.decimal "vehicle_confidence", precision: 5, scale: 4
+    t.decimal "animal_confidence", precision: 5, scale: 4
+    t.index ["contains_animal"], name: "index_tagscans_on_contains_animal"
+    t.index ["contains_person"], name: "index_tagscans_on_contains_person"
+    t.index ["contains_vehicle"], name: "index_tagscans_on_contains_vehicle"
     t.index ["event_id"], name: "index_tagscans_on_event_id", unique: true
+    t.index ["image_classification_status"], name: "index_tagscans_on_image_classification_status"
     t.index ["reader_id"], name: "index_tagscans_on_reader_id"
     t.index ["tag_id"], name: "index_tagscans_on_tag_id"
   end

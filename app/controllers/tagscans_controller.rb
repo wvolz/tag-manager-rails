@@ -11,7 +11,8 @@ class TagscansController < ApplicationController
   # GET /tagscans.json
   def index
     @filters = tagscan_filters
-    tagscans = apply_tagscan_filters(Tagscan.order(received_at: :desc))
+    base_scope = Tagscan.includes(:tag).with_attached_image.order(received_at: :desc)
+    tagscans = apply_tagscan_filters(base_scope)
     @pagy, @tagscans = pagy(tagscans)
   end
 
@@ -149,7 +150,7 @@ class TagscansController < ApplicationController
   end
 
   def apply_tagscan_filters(scope)
-    scope = scope.with_attached_image if @filters[:with_image] == "1"
+    scope = scope.with_image_attachment if @filters[:with_image] == "1"
 
     scope = case @filters[:classification_status]
     when "unclassified"

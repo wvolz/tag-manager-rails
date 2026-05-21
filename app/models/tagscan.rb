@@ -6,11 +6,11 @@ class Tagscan < ApplicationRecord
   has_one_attached :image
   after_create :update_last_seen_time
   scope :by_created, -> { order(received_at: :desc) }
-  scope :with_attached_image, -> { joins(:image_attachment) }
+  scope :with_image_attachment, -> { joins(:image_attachment) }
   scope :classification_status, ->(status) { where(image_classification_status: status) }
-  scope :unclassified_images, -> { with_attached_image.where(image_classification_status: nil) }
-  scope :classified_images, -> { with_attached_image.where(image_classification_status: "classified") }
-  scope :failed_classification_images, -> { with_attached_image.where(image_classification_status: "failed") }
+  scope :unclassified_images, -> { with_image_attachment.where(image_classification_status: nil) }
+  scope :classified_images, -> { with_image_attachment.where(image_classification_status: "classified") }
+  scope :failed_classification_images, -> { with_image_attachment.where(image_classification_status: "failed") }
   scope :containing_person, -> { classified_images.where(contains_person: true) }
   scope :containing_vehicle, -> { classified_images.where(contains_vehicle: true) }
   scope :containing_animal, -> { classified_images.where(contains_animal: true) }

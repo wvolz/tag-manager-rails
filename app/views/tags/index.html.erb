@@ -12,17 +12,17 @@
     <p class="text-sm mt-1">Get started by <%= link_to "creating your first tag", new_tag_path, class: "link" %>.</p>
   </div>
 <% else %>
-  <div class="overflow-x-auto">
-    <table class="table table-zebra">
+  <div class="w-full overflow-x-auto">
+    <table class="table table-zebra min-w-full">
       <thead>
         <tr>
-          <th>EPC</th>
+          <th class="whitespace-nowrap">EPC</th>
           <th>Description</th>
-          <th>PC</th>
-          <th>Type</th>
-          <th><%= sortable "created_at", "Created" %></th>
-          <th><%= sortable "updated_at", "Updated" %></th>
-          <th>Last Seen</th>
+          <th class="max-lg:hidden whitespace-nowrap">PC</th>
+          <th class="max-md:hidden">Type</th>
+          <th class="whitespace-nowrap"><%= sortable "created_at", "Date Added" %></th>
+          <th class="max-lg:hidden whitespace-nowrap"><%= sortable "updated_at", "Updated" %></th>
+          <th class="max-md:hidden whitespace-nowrap">Last Seen</th>
           <th></th>
         </tr>
       </thead>
@@ -33,12 +33,12 @@
             <td class="font-mono text-xs">
               <%= link_to tag.epc, tag_path(tag), class: "link link-primary" %>
             </td>
-            <td><%= tag.description.presence || "—" %></td>
-            <td class="font-mono text-xs"><%= tag.pc.presence || "—" %></td>
-            <td><%= tag.tag_type&.name || "—" %></td>
-            <td class="text-sm"><%= local_time(tag.created_at) if tag.created_at %></td>
-            <td class="text-sm"><%= local_time(tag.updated_at) if tag.updated_at %></td>
-            <td class="text-sm"><%= local_time(tag.last_seen_at) if tag.last_seen_at %></td>
+            <td class="max-w-44 truncate"><%= tag.description.presence || "—" %></td>
+            <td class="max-lg:hidden font-mono text-xs"><%= tag.pc.presence || "—" %></td>
+            <td class="max-md:hidden"><%= tag.tag_type&.name || "—" %></td>
+            <td class="text-sm whitespace-nowrap"><%= local_time(tag.created_at) if tag.created_at %></td>
+            <td class="max-lg:hidden text-sm whitespace-nowrap"><%= local_time(tag.updated_at) if tag.updated_at %></td>
+            <td class="max-md:hidden text-sm whitespace-nowrap"><%= local_time(tag.last_seen_at) if tag.last_seen_at %></td>
             <td>
               <div class="flex gap-1">
                 <%= link_to "Edit", edit_tag_path(tag), class: "btn btn-xs btn-outline" %>

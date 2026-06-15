@@ -135,11 +135,11 @@
           <h3 class="font-medium">Image Classification</h3>
 
           <div class="form-control">
-            <label class="label cursor-pointer justify-start gap-4">
+            <label class="label cursor-pointer items-start justify-start gap-4">
               <input type="checkbox" name="settings[image_classification_enabled]" value="1"
-                     class="toggle toggle-primary"
+                     class="toggle toggle-primary mt-1 shrink-0"
                      <%= "checked" if @classification_enabled %>>
-              <div>
+              <div class="min-w-0 flex-1">
                 <span class="label-text font-medium">Automatically classify newly uploaded images</span>
                 <p class="text-xs text-base-content/60 mt-0.5">When enabled, each new tagscan photo is sent to CodeProject.AI after upload and the resulting people, vehicle, and animal detections are stored.</p>
               </div>
@@ -177,11 +177,11 @@
           <h3 class="font-medium">Image Purge</h3>
 
         <div class="form-control">
-          <label class="label cursor-pointer justify-start gap-4">
+          <label class="label cursor-pointer items-start justify-start gap-4">
             <input type="checkbox" name="settings[image_purge_enabled]" value="1"
-                   class="toggle toggle-primary"
+                   class="toggle toggle-primary mt-1 shrink-0"
                    <%= "checked" if @purge_enabled %>>
-            <div>
+            <div class="min-w-0 flex-1">
               <span class="label-text font-medium">Enable automatic scheduled purge</span>
               <p class="text-xs text-base-content/60 mt-0.5">When enabled, images are purged daily at 2:00 AM according to the retention period below.</p>
             </div>
@@ -200,11 +200,11 @@
         </div>
 
           <div class="form-control">
-            <label class="label cursor-pointer justify-start gap-4">
+            <label class="label cursor-pointer items-start justify-start gap-4">
               <input type="checkbox" name="settings[image_purge_without_relevant_detections_enabled]" value="1"
-                     class="toggle toggle-primary"
+                     class="toggle toggle-primary mt-1 shrink-0"
                      <%= "checked" if @purge_without_relevant_detections_enabled %>>
-              <div>
+              <div class="min-w-0 flex-1">
                 <span class="label-text font-medium">Only purge images with no relevant detection</span>
                 <p class="text-xs text-base-content/60 mt-0.5">Disabled by default. When enabled, an image must be classified and have no person, vehicle, or animal detection at or above the configured confidence before it is eligible for purge.</p>
               </div>

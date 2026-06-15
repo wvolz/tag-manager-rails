@@ -2,6 +2,7 @@ class SettingsController < ApplicationController
   before_action :require_login
 
   def edit
+    @queue_status = JobQueueStatus.snapshot
     @retention_days  = Setting.image_retention_days
     @purge_enabled   = Setting.image_purge_enabled?
     @classification_enabled = Setting.image_classification_enabled?

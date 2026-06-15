@@ -9,6 +9,8 @@ class SettingsControllerTest < ActionDispatch::IntegrationTest
   test "should get edit" do
     get edit_settings_url
     assert_response :success
+    assert_select "h2", text: "Job Queue"
+    assert_match(/Active Job adapter is Test/, response.body)
   end
 
   test "should update retention days" do

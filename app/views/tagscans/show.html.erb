@@ -60,6 +60,13 @@
                 </table>
             </div>
 
+            <% if @tagscan.tag&.tag_type.present? %>
+                <div>
+                    <h2 class="text-sm font-semibold text-base-content/60 mb-2">Decoded Data</h2>
+                    <%= render "tags/uii_decode", tag: @tagscan.tag %>
+                </div>
+            <% end %>
+
             <%# ── Snapshot ─────────────────────────────────── %>
             <% if @tagscan.image.attached? %>
                 <div>

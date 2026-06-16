@@ -12,11 +12,15 @@
   <tbody>
     <tr>
       <td><%= @tag.uii_decode.header %></td>
-      <td><%= @tag.uii_decode.filter %></td>
-      <td><%= @tag.uii_decode.partition %></td>
+      <td><%= @tag.uii_decode.filter %> (<%= @tag.uii_decode.filter_name %>)</td>
+      <td><%= @tag.uii_decode.partition %> (<%= @tag.uii_decode.partition_layout %>)</td>
       <td><%= @tag.uii_decode.company_prefix %></td>
       <td><%= @tag.uii_decode.item_reference %></td>
       <td><%= @tag.uii_decode.serial %></td>
     </tr>
   </tbody>
 </table>
+
+<p class="text-xs text-base-content/70 mt-2">
+  The GS1 company prefix is not automatically looked up from a registry in this app yet; the value shown here is the raw numeric prefix from the EPC. If you want the company name, you would need to resolve that prefix against GS1’s prefix database (for example via a GS1 lookup service or a local mapping table).
+</p>

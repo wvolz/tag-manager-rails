@@ -32,6 +32,32 @@ class TagType < ApplicationRecord
       @item_reference = item_reference
       @serial = serial
     end
+
+    def filter_name
+      {
+        0 => "all others",
+        1 => "POS trade item",
+        2 => "full case for transport",
+        3 => "reserved",
+        4 => "inner pack item",
+        5 => "reserved",
+        6 => "unit load",
+        7 => "component/unit inside a larger trade item"
+      }.fetch(filter, "unknown")
+    end
+
+    def partition_layout
+      {
+        0 => "40-bit company prefix / 4-bit item reference",
+        1 => "37-bit company prefix / 7-bit item reference",
+        2 => "34-bit company prefix / 10-bit item reference",
+        3 => "30-bit company prefix / 14-bit item reference",
+        4 => "27-bit company prefix / 17-bit item reference",
+        5 => "24-bit company prefix / 20-bit item reference",
+        6 => "20-bit company prefix / 24-bit item reference",
+        7 => "17-bit company prefix / 27-bit item reference"
+      }.fetch(partition, "unknown")
+    end
   end
 
   def uii_decode(epc)

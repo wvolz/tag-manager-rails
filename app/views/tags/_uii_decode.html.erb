@@ -1,3 +1,5 @@
 <% if @tag.tag_type.E470? %>
     <%= render "uii_decode_e470" %>
+<% elsif @tag.tag_type.GS1_SGTIN? %>
+    <%= render "uii_decode_gs1_sgtin" %>
 <% end %>

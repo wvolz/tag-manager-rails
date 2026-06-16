@@ -1,0 +1,22 @@
+<table class="table table-sm table-bordered">
+  <thead>
+    <tr>
+      <th>Header</th>
+      <th>Filter</th>
+      <th>Partition</th>
+      <th>Company Prefix</th>
+      <th>Item Reference</th>
+      <th>Serial</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @tag.uii_decode.header %></td>
+      <td><%= @tag.uii_decode.filter %></td>
+      <td><%= @tag.uii_decode.partition %></td>
+      <td><%= @tag.uii_decode.company_prefix %></td>
+      <td><%= @tag.uii_decode.item_reference %></td>
+      <td><%= @tag.uii_decode.serial %></td>
+    </tr>
+  </tbody>
+</table>

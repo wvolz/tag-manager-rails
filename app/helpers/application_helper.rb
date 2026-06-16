@@ -1,6 +1,12 @@
 module ApplicationHelper
   include Pagy::Frontend
 
+  def app_version_label
+    @app_version_label ||= begin
+      ENV["APP_VERSION"].presence || git_describe_version || "unavailable"
+    end
+  end
+
   # below from: https://blog.albertorocha.me/posts/overwriting-pagy-navigation-helper
   def pagy_nav(pagy)
       html = %(<div class="join" aria-label="Pages">)
@@ -87,5 +93,19 @@ module ApplicationHelper
 
       safe_join(paths)
     end
+  end
+
+  private
+
+  def git_describe_version
+    return unless Rails.root.join(".git").exist?
+
+    require "open3"
+    output, status = Open3.capture2("git", "-C", Rails.root.to_s, "describe", "--tags", "--always", "--dirty")
+    return unless status.success?
+
+    output.strip.presence
+  rescue StandardError
+    nil
   end
 end

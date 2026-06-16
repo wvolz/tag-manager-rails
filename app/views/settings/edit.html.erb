@@ -1,7 +1,10 @@
 <% content_for :title, "Settings" %>
 
 <div class="max-w-3xl space-y-6">
-  <h1 class="text-2xl font-bold">Settings</h1>
+  <div>
+    <h1 class="text-2xl font-bold">Settings</h1>
+    <p class="mt-1 text-sm text-base-content/60">App version: <span class="font-mono"><%= app_version_label %></span></p>
+  </div>
 
   <div class="card bg-base-100 border border-base-300 shadow-sm">
     <div class="card-body space-y-4">

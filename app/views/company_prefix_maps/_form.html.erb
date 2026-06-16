@@ -1,0 +1,50 @@
+<%= form_with model: company_prefix_map, local: true, class: "card bg-base-100 border border-base-300 shadow-sm" do |form| %>
+  <div class="card-body space-y-4">
+    <% if company_prefix_map.errors.any? %>
+      <div class="alert alert-error shadow-sm">
+        <ul class="list-disc pl-5 text-sm">
+          <% company_prefix_map.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="grid gap-4 md:grid-cols-2">
+      <div class="form-control">
+        <%= form.label :decoder, class: "label" do %><span class="label-text">Decoder</span><% end %>
+        <%= form.select :decoder,
+              options_for_select([['GS1_SGTIN', 'GS1_SGTIN'], ['E470', 'E470']], company_prefix_map.decoder),
+              { include_blank: "Select a decoder" },
+              class: "select select-bordered w-full" %>
+      </div>
+
+      <div class="form-control">
+        <%= form.label :company_prefix, class: "label" do %><span class="label-text">Company Prefix</span><% end %>
+        <%= form.number_field :company_prefix, class: "input input-bordered w-full", min: 0 %>
+      </div>
+
+      <div class="form-control md:col-span-2">
+        <%= form.label :company_name, class: "label" do %><span class="label-text">Company Name</span><% end %>
+        <%= form.text_field :company_name, class: "input input-bordered w-full", placeholder: "Acme Goods" %>
+      </div>
+
+      <div class="form-control">
+        <label class="label cursor-pointer justify-start gap-3">
+          <%= form.check_box :active, class: "checkbox checkbox-primary" %>
+          <span class="label-text">Active</span>
+        </label>
+      </div>
+
+      <div class="form-control md:col-span-2">
+        <%= form.label :notes, class: "label" do %><span class="label-text">Notes</span><% end %>
+        <%= form.text_area :notes, rows: 3, class: "textarea textarea-bordered w-full" %>
+      </div>
+    </div>
+
+    <div class="flex gap-2">
+      <%= form.submit class: "btn btn-primary btn-sm" %>
+      <%= link_to "Cancel", company_prefix_maps_path, class: "btn btn-outline btn-sm" %>
+    </div>
+  </div>
+<% end %>

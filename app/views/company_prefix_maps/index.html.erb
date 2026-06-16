@@ -1,0 +1,51 @@
+<% content_for :title, "Company Prefix Maps" %>
+
+<div class="max-w-5xl space-y-6">
+  <div class="flex items-center justify-between gap-4">
+    <div>
+      <h1 class="text-2xl font-bold">Company Prefix Maps</h1>
+      <p class="mt-1 text-sm text-base-content/60">Manage local GS1 company-prefix to company-name mappings used by tag decoding.</p>
+    </div>
+    <%= link_to "New Mapping", new_company_prefix_map_path, class: "btn btn-primary btn-sm" %>
+  </div>
+
+  <div class="card bg-base-100 border border-base-300 shadow-sm">
+    <div class="card-body">
+      <% if @company_prefix_maps.any? %>
+        <div class="overflow-x-auto">
+          <table class="table table-sm table-zebra">
+            <thead>
+              <tr>
+                <th>Decoder</th>
+                <th>Company Prefix</th>
+                <th>Company Name</th>
+                <th>Active</th>
+                <th>Notes</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @company_prefix_maps.each do |mapping| %>
+                <tr>
+                  <td><%= mapping.decoder %></td>
+                  <td><%= mapping.company_prefix %></td>
+                  <td><%= mapping.company_name %></td>
+                  <td><%= mapping.active? ? "Yes" : "No" %></td>
+                  <td class="max-w-xs"><%= mapping.notes.presence || "—" %></td>
+                  <td>
+                    <div class="flex gap-1 justify-end">
+                      <%= link_to "Edit", edit_company_prefix_map_path(mapping), class: "btn btn-xs btn-outline" %>
+                      <%= link_to "Delete", company_prefix_map_path(mapping), data: { turbo_method: :delete, turbo_confirm: "Delete this mapping?" }, class: "btn btn-xs btn-error btn-outline" %>
+                    </div>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% else %>
+        <p class="text-sm text-base-content/60">No company prefix mappings have been added yet.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

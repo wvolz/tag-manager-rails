@@ -22,15 +22,16 @@ class TagType < ApplicationRecord
   end
 
   class GS1SGTIN96
-    attr_reader :header, :filter, :partition, :company_prefix, :item_reference, :serial
+    attr_reader :header, :filter, :partition, :company_prefix, :item_reference, :serial, :company_name
 
-    def initialize(header:, filter:, partition:, company_prefix:, item_reference:, serial:)
+    def initialize(header:, filter:, partition:, company_prefix:, item_reference:, serial:, company_name: nil)
       @header = header
       @filter = filter
       @partition = partition
       @company_prefix = company_prefix
       @item_reference = item_reference
       @serial = serial
+      @company_name = company_name
     end
 
     def filter_name
@@ -88,6 +89,7 @@ class TagType < ApplicationRecord
     company_prefix = bits[14, company_prefix_bits].to_i(2)
     item_reference = bits[14 + company_prefix_bits, item_reference_bits].to_i(2)
     serial = bits[58, 38].to_i(2)
+    company_name = CompanyPrefixMap.lookup(decoder: "GS1_SGTIN", company_prefix: company_prefix)&.company_name
 
     GS1SGTIN96.new(
       header: header,
@@ -95,7 +97,8 @@ class TagType < ApplicationRecord
       partition: partition,
       company_prefix: company_prefix,
       item_reference: item_reference,
-      serial: serial
+      serial: serial,
+      company_name: company_name
     )
   end
 

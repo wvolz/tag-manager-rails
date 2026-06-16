@@ -1,0 +1,10 @@
+<% content_for :title, "New Company Prefix Map" %>
+
+<div class="max-w-2xl space-y-6">
+  <div>
+    <h1 class="text-2xl font-bold">New Company Prefix Map</h1>
+    <p class="mt-1 text-sm text-base-content/60">Add a local GS1 company-prefix to company-name mapping for tag decoding.</p>
+  </div>
+
+  <%= render "form", company_prefix_map: @company_prefix_map %>
+</div>

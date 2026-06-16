@@ -1,5 +1,7 @@
-<% if @tag.tag_type.E470? %>
-    <%= render "uii_decode_e470" %>
-<% elsif @tag.tag_type.GS1_SGTIN? %>
-    <%= render "uii_decode_gs1_sgtin" %>
+<% tag = local_assigns.fetch(:tag, @tag) %>
+
+<% if tag&.tag_type&.E470? %>
+    <%= render "tags/uii_decode_e470", tag: tag %>
+<% elsif tag&.tag_type&.GS1_SGTIN? %>
+    <%= render "tags/uii_decode_gs1_sgtin", tag: tag %>
 <% end %>

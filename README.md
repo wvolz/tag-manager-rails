@@ -33,3 +33,19 @@ Run the following
 `bundle exec rake db:migrate RAILS_ENV=production`
 
 `bundle exec rake assets:precompile RAILS_ENV=production`
+
+## Docker Compose
+
+Use [docker-compose.yml.example](docker-compose.yml.example) as a starting point for a containerized production-style setup.
+
+The sample splits the Rails web process from the Solid Queue worker process:
+
+- `web` runs the frontend server
+- `worker` runs `./bin/jobs`
+- `db` runs PostgreSQL for the primary, cache, queue, and cable databases
+
+Both app services share the same `storage` volume so Active Storage files stay available to the web and worker containers.
+
+Start it with a real Rails master key in your environment:
+
+`RAILS_MASTER_KEY=... docker compose -f docker-compose.yml.example up --build`

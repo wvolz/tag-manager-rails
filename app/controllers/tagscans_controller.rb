@@ -185,6 +185,7 @@ class TagscansController < ApplicationController
 
   def queue_image_classification(tagscan)
     return unless Setting.image_classification_enabled?
+    return unless tagscan.image.attached?
 
     tagscan.mark_image_classification_queued!
     ClassifyTagscanImageJob.perform_later(tagscan.id)

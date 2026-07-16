@@ -90,9 +90,6 @@ gem "pagy", "~> 9.3"
 
 gem "clearance"
 
-# Added 01/30/2025 by volz for Rails <7.1 support
-gem "concurrent-ruby", "1.3.4"
-
 gem "ruby-vips", "~> 2.2"
 
 # Use Tailwind CSS [https://github.com/rails/tailwindcss-rails]
